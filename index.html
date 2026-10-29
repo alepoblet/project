@@ -125,15 +125,12 @@
   }
   .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #7ff0e0; animation: live 2s infinite; }
   @keyframes live { 0% { box-shadow: 0 0 0 0 rgba(127,240,224,.6); } 100% { box-shadow: 0 0 0 10px rgba(127,240,224,0); } }
-  .hero h1 {
-    font-size: clamp(2.6rem, 8vw, 5.4rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.02;
-    text-shadow: 0 6px 30px rgba(0,0,0,.18); opacity: 0; animation: rise 1s var(--ease) .25s forwards;
-  }
-  .hero h1 .shine {
-    display: inline-block; background: linear-gradient(90deg, #fff, #ffd58a, #fff); background-size: 200% auto;
-    -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 4s linear infinite;
-  }
-  @keyframes shine { to { background-position: 200% center; } }
+  .hero-title { font-size: clamp(2.3rem, 7vw, 5rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.04; margin: 0; text-shadow: 0 6px 30px rgba(0,0,0,.18); }
+  .hero-title .ln { display: block; }
+  .hero-title .w { display: inline-block; white-space: nowrap; }
+  .hero-title .accent { color: #ffd58a; }
+  .char { display: inline-block; opacity: 0; transform: translateY(.45em) rotate(3deg); animation: charIn 1s var(--ease) forwards; animation-delay: var(--d); }
+  @keyframes charIn { to { opacity: 1; transform: none; } }
   .hero .sub { font-size: clamp(1rem, 2.3vw, 1.2rem); max-width: 36rem; margin: 1.1rem auto 2rem; opacity: 0; animation: rise 1s var(--ease) .4s forwards; color: #e3f1f4; }
   @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
   .cta {
@@ -160,11 +157,6 @@
   .stats div:nth-child(3) { animation-delay: .94s; }
   .stats strong { display: block; font-size: 1.6rem; font-weight: 800; }
   .stats span { font-size: .78rem; opacity: .92; }
-  .waves { position: absolute; left: 0; bottom: -1px; width: 200%; height: 90px; z-index: 1; }
-  .waves use:nth-child(1) { animation: wave 14s linear infinite; }
-  .waves use:nth-child(2) { animation: wave 9s linear infinite reverse; }
-  .waves use:nth-child(3) { animation: wave 20s linear infinite; }
-  @keyframes wave { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ---------- BARRA DE SECCIONES (vidrio líquido) ---------- */
   .sections-wrap { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 74px); z-index: 60; display: flex; justify-content: center; padding: 0 12px; margin-top: 14px; pointer-events: none; }
@@ -335,6 +327,80 @@
   .em strong { font-size: .95rem; }
   .em a { font-size: 1.4rem; font-weight: 800; color: var(--coral); text-decoration: none; }
 
+  /* ---------- SECCIONES NUEVAS ---------- */
+  .lead-p { color: var(--mute); max-width: 40rem; margin-top: .4rem; }
+  .qa { background: var(--white); border: 1px solid var(--line); border-radius: 20px; padding: 0 20px; margin-bottom: 12px; transition: box-shadow .4s, border-color .4s; }
+  .qa[open] { box-shadow: 0 16px 30px -22px rgba(18,63,82,.45); border-color: #cfe2e8; }
+  .qa summary { cursor: pointer; list-style: none; font-weight: 800; padding: 18px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--lake-dark); }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::after { content: "+"; font-size: 1.4rem; color: var(--lake); transition: transform .4s var(--spring); }
+  .qa[open] summary::after { transform: rotate(45deg); }
+  .qa p { padding-bottom: 18px; color: var(--ink-2); margin: 0; }
+  .seg-grid, .info-grid, .srv-grid, .acc-grid, .res-grid, .food-grid, .lod-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 720px) {
+    .seg-grid, .info-grid, .srv-grid, .acc-grid, .res-grid { grid-template-columns: repeat(2, 1fr); }
+    .food-grid, .lod-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1000px) { .srv-grid, .info-grid { grid-template-columns: repeat(3, 1fr); } .seg-grid { grid-template-columns: repeat(3, 1fr); } }
+  .card-x {
+    background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 20px; box-shadow: 0 2px 10px -6px rgba(18,63,82,.15);
+    transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+  }
+  .card-x:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+  .card-x .ico { font-size: 1.9rem; display: inline-block; transition: transform .5s var(--spring); }
+  .card-x:hover .ico { transform: scale(1.15) rotate(-6deg); }
+  .card-x h4 { font-size: 1.08rem; font-weight: 800; margin: .6rem 0 .3rem; color: var(--lake-dark); }
+  .card-x p { margin: 0; color: var(--mute); font-size: .93rem; }
+  .card-x .age { display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); margin-bottom: .3rem; }
+  .info-item { background: var(--soft); border-radius: 18px; padding: 16px 18px; }
+  .info-item b { display: block; color: var(--lake-dark); margin-bottom: .2rem; }
+  .info-item span { color: var(--ink-2); font-size: .93rem; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.4rem 0 1rem; }
+  .filters button {
+    border: 1px solid var(--line); background: var(--white); color: var(--ink-2); border-radius: 999px; padding: .55rem 1rem; cursor: pointer; font-weight: 700;
+    transition: transform .35s var(--spring), background .3s, color .3s, border-color .3s;
+  }
+  .filters button:hover { transform: translateY(-2px); border-color: var(--lake); }
+  .filters button[aria-pressed="true"] { background: var(--lake-dark); color: #fff; border-color: var(--lake-dark); }
+  .tier { display: inline-block; font-weight: 800; color: var(--ember); letter-spacing: .05em; margin-left: 6px; }
+  .lod-note { font-size: .85rem; color: var(--mute); margin-top: 14px; }
+  .food-card { position: relative; overflow: hidden; }
+  .food-card .big { font-size: 2.6rem; display: block; margin-bottom: .4rem; }
+  .food-tip { margin-top: 18px; background: linear-gradient(120deg, #e6f0f3, #f3fbf9); border-radius: 20px; padding: 16px 20px; color: var(--lake-dark); font-weight: 600; }
+  .check-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .check-list li { display: flex; gap: 12px; align-items: flex-start; background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; color: var(--ink-2); transition: transform .4s var(--ease); }
+  .check-list li:hover { transform: translateX(6px); }
+  .check-list li::before { content: "✓"; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--grad); color: #fff; font-weight: 800; font-size: .85rem; }
+  .map-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.4rem; }
+  .map-grid a {
+    text-decoration: none; color: var(--lake-dark); font-weight: 700; background: var(--white); border: 1px solid var(--line); border-radius: 999px;
+    padding: .7rem 1.1rem; transition: transform .35s var(--spring), box-shadow .35s, background .3s;
+  }
+  .map-grid a:hover { transform: translateY(-3px); box-shadow: 0 12px 22px -14px rgba(18,63,82,.5); background: var(--soft); }
+  .promo-wrap { display: grid; gap: 24px; align-items: center; grid-template-columns: 1fr; margin-top: 1.6rem; }
+  @media (min-width: 800px) { .promo-wrap { grid-template-columns: 340px 1fr; } }
+  .poster {
+    position: relative; aspect-ratio: 4 / 5; border-radius: 26px; overflow: hidden; color: #fff; isolation: isolate;
+    background: linear-gradient(-45deg, #0d3346, #1f6f8b, #3e9a8a); background-size: 300% 300%; animation: gradientShift 12s ease infinite;
+    box-shadow: var(--shadow); transform: rotate(-1.5deg); transition: transform .6s var(--spring);
+  }
+  .poster:hover { transform: rotate(0deg) scale(1.02); }
+  .poster .p-art { position: absolute; inset: 0; z-index: -1; opacity: .55; }
+  .poster .p-art svg { width: 100%; height: 100%; }
+  .poster .p-top { font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; opacity: .9; }
+  .poster h3 { font-size: 2rem; font-weight: 800; margin-top: auto; text-shadow: 0 4px 18px rgba(0,0,0,.3); }
+  .poster p { font-size: .98rem; opacity: .95; margin: .6rem 0 0; }
+  .poster .p-qr { position: absolute; right: 18px; bottom: 18px; width: 56px; height: 56px; border-radius: 12px; background: #fff; display: grid; place-items: center; font-size: 1.6rem; }
+  .poster-inner { position: absolute; inset: 0; padding: 26px; display: flex; flex-direction: column; }
+  .promo-text h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: .4rem; }
+  .promo-text p { color: var(--mute); }
+  .share { margin-top: 16px; border: none; cursor: pointer; background: var(--lake-dark); color: #fff; font-weight: 800; padding: .9rem 1.4rem; border-radius: 999px; transition: transform .4s var(--spring), box-shadow .4s; }
+  .share:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -12px rgba(18,63,82,.6); }
+  .viab-box { margin-top: 22px; background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; color: var(--ink-2); }
+  .src-list { list-style: none; padding: 0; margin: 0; color: var(--mute); font-size: .92rem; }
+  .src-list li { padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  .sub-h { font-size: 1.1rem; font-weight: 800; color: var(--lake-dark); margin: 1.6rem 0 .6rem; }
+
   /* ---------- DESCARGA ---------- */
   .offline {
     margin-top: 44px; border-radius: 34px; padding: 46px 26px; text-align: center; color: #fff; position: relative; overflow: hidden;
@@ -395,6 +461,24 @@
     html { scroll-behavior: auto; }
     .rv, .hero h1, .hero .sub, .cta, .kicker, .stats div { opacity: 1 !important; transform: none !important; }
   }
+  /* ---------- AJUSTES MINIMALISTAS ---------- */
+  .stats div { background: none; border: none; backdrop-filter: none; min-width: 0; padding: .4rem .9rem; }
+  .stats strong { font-size: 1.8rem; }
+  .hero .cloud.c3 { display: none; }
+  .style-card { animation: none; }
+  .planner, .card-x, .spot { box-shadow: 0 8px 30px -22px rgba(18,63,82,.35); }
+  /* ---------- HORIZONTE ANIMADO ---------- */
+  .horizon { position: absolute; left: 0; bottom: -1px; width: 100%; height: 120px; z-index: 1; overflow: visible; }
+  .horizon .ridge { transform-box: fill-box; transform-origin: 50% 100%; animation: ridgeGrow 1.6s var(--ease) .2s both; }
+  .horizon .front { animation: frontSway 9s ease-in-out 1.8s infinite; }
+  @keyframes ridgeGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes frontSway { 0%,100% { transform: translateX(-14px); } 50% { transform: translateX(14px); } }
+  /* ---------- MAPA ---------- */
+  .map-frame-wrap { position: relative; width: 100%; height: 440px; border-radius: 26px; overflow: hidden; background: var(--soft); box-shadow: 0 20px 40px -26px rgba(18,63,82,.5); }
+  .map-frame-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--ink-2); font-weight: 600; z-index: 0; }
+  .map-open { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: var(--lake-dark); color: #fff !important; padding: .8rem 1.3rem; border-radius: 999px; font-weight: 800; transition: transform .4s var(--spring), box-shadow .4s; }
+  .map-open:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -12px rgba(18,63,82,.6); }
 </style>
 </head>
 <body>
@@ -425,7 +509,7 @@
 
   <div class="hero-inner">
     <span class="kicker" data-i18n="hero_kicker">Guía digital · Sur de Chile</span>
-    <h1><span data-i18n="hero_t1">Ruta Lagos y Volcanes</span><br><span class="shine" data-i18n="hero_t2">en Bolsillo</span></h1>
+    <h1 class="hero-title"><span class="ln" data-i18n="hero_t1">Ruta Lagos y Volcanes</span><span class="ln accent" data-i18n="hero_t2">en Bolsillo</span></h1>
     <p class="sub" data-i18n="hero_sub">Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.</p>
     <a class="cta" href="#planificador"><span data-i18n="hero_cta">Planificar mi viaje</span> <span class="arr">→</span></a>
     <div class="stats">
@@ -435,11 +519,10 @@
     </div>
   </div>
 
-  <svg class="waves" viewBox="0 0 2880 90" preserveAspectRatio="none" aria-hidden="true">
-    <defs><path id="w" d="M0 45 Q 180 0 360 45 T 720 45 T 1080 45 T 1440 45 T 1800 45 T 2160 45 T 2520 45 T 2880 45 L2880 90 L0 90 Z"/></defs>
-    <use href="#w" fill="#e6f0f3" opacity=".35"/>
-    <use href="#w" fill="#e6f0f3" opacity=".5" y="8"/>
-    <use href="#w" fill="var(--bg)" y="18"/>
+  
+<svg class="horizon" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path class="ridge" d="M-20 92 L150 42 L300 80 L500 22 L700 76 L900 34 L1090 84 L1270 30 L1460 72 L1460 120 L-20 120Z" fill="#e6f0f3" opacity=".6"/>
+    <path class="front" d="M-60 104 Q300 72 720 100 T1500 96 L1500 120 L-60 120Z" fill="var(--bg)"/>
   </svg>
 </header>
 
@@ -447,14 +530,15 @@
   <nav class="sections lg lg-sheen" aria-label="Secciones">
     <a href="#planificador" data-i18n="nav_plan">Planifica</a>
     <a href="#atractivos" data-i18n="nav_spots">Atractivos</a>
+    <a href="#alojamiento" data-i18n="x.nav_lod">Dormir</a>
+    <a href="#comida" data-i18n="x.nav_food">Comer</a>
+    <a href="#mapa" data-i18n="x.nav_map">Mapa</a>
     <a href="#cuidado" data-i18n="nav_care">Cuidado</a>
-    <a href="#descarga" data-i18n="nav_dl">Descarga</a>
   </nav>
 </div>
 
 <main class="page">
 
-<!-- PLANIFICADOR -->
 <section id="planificador" aria-labelledby="t-plan">
   <div class="sec-title rv">
     <span class="eyebrow" data-i18n="pl_eyebrow">Planificador</span>
@@ -504,7 +588,6 @@
   </div>
 </section>
 
-<!-- ATRACTIVOS -->
 <section id="atractivos" aria-labelledby="t-spots">
   <div class="sec-title rv">
     <span class="eyebrow" data-i18n="sp_eyebrow">Atractivos</span>
@@ -514,18 +597,45 @@
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- CUIDADO -->
-<section id="cuidado" aria-labelledby="t-eco">
+<section id="alojamiento" aria-labelledby="x-lod-h">
   <div class="sec-title rv">
-    <span class="eyebrow" data-i18n="care_eyebrow">Cuidado del medio ambiente</span>
-    <h2 id="t-eco" data-i18n="care_title">Viaja sin dejar huella</h2>
-    <p data-i18n="care_sub">Pequeños gestos protegen lagos, volcanes y comunidades.</p>
+    <span class="eyebrow" id="x-lod-t"></span>
+    <h2 id="x-lod-h"></h2>
   </div>
-  <div class="eco">
-    <div class="eco-card rv"><div class="ic">♻️</div><p data-i18n="eco1">Lleva tu basura de vuelta, también en la orilla de los lagos.</p></div>
-    <div class="eco-card rv"><div class="ic">🚶</div><p data-i18n="eco2">Mantente en los senderos señalizados para proteger el suelo y la vegetación.</p></div>
-    <div class="eco-card rv"><div class="ic">🦅</div><p data-i18n="eco3">No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
-    <div class="eco-card rv"><div class="ic">🤝</div><p data-i18n="eco4">Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
+  <div class="filters rv" id="x-lod-filters"></div>
+  <div class="lod-grid rv" id="x-lod-grid"></div>
+  <p class="lod-note rv" id="x-lod-note"></p>
+</section>
+
+<section id="comida" aria-labelledby="x-food-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-food-t"></span>
+    <h2 id="x-food-h"></h2>
+  </div>
+  <div class="food-grid rv" id="x-food-grid"></div>
+  <div class="food-tip rv" id="x-food-tip"></div>
+</section>
+
+<section id="servicios" aria-labelledby="x-srv-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-srv-t"></span>
+    <h2 id="x-srv-h"></h2>
+  </div>
+  <div class="srv-grid rv" id="x-srv-grid"></div>
+</section>
+
+<section id="mapa" aria-labelledby="x-map-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-map-t"></span>
+    <h2 id="x-map-h"></h2>
+  </div>
+  <div class="filters rv" id="x-map-grid"></div>
+  <div class="rv map-box" style="margin-top:18px">
+    <div class="map-frame-wrap">
+      <iframe id="x-map-frame" title="Mapa de la zona" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <div class="map-fallback" id="x-map-fallback"></div>
+    </div>
+    <p style="margin-top:14px"><a id="x-map-open" class="map-open" target="_blank" rel="noopener"></a></p>
   </div>
   <div class="emergency">
     <div class="em rv"><strong data-i18n="em_gen">Emergencias generales</strong><a href="tel:131">131</a></div>
@@ -534,7 +644,53 @@
   </div>
 </section>
 
-<!-- DESCARGA -->
+<section id="promo" aria-labelledby="x-promo-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-promo-t"></span>
+    <h2 id="x-promo-h"></h2>
+  </div>
+  <div class="promo-wrap rv">
+    <div class="poster" aria-label="Afiche promocional">
+      <div class="p-art" id="x-poster-art"></div>
+      <div class="poster-inner">
+        <span class="p-top">Guía Lagos y Volcanes</span>
+        <h3 id="x-poster-title"></h3>
+        <p id="x-poster-msg"></p>
+        <span class="p-qr" aria-hidden="true">▦</span>
+      </div>
+    </div>
+    <div class="promo-text">
+      <h3 id="x-promo-sub"></h3>
+      <p id="x-promo-ch"></p>
+      <button class="share" id="share"></button>
+    </div>
+  </div>
+</section>
+
+<section id="resultados" aria-labelledby="x-res-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-res-t"></span>
+    <h2 id="x-res-h"></h2>
+  </div>
+  <div class="res-grid rv" id="x-res-grid"></div>
+  <div class="viab-box rv" id="x-viab"></div>
+</section>
+
+<section id="fuentes" aria-labelledby="x-src-t">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-src-t"></span>
+  </div>
+  <ul class="src-list rv" id="x-src"></ul>
+</section>
+
+<section id="descripcion" aria-labelledby="x-desc-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-desc-t"></span>
+    <h2 id="x-desc-h"></h2>
+  </div>
+  <div id="x-desc-list" class="rv"></div>
+</section>
+
 <section id="descarga" aria-labelledby="t-off" style="padding-top:10px">
   <div class="offline rv">
     <h3 id="t-off" data-i18n="off_title">Llévala contigo sin señal</h3>
@@ -560,6 +716,100 @@
 const T = {
   es: {
     title: 'Guía Ruta Lagos y Volcanes', brand: 'Guía Lagos y Volcanes',
+    x: {
+      desc_t: 'Sobre la propuesta', desc_h: 'Una guía que convierte la ruta en un recorrido claro',
+      desc_q: [
+        ['¿En qué consiste?', 'Una guía digital en formato de página web, optimizada para celular, con recorridos armados según el tipo de turista y el tiempo disponible, un mapa de la ruta y fichas de atractivos.'],
+        ['¿Dónde se desarrolla?', 'En los 6 circuitos de la Ruta Escénica Lagos y Volcanes, con especial atención a las comunas de Frutillar, Puerto Varas, Puerto Octay, Pucón, Villarrica y Panguipulli.'],
+        ['¿Qué necesidad busca solucionar?', 'La dificultad de planificar y orientarse en una ruta de más de 2.000 km, con información dispersa y señal de internet irregular.'],
+        ['¿Qué experiencia se pretende entregar?', 'Un viaje organizado, seguro y sin pérdida de tiempo, que permita descubrir atractivos cercanos y conocer el patrimonio de la zona.'],
+        ['¿Qué elementos la diferencian?', 'Recorridos por perfil de viajero, uso sin conexión, fichas breves con recomendaciones de conservación y enlaces a los servicios locales.'],
+        ['¿Por qué resulta pertinente?', 'Responde al problema central del diagnóstico y facilita el acceso a una oferta que ya existe, pero que está poco articulada.']
+      ],
+      pub_t: 'Público objetivo', pub_h: 'Viajeros de 25 a 65 años que planifican desde el celular',
+      seg: [
+        ['Parejas y adultos jóvenes', '25 a 40 años', 'Viajan con poco tiempo, buscan aventura liviana, fotografía de paisajes y gastronomía local.'],
+        ['Familias y adultos', '35 a 55 años', 'Buscan actividades variadas, alojamientos cómodos y recorridos con información clara sobre distancias y tiempos.'],
+        ['Viajeros internacionales', 'Argentina, Brasil, EE. UU., Alemania, Francia y España', 'Requieren información en español e inglés y dependen más de la navegación digital.']
+      ],
+      pub_info: [
+        ['Procedencia', 'Nacionales desde la Región Metropolitana, Valparaíso y Concepción; internacionales desde los países indicados.'],
+        ['Intereses', 'Naturaleza, fotografía de paisajes, vida al aire libre y gastronomía sureña.'],
+        ['Motivaciones', 'Desconexión de la ciudad, conocer lugares nuevos y estar en un entorno natural y tranquilo.'],
+        ['Tipos de turismo', 'Aventura, bienestar, cultural o histórico y ecoturismo.'],
+        ['Necesidades', 'Buena conectividad vial y señalización, navegación GPS o internet, y alojamiento de todo tipo, desde camping hasta hostales.'],
+        ['Hábitos', 'Planifican desde el celular, consultan mapas y reseñas, y valoran poder revisar la información sin conexión.']
+      ],
+      nav_lod: 'Dormir', nav_food: 'Comer', nav_map: 'Mapa',
+      lod_t: 'Alojamiento', lod_h: 'Dónde dormir, según tu presupuesto y tu estilo',
+      f_all: 'Todos', f_camp: 'Camping', f_hostal: 'Hostal', f_hotel: 'Hotel o cabaña',
+      lod: [
+        { k: 'hotel', z: 'Puerto Varas', tp: 'Hotel o cabaña', p: '$$$', d: 'Vista al lago y cercanía a restaurantes y actividades.' },
+        { k: 'hostal', z: 'Frutillar', tp: 'Hostal', p: '$$', d: 'Caminable al lago y al Teatro del Lago.' },
+        { k: 'camp', z: 'Puerto Octay', tp: 'Camping', p: '$', d: 'Zona tranquila junto al lago, ideal para naturaleza.' },
+        { k: 'hotel', z: 'Petrohué', tp: 'Cabaña o camping', p: '$$', d: 'Base para visitar el Parque Vicente Pérez Rosales.' },
+        { k: 'hostal', z: 'Pucón y Villarrica', tp: 'Hostal u hotel', p: '$$', d: 'Base para senderismo y actividades de aventura.' },
+        { k: 'camp', z: 'Panguipulli y Lago Ranco', tp: 'Cabaña o camping', p: '$', d: 'Bosques y lagos con menos oferta: conviene reservar con anticipación.' }
+      ],
+      lod_note: 'Ejemplos de tipos de oferta por zona. Precio: $ económico, $$ intermedio, $$$ alto (referencial). Verifica precio, disponibilidad y contacto antes de viajar.',
+      food_t: 'Comida local', food_h: 'Sabores del sur para probar en el recorrido',
+      food: [
+        { e: '🍲', n: 'Curanto en hoyo', d: 'Preparación tradicional con mariscos, carnes, papas y milcaos cocidos al vapor bajo tierra.' },
+        { e: '🥔', n: 'Milcao', d: 'Pan de papa tradicional, servido caliente con mantequilla o queso.' },
+        { e: '🍰', n: 'Kuchen', d: 'Tradición alemana de la zona: tortas de frutas, con crema o streusel.' },
+        { e: '🐟', n: 'Salmón y trucha', d: 'Pescados de lagos y ríos, preparados a la parrilla, al horno o ahumados.' },
+        { e: '🥤', n: 'Mote con huesillo', d: 'Bebida refrescante de trigo y durazno deshidratado, típica en verano.' },
+        { e: '🍺', n: 'Cerveza artesanal', d: 'Cervecerías de la zona, con influencia de la tradición alemana.' }
+      ],
+      food_tip: 'Busca fondas, ferias y mercados locales. Consulta antes horarios y disponibilidad.',
+      srv_t: 'Servicios y transporte', srv_h: 'Cómo llegar y moverse por la ruta',
+      srv: [
+        ['🚌', 'Buses', 'Desde Temuco, Pucón, Valdivia, Osorno y Puerto Montt.'],
+        ['✈️', 'Aeropuertos', 'Temuco, Valdivia, Osorno y Puerto Montt, con movilidad local hacia la ruta.'],
+        ['🚗', 'Auto propio', 'Por la Ruta 5 Sur y los caminos de la ruta. Revisa las condiciones climáticas antes de salir.'],
+        ['🧭', 'Guiado', 'Guías locales certificados para las actividades de aventura.'],
+        ['ℹ️', 'Información turística', 'Oficinas de turismo en las comunas y puntos de información en los accesos.'],
+        ['📶', 'Conectividad', 'Señal irregular en tramos alejados: descarga la guía antes de salir.']
+      ],
+      acc_t: 'Accesibilidad y conectividad', acc_h: 'Barreras identificadas y cómo las enfrentamos',
+      acc: [
+        ['Señal irregular en tramos alejados', 'Descarga previa de mapas y fichas, con indicación de los puntos con señal.'],
+        ['Señalización insuficiente', 'Códigos QR en paraderos y accesos que enlazan a la ficha del atractivo.'],
+        ['Información en un solo idioma', 'Versión en español, inglés y portugués.'],
+        ['Tiempos de traslado no evidentes', 'Tiempo estimado entre atractivos, según el medio de transporte.']
+      ],
+      cal_t: 'Calidad y seguridad', cal_h: 'Qué revisar antes de cada actividad',
+      cal: [
+        'Información previa sobre dificultad, clima, equipamiento y horarios de cada atractivo.',
+        'Advertencias de seguridad para actividades de montaña.',
+        'Servicios de aventura solo con prestadores inscritos en el Registro Nacional de Prestadores de Servicios Turísticos (decreto N°19).',
+        'Busca el Sello de Calidad Turística, que reconoce a los prestadores que cumplen la normativa.',
+        'Guías con certificado de primeros auxilios y experiencia comprobable.',
+        'Números de emergencia visibles en todo momento.'
+      ],
+      map_t: 'Mapa y zonas', map_h: 'Explora cada zona en el mapa', map_btn: 'Abrir en mapas',
+      promo_t: 'Promoción', promo_h: 'Pieza promocional',
+      poster_title: 'Tu ruta, en tu bolsillo', poster_msg: 'Planifica el viaje a los lagos y volcanes sin perderte.',
+      promo_sub: 'Compártela en tus redes', promo_ch: 'Canal: Instagram y la página de la guía. Mensaje principal: planificar sin perderse.',
+      share: 'Compartir enlace', copied: 'Enlace copiado',
+      res_t: 'Resultados esperados', res_h: 'Cómo sabremos que funciona',
+      res: [
+        ['Descargas', 'Cantidad de descargas de la guía.'],
+        ['Atractivos menos conocidos', 'Visitas a las fichas de lugares poco conocidos.'],
+        ['Opinión de viajeros', 'Valoración de los usuarios al final del viaje.']
+      ],
+      viab: 'Viabilidad: no requiere infraestructura física ni grandes inversiones. Se mantiene con revisión anual de la información, un responsable de contenidos y alianzas con municipios y prestadores que difunden la guía.',
+      src_t: 'Fuentes',
+      src: [
+        'Chile Travel (2026). Ruta Lagos y Volcanes. Servicio Nacional de Turismo.',
+        'Chile Travel (2024). Ruta Lagos y Volcanes, un circuito turístico cargado de aventura.',
+        'Ruta Lagos y Volcanes (s. f.). Ruta Escénica Lagos y Volcanes.',
+        'Programa Ruta Escénica Lagos y Volcanes (2021). Guía de aventuras.',
+        'Ilustre Municipalidad de Frutillar. Turismo.',
+        'Chile Travel (2026). Puerto Varas y Frutillar.',
+        'Decreto N°19, Ministerio de Economía, Fomento y Turismo.'
+      ]
+    },
     nav_plan: 'Planifica', nav_spots: 'Atractivos', nav_care: 'Cuidado', nav_dl: 'Descarga',
     hero_kicker: 'Guía digital · Sur de Chile', hero_t1: 'Ruta Lagos y Volcanes', hero_t2: 'en Bolsillo',
     hero_sub: 'Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.',
@@ -600,7 +850,9 @@ const T = {
       iglesia: { n: 'Iglesia del Sagrado Corazón', t: 'Patrimonio', d: 'Arquitectura de colonos alemanes en Puerto Varas. Monumento histórico desde 1992.' },
       teatro: { n: 'Teatro del Lago', t: 'Cultura contemporánea', d: 'Espacio cultural frente al lago, con conciertos, arte y música.' },
       pewenche: { n: 'Rutas Ancestrales Pewenche', t: 'Cultura', d: 'Conocimiento del territorio y las tradiciones pewenche en la Araucanía Andina.' },
-      termas: { n: 'Termas y spa', t: 'Bienestar', d: 'Aguas termales naturales de la zona volcánica, con circuitos de descanso.' }
+      termas: { n: 'Termas y spa', t: 'Bienestar', d: 'Aguas termales naturales de la zona volcánica, con circuitos de descanso.' },
+      templo: { n: 'Templo Luterano (Puerto Varas)', t: 'Patrimonio', d: 'Iglesia de madera de la década de 1920 que une la arquitectura europea con la carpintería de los colonos alemanes.' },
+      ferias: { n: 'Ferias artesanales', t: 'Comercio local', d: 'Productos hechos a mano y artículos de identidad local. Compra directa a emprendedores.' }
     },
     stops: {
       naturaleza: ['Caminata por el borde del lago', 'Mirador hacia el volcán', 'Senderismo en bosque nativo', 'Excursión a Petrohué', 'Caminata tranquila de cierre'],
@@ -611,6 +863,100 @@ const T = {
   },
   en: {
     title: 'Lakes and Volcanoes Route Guide', brand: 'Lakes & Volcanoes Guide',
+    x: {
+      desc_t: 'About the proposal', desc_h: 'A guide that turns the route into a clear journey',
+      desc_q: [
+        ['What is it?', 'A digital guide in web page format, optimized for mobile, with routes built by traveler type and available time, a route map and attraction cards.'],
+        ['Where does it apply?', 'Across the 6 circuits of the Lakes and Volcanoes Scenic Route, with special focus on Frutillar, Puerto Varas, Puerto Octay, Pucón, Villarrica and Panguipulli.'],
+        ['What need does it solve?', 'The difficulty of planning and finding your way along a route of more than 2,000 km, with scattered information and unreliable internet signal.'],
+        ['What experience does it deliver?', 'An organized, safe journey without wasted time, helping you discover nearby places and the heritage of the area.'],
+        ['What sets it apart?', 'Routes by traveler profile, offline use, short cards with conservation tips and links to local services.'],
+        ['Why is it relevant?', 'It addresses the central problem of the diagnosis and makes an existing but poorly connected offer easier to access.']
+      ],
+      pub_t: 'Target audience', pub_h: 'Travelers aged 25 to 65 who plan from their phone',
+      seg: [
+        ['Couples and young adults', '25 to 40 years old', 'They travel with little time, look for light adventure, landscape photography and local food.'],
+        ['Families and adults', '35 to 55 years old', 'They look for varied activities, comfortable accommodation and routes with clear information on distances and times.'],
+        ['International travelers', 'Argentina, Brazil, USA, Germany, France and Spain', 'They need information in Spanish and English and rely more on digital navigation.']
+      ],
+      pub_info: [
+        ['Origin', 'Domestic travelers from the Metropolitan Region, Valparaíso and Concepción; international travelers from the countries listed.'],
+        ['Interests', 'Nature, landscape photography, outdoor life and southern gastronomy.'],
+        ['Motivations', 'Escaping the city, discovering new places and being in a calm natural setting.'],
+        ['Types of tourism', 'Adventure, wellness, cultural or historical tourism and ecotourism.'],
+        ['Needs', 'Good road connectivity and signage, GPS or internet navigation, and accommodation of all kinds, from camping to hostels.'],
+        ['Habits', 'They plan from their phone, check maps and reviews, and value being able to review information offline.']
+      ],
+      nav_lod: 'Stay', nav_food: 'Eat', nav_map: 'Map',
+      lod_t: 'Accommodation', lod_h: 'Where to stay, by budget and style',
+      f_all: 'All', f_camp: 'Camping', f_hostal: 'Hostel', f_hotel: 'Hotel or cabin',
+      lod: [
+        { k: 'hotel', z: 'Puerto Varas', tp: 'Hotel or cabin', p: '$$$', d: 'Lake views and close to restaurants and activities.' },
+        { k: 'hostal', z: 'Frutillar', tp: 'Hostel', p: '$$', d: 'Walkable to the lake and the Teatro del Lago.' },
+        { k: 'camp', z: 'Puerto Octay', tp: 'Campground', p: '$', d: 'Quiet lakeside area, ideal for nature.' },
+        { k: 'hotel', z: 'Petrohué', tp: 'Cabin or campground', p: '$$', d: 'Base for visiting Vicente Pérez Rosales National Park.' },
+        { k: 'hostal', z: 'Pucón and Villarrica', tp: 'Hostel or hotel', p: '$$', d: 'Base for hiking and adventure activities.' },
+        { k: 'camp', z: 'Panguipulli and Lago Ranco', tp: 'Cabin or campground', p: '$', d: 'Forests and lakes with fewer options: book in advance.' }
+      ],
+      lod_note: 'Examples of accommodation types by area. Price: $ budget, $$ mid-range, $$$ high (indicative). Check price, availability and contact before traveling.',
+      food_t: 'Local food', food_h: 'Southern flavors to try along the route',
+      food: [
+        { e: '🍲', n: 'Curanto in a pit', d: 'Traditional dish of seafood, meats, potatoes and milcaos steamed underground.' },
+        { e: '🥔', n: 'Milcao', d: 'Traditional potato bread, served hot with butter or cheese.' },
+        { e: '🍰', n: 'Kuchen', d: 'German tradition of the area: fruit cakes with cream or streusel.' },
+        { e: '🐟', n: 'Salmon and trout', d: 'Lake and river fish, grilled, baked or smoked.' },
+        { e: '🥤', n: 'Mote con huesillo', d: 'Refreshing drink of wheat and dried peach, typical in summer.' },
+        { e: '🍺', n: 'Craft beer', d: 'Breweries in the area, influenced by German tradition.' }
+      ],
+      food_tip: 'Look for local eateries, fairs and markets. Check opening hours and availability first.',
+      srv_t: 'Services and transport', srv_h: 'How to get there and get around the route',
+      srv: [
+        ['🚌', 'Buses', 'From Temuco, Pucón, Valdivia, Osorno and Puerto Montt.'],
+        ['✈️', 'Airports', 'Temuco, Valdivia, Osorno and Puerto Montt, with local transport to the route.'],
+        ['🚗', 'Own car', 'Via Ruta 5 Sur and the route roads. Check weather conditions before leaving.'],
+        ['🧭', 'Guides', 'Certified local guides for adventure activities.'],
+        ['ℹ️', 'Tourist information', 'Tourism offices in the towns and information points at the entrances.'],
+        ['📶', 'Connectivity', 'Weak signal in remote stretches: download the guide before leaving.']
+      ],
+      acc_t: 'Accessibility and connectivity', acc_h: 'Barriers identified and how we address them',
+      acc: [
+        ['Weak signal in remote stretches', 'Maps and cards downloaded in advance, with indication of spots that have signal.'],
+        ['Insufficient signage', 'QR codes at stops and entrances that link to the attraction card.'],
+        ['Information in one language only', 'Versions in Spanish, English and Portuguese.'],
+        ['Travel times not obvious', 'Estimated time between attractions, by mode of transport.']
+      ],
+      cal_t: 'Quality and safety', cal_h: 'What to check before each activity',
+      cal: [
+        'Advance information on difficulty, weather, equipment and opening hours for each attraction.',
+        'Safety warnings for mountain activities.',
+        'Adventure services only from providers registered in the National Register of Tourism Service Providers (decree No. 19).',
+        'Look for the Tourism Quality Seal, which recognizes providers that meet the regulations.',
+        'Guides with first aid certification and proven experience.',
+        'Emergency numbers visible at all times.'
+      ],
+      map_t: 'Map and areas', map_h: 'Explore each area on the map', map_btn: 'Open in maps',
+      promo_t: 'Promotion', promo_h: 'Promotional piece',
+      poster_title: 'Your route, in your pocket', poster_msg: 'Plan your trip to the lakes and volcanoes without getting lost.',
+      promo_sub: 'Share it on your social media', promo_ch: 'Channel: Instagram and the guide page. Main message: plan without getting lost.',
+      share: 'Share link', copied: 'Link copied',
+      res_t: 'Expected results', res_h: 'How we will know it works',
+      res: [
+        ['Downloads', 'Number of guide downloads.'],
+        ['Less known attractions', 'Visits to cards of less known places.'],
+        ['Traveler feedback', 'User rating at the end of the trip.']
+      ],
+      viab: 'Viability: it needs no physical infrastructure or large investment. It is sustained through annual review of the information, a content lead, and partnerships with municipalities and providers who share the guide.',
+      src_t: 'Sources',
+      src: [
+        'Chile Travel (2026). Ruta Lagos y Volcanes. National Tourism Service.',
+        'Chile Travel (2024). Ruta Lagos y Volcanes, an adventure-packed tourist circuit.',
+        'Ruta Lagos y Volcanes (n.d.). Lakes and Volcanoes Scenic Route.',
+        'Ruta Escénica Lagos y Volcanes program (2021). Adventure guide.',
+        'Municipality of Frutillar. Tourism.',
+        'Chile Travel (2026). Puerto Varas and Frutillar.',
+        'Decree No. 19, Ministry of Economy, Development and Tourism.'
+      ]
+    },
     nav_plan: 'Plan', nav_spots: 'Highlights', nav_care: 'Care', nav_dl: 'Download',
     hero_kicker: 'Digital guide · Southern Chile', hero_t1: 'Lakes and Volcanoes Route', hero_t2: 'in your pocket',
     hero_sub: 'Your route organized by your travel style and your time, with information you can check even without signal.',
@@ -651,7 +997,9 @@ const T = {
       iglesia: { n: 'Sacred Heart Church', t: 'Heritage', d: 'German colonist architecture in Puerto Varas. Historic monument since 1992.' },
       teatro: { n: 'Teatro del Lago', t: 'Contemporary culture', d: 'Cultural venue by the lake with concerts, art and music.' },
       pewenche: { n: 'Pewenche Ancestral Routes', t: 'Culture', d: 'Learn about the land and traditions of the Pewenche people in the Andean Araucanía.' },
-      termas: { n: 'Hot springs & spa', t: 'Wellness', d: 'Natural thermal waters from the volcanic zone, with relaxation circuits.' }
+      termas: { n: 'Hot springs & spa', t: 'Wellness', d: 'Natural thermal waters from the volcanic zone, with relaxation circuits.' },
+      templo: { n: 'Lutheran Church (Puerto Varas)', t: 'Heritage', d: 'Wooden church from the 1920s blending European architecture with the carpentry of German settlers.' },
+      ferias: { n: 'Craft fairs', t: 'Local trade', d: 'Handmade products and local identity items. Buy directly from makers.' }
     },
     stops: {
       naturaleza: ['Walk along the lakeshore', 'Viewpoint toward the volcano', 'Hike through native forest', 'Excursion to Petrohué', 'Relaxed closing walk'],
@@ -662,6 +1010,100 @@ const T = {
   },
   pt: {
     title: 'Guia da Rota Lagos e Vulcões', brand: 'Guia Lagos e Vulcões',
+    x: {
+      desc_t: 'Sobre a proposta', desc_h: 'Um guia que transforma a rota em um roteiro claro',
+      desc_q: [
+        ['Em que consiste?', 'Um guia digital em formato de página web, otimizado para celular, com roteiros montados conforme o tipo de viajante e o tempo disponível, um mapa da rota e fichas dos atrativos.'],
+        ['Onde se desenvolve?', 'Nos 6 circuitos da Rota Cênica Lagos e Vulcões, com foco especial em Frutillar, Puerto Varas, Puerto Octay, Pucón, Villarrica e Panguipulli.'],
+        ['Que necessidade busca resolver?', 'A dificuldade de planejar e se orientar em uma rota de mais de 2.000 km, com informações dispersas e sinal de internet irregular.'],
+        ['Que experiência pretende entregar?', 'Uma viagem organizada, segura e sem perda de tempo, que permita descobrir atrativos próximos e conhecer o patrimônio da região.'],
+        ['O que a diferencia?', 'Roteiros por perfil de viajante, uso offline, fichas breves com recomendações de conservação e links para os serviços locais.'],
+        ['Por que é pertinente?', 'Responde ao problema central do diagnóstico e facilita o acesso a uma oferta que já existe, mas está pouco articulada.']
+      ],
+      pub_t: 'Público-alvo', pub_h: 'Viajantes de 25 a 65 anos que planejam pelo celular',
+      seg: [
+        ['Casais e adultos jovens', '25 a 40 anos', 'Viajam com pouco tempo, buscam aventura leve, fotografia de paisagens e gastronomia local.'],
+        ['Famílias e adultos', '35 a 55 anos', 'Buscam atividades variadas, hospedagem confortável e roteiros com informação clara sobre distâncias e tempos.'],
+        ['Viajantes internacionais', 'Argentina, Brasil, EUA, Alemanha, França e Espanha', 'Precisam de informações em espanhol e inglês e dependem mais da navegação digital.']
+      ],
+      pub_info: [
+        ['Procedência', 'Nacionais da Região Metropolitana, Valparaíso e Concepción; internacionais dos países indicados.'],
+        ['Interesses', 'Natureza, fotografia de paisagens, vida ao ar livre e gastronomia do sul.'],
+        ['Motivações', 'Desconexão da cidade, conhecer lugares novos e estar em um ambiente natural e tranquilo.'],
+        ['Tipos de turismo', 'Aventura, bem-estar, cultural ou histórico e ecoturismo.'],
+        ['Necessidades', 'Boa conectividade viária e sinalização, navegação GPS ou internet, e hospedagem de todos os tipos, do camping às pousadas.'],
+        ['Hábitos', 'Planejam pelo celular, consultam mapas e avaliações, e valorizam poder consultar as informações offline.']
+      ],
+      nav_lod: 'Hospedagem', nav_food: 'Comer', nav_map: 'Mapa',
+      lod_t: 'Hospedagem', lod_h: 'Onde ficar, conforme seu orçamento e estilo',
+      f_all: 'Todos', f_camp: 'Camping', f_hostal: 'Hostel', f_hotel: 'Hotel ou cabana',
+      lod: [
+        { k: 'hotel', z: 'Puerto Varas', tp: 'Hotel ou cabana', p: '$$$', d: 'Vista para o lago e perto de restaurantes e atividades.' },
+        { k: 'hostal', z: 'Frutillar', tp: 'Hostel', p: '$$', d: 'Caminhável até o lago e o Teatro del Lago.' },
+        { k: 'camp', z: 'Puerto Octay', tp: 'Camping', p: '$', d: 'Área tranquila à beira do lago, ideal para natureza.' },
+        { k: 'hotel', z: 'Petrohué', tp: 'Cabana ou camping', p: '$$', d: 'Base para visitar o Parque Vicente Pérez Rosales.' },
+        { k: 'hostal', z: 'Pucón e Villarrica', tp: 'Hostel ou hotel', p: '$$', d: 'Base para trilhas e atividades de aventura.' },
+        { k: 'camp', z: 'Panguipulli e Lago Ranco', tp: 'Cabana ou camping', p: '$', d: 'Florestas e lagos com menos oferta: reserve com antecedência.' }
+      ],
+      lod_note: 'Exemplos de tipos de oferta por região. Preço: $ econômico, $$ intermediário, $$$ alto (referencial). Confira preço, disponibilidade e contato antes de viajar.',
+      food_t: 'Comida local', food_h: 'Sabores do sul para provar no roteiro',
+      food: [
+        { e: '🍲', n: 'Curanto em buraco', d: 'Prato tradicional com frutos do mar, carnes, batatas e milcaos cozidos no vapor sob a terra.' },
+        { e: '🥔', n: 'Milcao', d: 'Pão tradicional de batata, servido quente com manteiga ou queijo.' },
+        { e: '🍰', n: 'Kuchen', d: 'Tradição alemã da região: tortas de frutas, com creme ou farofa doce.' },
+        { e: '🐟', n: 'Salmão e truta', d: 'Peixes de lagos e rios, grelhados, assados ou defumados.' },
+        { e: '🥤', n: 'Mote com huesillo', d: 'Bebida refrescante de trigo e pêssego desidratado, típica do verão.' },
+        { e: '🍺', n: 'Cerveja artesanal', d: 'Cervejarias da região, com influência da tradição alemã.' }
+      ],
+      food_tip: 'Procure restaurantes simples, feiras e mercados locais. Confira antes os horários e a disponibilidade.',
+      srv_t: 'Serviços e transporte', srv_h: 'Como chegar e se locomover pela rota',
+      srv: [
+        ['🚌', 'Ônibus', 'De Temuco, Pucón, Valdivia, Osorno e Puerto Montt.'],
+        ['✈️', 'Aeroportos', 'Temuco, Valdivia, Osorno e Puerto Montt, com transporte local até a rota.'],
+        ['🚗', 'Carro próprio', 'Pela Ruta 5 Sur e pelas estradas da rota. Verifique as condições climáticas antes de sair.'],
+        ['🧭', 'Guias', 'Guias locais certificados para as atividades de aventura.'],
+        ['ℹ️', 'Informação turística', 'Escritórios de turismo nas cidades e pontos de informação nas entradas.'],
+        ['📶', 'Conectividade', 'Sinal fraco em trechos afastados: baixe o guia antes de sair.']
+      ],
+      acc_t: 'Acessibilidade e conectividade', acc_h: 'Barreiras identificadas e como as enfrentamos',
+      acc: [
+        ['Sinal fraco em trechos afastados', 'Mapas e fichas baixados antecipadamente, com indicação dos pontos com sinal.'],
+        ['Sinalização insuficiente', 'Códigos QR em paradas e entradas que levam à ficha do atrativo.'],
+        ['Informação em um só idioma', 'Versões em espanhol, inglês e português.'],
+        ['Tempos de deslocamento pouco claros', 'Tempo estimado entre os atrativos, conforme o meio de transporte.']
+      ],
+      cal_t: 'Qualidade e segurança', cal_h: 'O que verificar antes de cada atividade',
+      cal: [
+        'Informação prévia sobre dificuldade, clima, equipamento e horários de cada atrativo.',
+        'Avisos de segurança para atividades de montanha.',
+        'Serviços de aventura somente com prestadores inscritos no Registro Nacional de Prestadores de Serviços Turísticos (decreto nº 19).',
+        'Procure o Selo de Qualidade Turística, que reconhece os prestadores que cumprem a norma.',
+        'Guias com certificado de primeiros socorros e experiência comprovada.',
+        'Números de emergência sempre visíveis.'
+      ],
+      map_t: 'Mapa e regiões', map_h: 'Explore cada região no mapa', map_btn: 'Abrir no mapa',
+      promo_t: 'Divulgação', promo_h: 'Peça promocional',
+      poster_title: 'Sua rota, no seu bolso', poster_msg: 'Planeje a viagem aos lagos e vulcões sem se perder.',
+      promo_sub: 'Compartilhe nas suas redes', promo_ch: 'Canal: Instagram e a página do guia. Mensagem principal: planejar sem se perder.',
+      share: 'Compartilhar link', copied: 'Link copiado',
+      res_t: 'Resultados esperados', res_h: 'Como saberemos que funciona',
+      res: [
+        ['Downloads', 'Número de downloads do guia.'],
+        ['Atrativos menos conhecidos', 'Visitas às fichas de lugares pouco conhecidos.'],
+        ['Opinião dos viajantes', 'Avaliação dos usuários ao final da viagem.']
+      ],
+      viab: 'Viabilidade: não exige infraestrutura física nem grandes investimentos. Mantém-se com revisão anual das informações, um responsável pelo conteúdo e parcerias com municípios e prestadores que divulgam o guia.',
+      src_t: 'Fontes',
+      src: [
+        'Chile Travel (2026). Ruta Lagos y Volcanes. Serviço Nacional de Turismo.',
+        'Chile Travel (2024). Ruta Lagos y Volcanes, um circuito turístico cheio de aventura.',
+        'Ruta Lagos y Volcanes (s. d.). Ruta Escénica Lagos y Volcanes.',
+        'Programa Ruta Escénica Lagos y Volcanes (2021). Guia de aventuras.',
+        'Prefeitura de Frutillar. Turismo.',
+        'Chile Travel (2026). Puerto Varas y Frutillar.',
+        'Decreto nº 19, Ministério da Economia, Fomento e Turismo.'
+      ]
+    },
     nav_plan: 'Planeje', nav_spots: 'Destaques', nav_care: 'Cuidado', nav_dl: 'Baixar',
     hero_kicker: 'Guia digital · Sul do Chile', hero_t1: 'Rota dos Lagos e Vulcões', hero_t2: 'no seu bolso',
     hero_sub: 'Seu roteiro organizado pelo seu estilo de viagem e pelo seu tempo, com informações que você pode consultar mesmo sem sinal.',
@@ -702,7 +1144,9 @@ const T = {
       iglesia: { n: 'Igreja do Sagrado Coração', t: 'Patrimônio', d: 'Arquitetura dos colonos alemães em Puerto Varas. Monumento histórico desde 1992.' },
       teatro: { n: 'Teatro del Lago', t: 'Cultura contemporânea', d: 'Espaço cultural à beira do lago, com concertos, arte e música.' },
       pewenche: { n: 'Rotas Ancestrais Pewenche', t: 'Cultura', d: 'Conhecimento do território e das tradições pewenche na Araucânia Andina.' },
-      termas: { n: 'Termas e spa', t: 'Bem-estar', d: 'Águas termais naturais da zona vulcânica, com circuitos de descanso.' }
+      termas: { n: 'Termas e spa', t: 'Bem-estar', d: 'Águas termais naturais da zona vulcânica, com circuitos de descanso.' },
+      templo: { n: 'Igreja Luterana (Puerto Varas)', t: 'Patrimônio', d: 'Igreja de madeira da década de 1920 que une a arquitetura europeia à carpintaria dos colonos alemães.' },
+      ferias: { n: 'Feiras artesanais', t: 'Comércio local', d: 'Produtos feitos à mão e artigos da identidade local. Compra direta dos artesãos.' }
     },
     stops: {
       naturaleza: ['Caminhada à beira do lago', 'Mirante para o vulcão', 'Trilha na floresta nativa', 'Excursão a Petrohué', 'Caminhada tranquila de encerramento'],
@@ -726,7 +1170,9 @@ const LUGARES = {
   iglesia:   { scene: 'church',  p: ['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id: 'I1' },
   teatro:    { scene: 'theater', p: ['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id: 'T1' },
   pewenche:  { scene: 'ruka',    p: ['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id: 'R1' },
-  termas:    { scene: 'steam',   p: ['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id: 'S1' }
+  termas:    { scene: 'steam',   p: ['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id: 'S1' },
+  templo:    { scene: 'church',  p: ['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id: 'TL1' },
+  ferias:    { scene: 'house',   p: ['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id: 'FE1' }
 };
 const PERFILES = {
   aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
@@ -1025,6 +1471,167 @@ topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smoo
    ========================================================= */
 $$('.rv').forEach(n => io.observe(n));
 applyStatic();
+/* =========================================================
+   SECCIONES NUEVAS: descripción, público, alojamiento, comida,
+   servicios, accesibilidad, calidad, mapa, promoción, resultados, fuentes
+   ========================================================= */
+let lodFiltro = 'all';
+function renderExtras() {
+  const X = T[lang].x;
+  const set = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
+  const fill = (id, arr, fn) => { const n = document.getElementById(id); if (!n) return; n.innerHTML = ''; arr.forEach((v, i) => n.appendChild(fn(v, i))); };
+
+  // Textos de navegación
+  $$('nav.sections a[href="#alojamiento"]').forEach(a => a.textContent = X.nav_lod);
+  $$('nav.sections a[href="#comida"]').forEach(a => a.textContent = X.nav_food);
+  $$('nav.sections a[href="#mapa"]').forEach(a => a.textContent = X.nav_map);
+
+  // Descripción
+  set('x-desc-t', X.desc_t); set('x-desc-h', X.desc_h);
+  fill('x-desc-list', X.desc_q, ([q, a], i) => {
+    const d = el('details', 'qa'); if (i === 0) d.open = true;
+    const s = el('summary', '', q); d.appendChild(s); d.appendChild(el('p', '', a));
+    return d;
+  });
+
+  // Alojamiento
+  set('x-lod-t', X.lod_t); set('x-lod-h', X.lod_h); set('x-lod-note', X.lod_note);
+  const filtros = [['all', X.f_all], ['camp', X.f_camp], ['hostal', X.f_hostal], ['hotel', X.f_hotel]];
+  fill('x-lod-filters', filtros, ([k, label]) => {
+    const b = el('button', '', label); b.setAttribute('aria-pressed', String(lodFiltro === k));
+    b.addEventListener('click', () => { lodFiltro = k; renderLod(); });
+    return b;
+  });
+  renderLod();
+
+  // Comida
+  set('x-food-t', X.food_t); set('x-food-h', X.food_h); set('x-food-tip', X.food_tip);
+  fill('x-food-grid', X.food, f => {
+    const c = el('div', 'card-x food-card'); c.appendChild(el('span', 'big', f.e));
+    c.appendChild(el('h4', '', f.n)); c.appendChild(el('p', '', f.d)); return c;
+  });
+
+  // Servicios
+  set('x-srv-t', X.srv_t); set('x-srv-h', X.srv_h);
+  fill('x-srv-grid', X.srv, ([i, h, d]) => {
+    const c = el('div', 'card-x'); c.appendChild(el('span', 'ico', i));
+    c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d)); return c;
+  });
+
+  // Accesibilidad
+  set('x-acc-t', X.acc_t); set('x-acc-h', X.acc_h);
+  fill('x-acc-grid', X.acc, ([h, d]) => {
+    const c = el('div', 'card-x'); c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d)); return c;
+  });
+
+  // Calidad
+  set('x-cal-t', X.cal_t); set('x-cal-h', X.cal_h);
+  fill('x-cal-list', X.cal, txt => el('li', '', txt));
+
+  // Mapa con Google Maps incrustado
+  set('x-map-t', X.map_t); set('x-map-h', X.map_h);
+  const zonas = ['Frutillar', 'Puerto Varas', 'Puerto Octay', 'Petrohué', 'Pucón', 'Villarrica', 'Panguipulli', 'Lago Ranco'];
+  const frame = document.getElementById('x-map-frame');
+  if (!frame.dataset.zona) frame.dataset.zona = 'Frutillar';
+  fill('x-map-grid', zonas, z => {
+    const b = el('button', '', z);
+    b.setAttribute('aria-pressed', String(frame.dataset.zona === z));
+    b.addEventListener('click', () => { frame.dataset.zona = z; renderMapa(); renderExtras(); });
+    return b;
+  });
+  renderMapa();
+  const open = document.getElementById('x-map-open');
+  open.textContent = X.map_btn + ' →';
+  open.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(frame.dataset.zona + ', Chile');
+
+  // Promoción
+  set('x-promo-t', X.promo_t); set('x-promo-h', X.promo_h);
+  set('x-poster-title', X.poster_title); set('x-poster-msg', X.poster_msg);
+  set('x-promo-sub', X.promo_sub); set('x-promo-ch', X.promo_ch);
+  const shareBtn = $('#share'); shareBtn.textContent = X.share;
+  const art = $('#x-poster-art'); art.innerHTML = scene('lake', LUGARES.lago.p, 'PO1');
+  art.querySelector('svg').style.height = '100%';
+
+  // Resultados
+  set('x-res-t', X.res_t); set('x-res-h', X.res_h); set('x-viab', X.viab);
+  fill('x-res-grid', X.res, ([h, d]) => {
+    const c = el('div', 'card-x'); c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d)); return c;
+  });
+
+  // Fuentes
+  set('x-src-t', X.src_t);
+  fill('x-src', X.src, s => el('li', '', s));
+}
+
+function renderMapa() {
+  const f = document.getElementById('x-map-frame');
+  if (!f) return;
+  const zona = f.dataset.zona || 'Frutillar';
+  f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&output=embed';
+  const fb = document.getElementById('x-map-fallback');
+  if (fb) fb.textContent = 'Cargando mapa de ' + zona + '…';
+}
+
+function renderLod() {
+  const X = T[lang].x;
+  const lista = X.lod.filter(x => lodFiltro === 'all' || x.k === lodFiltro);
+  $$('#x-lod-filters button').forEach((b, i) => {
+    const k = ['all', 'camp', 'hostal', 'hotel'][i];
+    b.setAttribute('aria-pressed', String(lodFiltro === k));
+  });
+  const g = $('#x-lod-grid'); g.innerHTML = '';
+  lista.forEach(x => {
+    const c = el('div', 'card-x');
+    c.appendChild(el('span', 'age', x.tp));
+    const h = el('h4', '', x.z); h.appendChild(el('span', 'tier', x.p)); c.appendChild(h);
+    c.appendChild(el('p', '', x.d));
+    g.appendChild(c);
+  });
+}
+
+// Compartir el enlace de la guía
+$('#share').addEventListener('click', async () => {
+  const data = { title: document.title, text: T[lang].x.promo_ch, url: location.href };
+  try {
+    if (navigator.share) { await navigator.share(data); }
+    else { await navigator.clipboard.writeText(location.href); toast(T[lang].x.copied); }
+  } catch (e) {}
+});
+
+// Reemplaza applyStatic para que también actualice las secciones nuevas
+const _applyStaticBase = applyStatic;
+applyStatic = function () { _applyStaticBase(); renderExtras(); splitHero(); };
+renderExtras();
+splitHero();
+
+function splitHero() {
+  let i = 0;
+  document.querySelectorAll('.hero-title .ln').forEach(ln => {
+    const txt = ln.textContent;
+    ln.setAttribute('aria-label', txt);
+    ln.innerHTML = '';
+    txt.split(' ').forEach((word, wi, arr) => {
+      const w = document.createElement('span');
+      w.className = 'w';
+      [...word].forEach(ch => {
+        const c = document.createElement('span');
+        c.className = 'char';
+        c.style.setProperty('--d', (i * 40) + 'ms');
+        c.textContent = ch;
+        w.appendChild(c);
+        i++;
+      });
+      ln.appendChild(w);
+      if (wi < arr.length - 1) { ln.appendChild(document.createTextNode(' ')); i++; }
+    });
+    i += 4;
+  });
+}
+
+
+// Revelado de las secciones nuevas
+$$('section .rv, .qa').forEach(n => io.observe(n));
+
 irA(0);
 </script>
 </body>
