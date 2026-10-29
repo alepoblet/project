@@ -479,6 +479,9 @@
   .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--ink-2); font-weight: 600; z-index: 0; }
   .map-open { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: var(--lake-dark); color: #fff !important; padding: .8rem 1.3rem; border-radius: 999px; font-weight: 800; transition: transform .4s var(--spring), box-shadow .4s; }
   .map-open:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -12px rgba(18,63,82,.6); }
+  .links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .links a { font-size: .8rem; font-weight: 700; color: var(--lake); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: .35rem .8rem; transition: background .3s, transform .3s var(--spring); }
+  .links a:hover { background: var(--soft); transform: translateY(-1px); }
 </style>
 </head>
 <body>
@@ -741,6 +744,10 @@ const T = {
         ['Hábitos', 'Planifican desde el celular, consultan mapas y reseñas, y valoran poder revisar la información sin conexión.']
       ],
       nav_lod: 'Dormir', nav_food: 'Comer', nav_map: 'Mapa',
+      lk_maps: 'Ver en Google Maps', lk_book: 'Ver en Booking', lk_air: 'Ver en Airbnb', lk_food: 'Dónde comer en Google Maps',
+      car_n: 'Arriendo de vehículos', car_d: 'Autos y camionetas para recorrer la ruta a tu ritmo.',
+      bike_n: 'Bicicletas y kayak', bike_d: 'Arriendo para recorrer costas de lagos y senderos, con equipamiento.',
+      cab_t: 'Cabañas y arriendo', cab_d: 'Opciones para estadías en familia o en pareja, con vista a lagos y bosques.', rent_lk: 'Buscar arriendos en Google Maps',
       lod_t: 'Alojamiento', lod_h: 'Dónde dormir, según tu presupuesto y tu estilo',
       f_all: 'Todos', f_camp: 'Camping', f_hostal: 'Hostal', f_hotel: 'Hotel o cabaña',
       lod: [
@@ -888,6 +895,10 @@ const T = {
         ['Habits', 'They plan from their phone, check maps and reviews, and value being able to review information offline.']
       ],
       nav_lod: 'Stay', nav_food: 'Eat', nav_map: 'Map',
+      lk_maps: 'See on Google Maps', lk_book: 'See on Booking', lk_air: 'See on Airbnb', lk_food: 'Where to eat on Google Maps',
+      car_n: 'Car rental', car_d: 'Cars and vans to explore the route at your own pace.',
+      bike_n: 'Bikes and kayaks', bike_d: 'Rental for exploring lakeshores and trails, with equipment.',
+      cab_t: 'Cabins and rentals', cab_d: 'Options for family or couple stays with lake and forest views.', rent_lk: 'Find rentals on Google Maps',
       lod_t: 'Accommodation', lod_h: 'Where to stay, by budget and style',
       f_all: 'All', f_camp: 'Camping', f_hostal: 'Hostel', f_hotel: 'Hotel or cabin',
       lod: [
@@ -1035,6 +1046,10 @@ const T = {
         ['Hábitos', 'Planejam pelo celular, consultam mapas e avaliações, e valorizam poder consultar as informações offline.']
       ],
       nav_lod: 'Hospedagem', nav_food: 'Comer', nav_map: 'Mapa',
+      lk_maps: 'Ver no Google Maps', lk_book: 'Ver no Booking', lk_air: 'Ver no Airbnb', lk_food: 'Onde comer no Google Maps',
+      car_n: 'Aluguel de veículos', car_d: 'Carros e vans para percorrer a rota no seu ritmo.',
+      bike_n: 'Bicicletas e caiaques', bike_d: 'Aluguel para explorar margens de lagos e trilhas, com equipamento.',
+      cab_t: 'Cabanas e aluguéis', cab_d: 'Opções para estadias em família ou em casal, com vista para lagos e florestas.', rent_lk: 'Buscar aluguéis no Google Maps',
       lod_t: 'Hospedagem', lod_h: 'Onde ficar, conforme seu orçamento e estilo',
       f_all: 'Todos', f_camp: 'Camping', f_hostal: 'Hostel', f_hotel: 'Hotel ou cabana',
       lod: [
@@ -1508,7 +1523,8 @@ function renderExtras() {
   set('x-food-t', X.food_t); set('x-food-h', X.food_h); set('x-food-tip', X.food_tip);
   fill('x-food-grid', X.food, f => {
     const c = el('div', 'card-x food-card'); c.appendChild(el('span', 'big', f.e));
-    c.appendChild(el('h4', '', f.n)); c.appendChild(el('p', '', f.d)); return c;
+    c.appendChild(el('h4', '', f.n)); c.appendChild(el('p', '', f.d));
+    c.appendChild(linksBox([[X.lk_food, gmaps(f.n + ' Chile')]])); return c;
   });
 
   // Servicios
@@ -1516,6 +1532,19 @@ function renderExtras() {
   fill('x-srv-grid', X.srv, ([i, h, d]) => {
     const c = el('div', 'card-x'); c.appendChild(el('span', 'ico', i));
     c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d)); return c;
+  });
+
+  // Arriendos (vehículos, bicicletas y kayak)
+  const arriendos = [
+    ['🚙', X.car_n, X.car_d, gmaps('arriendo de autos Puerto Varas Chile')],
+    ['🚲', X.bike_n, X.bike_d, gmaps('arriendo de bicicletas Frutillar Chile')],
+    ['🏡', X.cab_t, X.cab_d, gmaps('cabañas Puerto Varas Chile')]
+  ];
+  arriendos.forEach(([i, h, d, url]) => {
+    const c = el('div', 'card-x'); c.appendChild(el('span', 'ico', i));
+    c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d));
+    c.appendChild(linksBox([[X.rent_lk, url]]));
+    $('#x-srv-grid').appendChild(c);
   });
 
   // Accesibilidad
@@ -1563,13 +1592,22 @@ function renderExtras() {
   fill('x-src', X.src, s => el('li', '', s));
 }
 
+function gmaps(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
+function linksBox(items) {
+  const box = el('div', 'links');
+  items.forEach(([label, url]) => {
+    const a = el('a', '', label + ' ↗'); a.href = url; a.target = '_blank'; a.rel = 'noopener';
+    box.appendChild(a);
+  });
+  return box;
+}
+
 function renderMapa() {
   const f = document.getElementById('x-map-frame');
   if (!f) return;
   const zona = f.dataset.zona || 'Frutillar';
+  f.onload = () => { const fb = document.getElementById('x-map-fallback'); if (fb) fb.style.display = 'none'; };
   f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&output=embed';
-  const fb = document.getElementById('x-map-fallback');
-  if (fb) fb.textContent = 'Cargando mapa de ' + zona + '…';
 }
 
 function renderLod() {
@@ -1585,6 +1623,12 @@ function renderLod() {
     c.appendChild(el('span', 'age', x.tp));
     const h = el('h4', '', x.z); h.appendChild(el('span', 'tier', x.p)); c.appendChild(h);
     c.appendChild(el('p', '', x.d));
+    const zona = x.z.split(' y ')[0];
+    c.appendChild(linksBox([
+      [X.lk_maps, gmaps('alojamiento ' + x.z + ' Chile')],
+      [X.lk_book, 'https://www.booking.com/searchresults.html?ss=' + encodeURIComponent(zona + ', Chile')],
+      [X.lk_air, 'https://www.airbnb.com/s/' + encodeURIComponent(zona.replace(/ /g, '-')) + '--Chile/homes']
+    ]));
     g.appendChild(c);
   });
 }
