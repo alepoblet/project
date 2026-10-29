@@ -1,0 +1,20 @@
+{
+  "name": "Guía Ruta Lagos y Volcanes",
+  "short_name": "Guía Lagos",
+  "description": "Guía digital de la Ruta Lagos y Volcanes, con uso sin conexión.",
+  "lang": "es",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f8fb",
+  "theme_color": "#0c1f2b",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230c1f2b'/><text x='50' y='68' font-size='56' text-anchor='middle'>🌋</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
