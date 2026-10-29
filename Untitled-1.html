@@ -3,565 +3,1029 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ruta Lagos y Volcanes en Bolsillo</title>
+<meta name="theme-color" content="#123f52">
+<meta name="description" content="Guía digital de la Ruta Lagos y Volcanes: arma tu recorrido y úsalo sin conexión.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌋</text></svg>">
+<title>Guía Ruta Lagos y Volcanes</title>
 <style>
   :root {
-    --bg: #f4f7f2; --surface: #ffffff; --text: #1e2d2a; --muted: #5d6f69;
-    --lake: #1f6f8b; --lake-dark: #123f52; --forest: #2f6b4f; --ember: #e0803f;
-    --soft: #e6f0f3; --border: #d7e3e0; --shadow: 0 12px 34px rgba(18, 63, 82, .14);
-    color-scheme: light;
+    --ink: #0d2a36; --ink-2: #2b4a57; --mute: #5b7480; --white: #ffffff; --bg: #f4f8f7;
+    --line: rgba(13,42,54,.09);
+    --lake: #1f6f8b; --lake-dark: #123f52; --forest: #2f6b4f; --teal: #2e9c93;
+    --ember: #e8804a; --coral: #ff7a59; --soft: #e6f0f3;
+    --grad: linear-gradient(120deg, #1f6f8b 0%, #2e9c93 100%);
+    --shadow: 0 26px 50px -24px rgba(18,63,82,.42);
+    --ease: cubic-bezier(.22,.8,.24,1);
+    --spring: cubic-bezier(.34,1.56,.64,1);
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0f1b1d; --surface: #172629; --text: #e4efec; --muted: #9bb3ad;
-      --lake: #6fc3de; --lake-dark: #d8f1f9; --forest: #8fd1ad; --ember: #f0a06a;
-      --soft: #1d3436; --border: #2a4245; --shadow: 0 12px 34px rgba(0, 0, 0, .4);
-      color-scheme: dark;
-    }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
   body {
-    margin: 0; font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-    background: var(--bg); color: var(--text); line-height: 1.55; overflow-x: hidden;
-    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+    margin: 0; font-family: "Inter", "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: var(--ink);
+    background: var(--bg); line-height: 1.6; overflow-x: clip; -webkit-font-smoothing: antialiased;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
+  h1, h2, h3, h4 { margin: 0; line-height: 1.12; letter-spacing: -.025em; }
+  p { margin: 0 0 .7rem; }
+  svg { display: block; max-width: 100%; }
+  button { font: inherit; }
+  :focus-visible { outline: 3px solid var(--lake); outline-offset: 3px; border-radius: 12px; }
+
+  /* ---------- VIDRIO LÍQUIDO (reutilizable) ---------- */
+  .lg {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255,255,255,.66) 0%, rgba(255,255,255,.3) 55%, rgba(255,255,255,.5) 100%);
+    backdrop-filter: blur(18px) saturate(190%) brightness(1.04);
+    -webkit-backdrop-filter: blur(18px) saturate(190%) brightness(1.04);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.35), inset 0 0 22px rgba(255,255,255,.35),
+      0 14px 34px -12px rgba(18,63,82,.35), 0 2px 6px rgba(18,63,82,.08);
+  }
+  .lg::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.2px; pointer-events: none;
+    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.15) 40%, rgba(255,255,255,.7) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+  }
+  .lg-sheen::after {
+    content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; pointer-events: none; border-radius: inherit;
+    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,.55) 50%, transparent 100%);
+    animation: glassSheen 7s ease-in-out infinite;
+  }
+  @keyframes glassSheen { 0%,35% { left: -60%; } 75%,100% { left: 130%; } }
+
+  /* ---------- ENCABEZADO FIJO ---------- */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 70;
+    padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 0; transition: transform .6s var(--ease);
+  }
+  .topbar.hide { transform: translateY(-140%); }
+  .topbar-inner {
+    max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: .4rem .45rem .4rem .8rem; border-radius: 999px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: .95rem; color: var(--lake-dark); text-decoration: none; }
+  .brand .logo {
+    width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 1.05rem;
+    background: var(--grad); box-shadow: 0 8px 18px -8px var(--lake);
+  }
+  .lang { position: relative; }
+  .lang-btn {
+    display: flex; align-items: center; gap: 8px; border: none; cursor: pointer; color: var(--lake-dark); font-weight: 700; font-size: .86rem;
+    padding: .55rem .95rem; border-radius: 999px; transition: transform .35s var(--spring), box-shadow .3s;
+  }
+  .lang-btn:hover { transform: translateY(-1px); }
+  .lang-btn .chev { font-size: .6rem; transition: transform .45s var(--ease); }
+  .lang.open .lang-btn .chev { transform: rotate(180deg); }
+  .lang-menu {
+    position: absolute; right: 0; top: calc(100% + 10px); min-width: 190px; list-style: none; margin: 0; padding: 6px;
+    background: rgba(255,255,255,.96); border-radius: 18px; box-shadow: var(--shadow); border: 1px solid var(--line);
+    opacity: 0; transform: translateY(-10px) scale(.96); transform-origin: top right; pointer-events: none;
+    transition: opacity .3s var(--ease), transform .45s var(--spring);
+  }
+  .lang.open .lang-menu { opacity: 1; transform: none; pointer-events: auto; }
+  .lang-menu button {
+    width: 100%; text-align: left; border: none; background: none; padding: .65rem .85rem; border-radius: 12px; cursor: pointer;
+    font-size: .92rem; color: var(--ink); display: flex; justify-content: space-between; align-items: center; transition: background .2s;
+  }
+  .lang-menu button:hover { background: var(--soft); }
+  .lang-menu button[aria-selected="true"] { color: var(--lake); font-weight: 800; }
 
   /* ---------- HERO ---------- */
   .hero {
-    position: relative; overflow: hidden; color: #fff; text-align: center;
-    padding: 4rem 1.25rem 5rem;
+    position: relative; min-height: 100svh; overflow: hidden; color: #fff;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    padding: 7rem 1.25rem 9rem;
     background: linear-gradient(-45deg, #0d3346, #1f6f8b, #3e9a8a, #123f52);
-    background-size: 300% 300%;
-    animation: gradientShift 14s ease infinite;
+    background-size: 300% 300%; animation: gradientShift 14s ease infinite;
   }
   @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
   .sun {
-    position: absolute; top: 14%; right: 12%; width: 90px; height: 90px; border-radius: 50%;
+    position: absolute; top: 16%; right: 14%; width: 96px; height: 96px; border-radius: 50%;
     background: radial-gradient(circle, #ffd58a 0%, #f0a050 60%, rgba(240,160,80,0) 72%);
-    filter: blur(1px); animation: pulse 6s ease-in-out infinite;
+    animation: pulse 6s ease-in-out infinite;
   }
   @keyframes pulse { 0%,100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.12); opacity: 1; } }
-
   .cloud {
-    position: absolute; background: rgba(255,255,255,.18); border-radius: 100px; height: 26px; width: 120px;
-    animation: drift linear infinite;
+    position: absolute; background: rgba(255,255,255,.18); border-radius: 100px; height: 26px; width: 120px; animation: drift linear infinite;
   }
   .cloud::before, .cloud::after { content: ""; position: absolute; background: inherit; border-radius: 50%; }
   .cloud::before { width: 50px; height: 50px; top: -22px; left: 18px; }
   .cloud::after { width: 70px; height: 70px; top: -36px; left: 50px; }
-  .cloud.c1 { top: 18%; left: -160px; animation-duration: 40s; }
-  .cloud.c2 { top: 42%; left: -220px; animation-duration: 55s; transform: scale(.7); }
-  .cloud.c3 { top: 8%; left: -260px; animation-duration: 70s; transform: scale(1.3); }
-  @keyframes drift { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 400px)); } }
-
-  .hero .kicker {
-    position: relative; display: inline-block; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
-    background: rgba(255,255,255,.16); padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1rem;
-    animation: fadeUp .8s ease both;
+  .cloud.c1 { top: 22%; left: -160px; animation-duration: 40s; }
+  .cloud.c2 { top: 46%; left: -220px; animation-duration: 58s; transform: scale(.7); }
+  .cloud.c3 { top: 12%; left: -260px; animation-duration: 72s; transform: scale(1.3); }
+  @keyframes drift { to { transform: translateX(calc(100vw + 400px)); } }
+  .hero-inner { position: relative; z-index: 2; max-width: 980px; width: 100%; }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 8px; font-size: .74rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.22); padding: .42rem .95rem; border-radius: 999px; margin-bottom: 1.2rem;
+    backdrop-filter: blur(6px); opacity: 0; animation: rise .9s var(--ease) .1s forwards;
   }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #7ff0e0; animation: live 2s infinite; }
+  @keyframes live { 0% { box-shadow: 0 0 0 0 rgba(127,240,224,.6); } 100% { box-shadow: 0 0 0 10px rgba(127,240,224,0); } }
   .hero h1 {
-    position: relative; margin: 0 0 .6rem; font-size: clamp(2.1rem, 6.5vw, 3.6rem); line-height: 1.08; font-weight: 800;
-    animation: fadeUp .9s .15s ease both;
+    font-size: clamp(2.6rem, 8vw, 5.4rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.02;
+    text-shadow: 0 6px 30px rgba(0,0,0,.18); opacity: 0; animation: rise 1s var(--ease) .25s forwards;
   }
   .hero h1 .shine {
-    background: linear-gradient(90deg, #fff, #ffd58a, #fff); background-size: 200% auto;
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: shine 4s linear infinite;
+    display: inline-block; background: linear-gradient(90deg, #fff, #ffd58a, #fff); background-size: 200% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 4s linear infinite;
   }
   @keyframes shine { to { background-position: 200% center; } }
-  .hero p { position: relative; margin: 0 auto; max-width: 36rem; font-size: 1.08rem; opacity: 0; animation: fadeUp .9s .3s ease forwards; }
-
-  .stats { position: relative; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
-  .stats div {
-    background: rgba(255,255,255,.14); backdrop-filter: blur(6px); padding: .7rem 1.1rem; border-radius: 16px; min-width: 104px;
-    border: 1px solid rgba(255,255,255,.22); opacity: 0; animation: fadeUp .7s ease forwards;
+  .hero .sub { font-size: clamp(1rem, 2.3vw, 1.2rem); max-width: 36rem; margin: 1.1rem auto 2rem; opacity: 0; animation: rise 1s var(--ease) .4s forwards; color: #e3f1f4; }
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  .cta {
+    position: relative; display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; cursor: pointer; border: none;
+    padding: 1.05rem 1.9rem; border-radius: 999px; color: var(--lake-dark); font-weight: 800; font-size: 1rem; background: #fff;
+    box-shadow: 0 16px 34px -12px rgba(0,0,0,.45); opacity: 0; animation: rise 1s var(--ease) .55s forwards;
+    transition: transform .45s var(--spring), box-shadow .45s var(--ease);
   }
-  .stats div:nth-child(1) { animation-delay: .5s; }
-  .stats div:nth-child(2) { animation-delay: .65s; }
-  .stats div:nth-child(3) { animation-delay: .8s; }
-  .stats strong { display: block; font-size: 1.5rem; }
-  .stats span { font-size: .8rem; opacity: .9; }
-
-  /* Ondas en la base del hero */
-  .waves { position: absolute; left: 0; bottom: -1px; width: 200%; height: 90px; }
-  .waves use { animation: wave 14s linear infinite; }
-  .waves use:nth-child(2) { animation-duration: 9s; animation-direction: reverse; }
-  .waves use:nth-child(3) { animation-duration: 20s; }
+  .cta::before {
+    content: ""; position: absolute; inset: -6px; border-radius: 999px; border: 2px solid #7ff0e0; opacity: 0; animation: ring 2.4s var(--ease) infinite;
+  }
+  @keyframes ring { 0% { transform: scale(.92); opacity: .8; } 100% { transform: scale(1.28); opacity: 0; } }
+  .cta:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 24px 44px -14px rgba(0,0,0,.5); }
+  .cta:active { transform: scale(.97); }
+  .cta .arr { transition: transform .4s var(--ease); }
+  .cta:hover .arr { transform: translateX(5px); }
+  .stats { position: relative; z-index: 2; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.4rem; }
+  .stats div {
+    min-width: 116px; padding: .75rem 1.1rem; border-radius: 18px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.24);
+    backdrop-filter: blur(8px); opacity: 0; animation: rise .8s var(--ease) forwards;
+  }
+  .stats div:nth-child(1) { animation-delay: .7s; }
+  .stats div:nth-child(2) { animation-delay: .82s; }
+  .stats div:nth-child(3) { animation-delay: .94s; }
+  .stats strong { display: block; font-size: 1.6rem; font-weight: 800; }
+  .stats span { font-size: .78rem; opacity: .92; }
+  .waves { position: absolute; left: 0; bottom: -1px; width: 200%; height: 90px; z-index: 1; }
+  .waves use:nth-child(1) { animation: wave 14s linear infinite; }
+  .waves use:nth-child(2) { animation: wave 9s linear infinite reverse; }
+  .waves use:nth-child(3) { animation: wave 20s linear infinite; }
   @keyframes wave { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  /* ---------- BARRA DE SECCIONES (vidrio líquido) ---------- */
+  .sections-wrap { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 74px); z-index: 60; display: flex; justify-content: center; padding: 0 12px; margin-top: 14px; pointer-events: none; }
+  nav.sections {
+    pointer-events: auto; display: flex; gap: .25rem; max-width: 100%; overflow-x: auto; scrollbar-width: none;
+    padding: .38rem; border-radius: 999px;
+  }
+  nav.sections::-webkit-scrollbar { display: none; }
+  nav.sections a {
+    position: relative; z-index: 1; white-space: nowrap; text-decoration: none; color: var(--lake-dark); font-weight: 700; font-size: .9rem;
+    padding: .5rem 1rem; border-radius: 999px; transition: background .4s var(--ease), color .4s, transform .4s var(--spring), box-shadow .4s;
+  }
+  nav.sections a:hover { background: rgba(255,255,255,.6); color: var(--lake); transform: translateY(-1px); box-shadow: inset 0 1px 0 #fff, 0 4px 12px -6px rgba(18,63,82,.3); }
+  nav.sections a.active { background: linear-gradient(135deg, #1f6f8b, #2e9c93); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 18px -8px rgba(18,63,82,.55); }
+  @media (prefers-reduced-motion: reduce) { nav.sections a:hover { transform: none; } }
 
-  /* ---------- NAV ---------- */
-  nav {
-    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
-    background: color-mix(in srgb, var(--surface) 88%, transparent);
-    backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
-    display: flex; gap: .3rem; overflow-x: auto; padding: .55rem .75rem; scrollbar-width: none;
-  }
-  nav::-webkit-scrollbar { display: none; }
-  nav a {
-    color: var(--lake); text-decoration: none; padding: .45rem .9rem; border-radius: 999px;
-    white-space: nowrap; font-size: .9rem; font-weight: 600; transition: background .2s, color .2s;
-  }
-  nav a:hover, nav a:focus-visible { background: var(--soft); color: var(--lake-dark); }
-  nav a.active { background: var(--lake); color: #fff; }
+  /* ---------- SECCIONES ---------- */
+  .page { max-width: 1120px; margin: 0 auto; padding: 0 18px; }
+  section { position: relative; padding: 70px 0 30px; scroll-margin-top: 150px; }
+  .eyebrow { font-size: .74rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--lake); display: inline-flex; align-items: center; gap: .5rem; }
+  .eyebrow::before { content: ""; width: 24px; height: 2px; border-radius: 2px; background: var(--grad); }
+  .sec-title h2 { font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 800; margin: .75rem 0 .6rem; }
+  .sec-title p { color: var(--mute); max-width: 38rem; }
+  .rv { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
 
-  /* ---------- LAYOUT ---------- */
-  main { max-width: 980px; margin: -3rem auto 0; padding: 0 1.1rem 2rem; position: relative; }
-  section {
-    background: var(--surface); border-radius: 24px; padding: 1.7rem; margin-bottom: 1.4rem;
-    box-shadow: var(--shadow); border: 1px solid var(--border);
-    opacity: 0; transform: translateY(30px);
-    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1);
+  /* ---------- PLANIFICADOR ---------- */
+  .planner { margin-top: 2.2rem; background: var(--white); border-radius: 32px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--line); }
+  .progress { height: 6px; background: #e3edf0; position: relative; }
+  .progress i { position: absolute; left: 0; top: 0; bottom: 0; width: 33.3%; background: var(--grad); transition: width .8s var(--ease); border-radius: 0 6px 6px 0; }
+  .steps { display: flex; justify-content: space-between; padding: 18px 24px 0; font-size: .8rem; font-weight: 800; color: #9bb0b9; }
+  .steps span { transition: color .4s; }
+  .steps span.on { color: var(--lake); }
+  .viewport { position: relative; overflow: hidden; min-height: 460px; }
+  .slide {
+    position: absolute; inset: 0; padding: 26px 24px 110px; overflow-y: auto;
+    transform: translateX(100%); opacity: 0; transition: transform .8s var(--ease), opacity .6s var(--ease); pointer-events: none;
   }
-  section.visible { opacity: 1; transform: translateY(0); }
+  .slide.left { transform: translateX(-100%); }
+  .slide.active { transform: none; opacity: 1; pointer-events: auto; }
+  .slide h3 { font-size: 1.7rem; font-weight: 800; margin-bottom: .35rem; }
+  .slide > p.hint { color: var(--mute); margin-bottom: 1.4rem; }
 
-  .sec-head { display: flex; align-items: center; gap: .8rem; margin-bottom: .7rem; }
-  .sec-icon {
-    width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center;
-    background: linear-gradient(135deg, var(--soft), var(--bg)); font-size: 1.4rem; flex-shrink: 0;
-    box-shadow: inset 0 0 0 1px var(--border);
-    animation: float 4s ease-in-out infinite;
+  .styles { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 14px; perspective: 900px; }
+  .style-card {
+    position: relative; border: 1px solid var(--line); background: #fbfdfd; border-radius: 24px; padding: 20px 18px; cursor: pointer; text-align: left;
+    transform-style: preserve-3d; will-change: transform; transition: transform .3s var(--ease), box-shadow .5s var(--ease), background .4s, color .4s;
+    animation: floaty 6s ease-in-out infinite;
   }
-  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-  h2 { margin: 0; color: var(--lake-dark); font-size: 1.5rem; }
-  h3 { margin: 0 0 .25rem; font-size: 1.05rem; color: var(--lake-dark); }
-  p { margin: 0 0 .75rem; }
-  .muted { color: var(--muted); font-size: .93rem; }
-  .label { font-size: .78rem; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 1.2rem 0 .6rem; font-weight: 700; }
+  .style-card:nth-child(2) { animation-delay: -1.5s; }
+  .style-card:nth-child(3) { animation-delay: -3s; }
+  .style-card:nth-child(4) { animation-delay: -4.5s; }
+  @keyframes floaty { 0%,100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+  .style-card:hover { box-shadow: 0 22px 40px -22px rgba(18,63,82,.45); }
+  .style-card .emo { font-size: 2.3rem; display: inline-block; transform: translateZ(30px); transition: transform .5s var(--spring); }
+  .style-card h4 { font-size: 1.15rem; margin: .8rem 0 .2rem; font-weight: 800; transform: translateZ(20px); }
+  .style-card small { color: var(--mute); transform: translateZ(10px); display: block; font-size: .85rem; }
+  .style-card[aria-pressed="true"] { background: var(--lake-dark); color: #fff; box-shadow: 0 24px 44px -20px rgba(18,63,82,.8); animation: none; }
+  .style-card[aria-pressed="true"] small { color: #b7d6de; }
+  .style-card[aria-pressed="true"] .emo { transform: translateZ(30px) scale(1.12); }
 
-  /* ---------- PERFIL ---------- */
-  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .85rem; }
-  button.opt {
-    font: inherit; text-align: left; cursor: pointer; min-height: 104px; position: relative; overflow: hidden;
-    background: var(--bg); color: var(--text); border: 2px solid transparent; border-radius: 20px; padding: 1rem;
-    transition: transform .25s, border-color .25s, box-shadow .25s, background .25s;
+  .durations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .dur {
+    border: 1px solid var(--line); background: #fbfdfd; border-radius: 26px; padding: 26px 12px; cursor: pointer; text-align: center;
+    transition: transform .5s var(--spring), background .4s, color .4s, box-shadow .5s;
   }
-  button.opt::after {
-    content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
-    transform: translateX(-120%); transition: transform .6s;
-  }
-  button.opt:hover::after { transform: translateX(120%); }
-  button.opt:hover { transform: translateY(-3px); }
-  button.opt:active { transform: scale(.97); }
-  button.opt .ico { font-size: 1.8rem; display: block; margin-bottom: .3rem; transition: transform .3s; }
-  button.opt:hover .ico { transform: scale(1.15) rotate(-6deg); }
-  button.opt strong { display: block; color: var(--lake-dark); font-size: 1.06rem; }
-  button.opt small { color: var(--muted); }
-  button.opt[aria-pressed="true"] { border-color: var(--lake); box-shadow: 0 0 0 5px var(--soft); background: var(--surface); }
-  button:focus-visible, a:focus-visible { outline: 3px solid var(--lake); outline-offset: 2px; }
+  .dur:hover { transform: translateY(-5px); box-shadow: 0 16px 32px -18px rgba(18,63,82,.45); }
+  .dur strong { display: block; font-size: 2.8rem; font-weight: 800; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .dur span { font-size: .92rem; color: var(--mute); font-weight: 700; }
+  .dur[aria-pressed="true"] { background: var(--lake-dark); color: #fff; border-color: var(--lake-dark); box-shadow: 0 22px 40px -18px rgba(18,63,82,.8); }
+  .dur[aria-pressed="true"] strong { background: none; -webkit-text-fill-color: #fff; color: #fff; }
+  .dur[aria-pressed="true"] span { color: #b7d6de; }
 
-  .days { display: flex; gap: .6rem; flex-wrap: wrap; }
-  .days button {
-    font: inherit; font-weight: 600; min-width: 100px; min-height: 48px; border-radius: 999px;
-    border: 1.5px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; padding: 0 1.2rem;
-    transition: all .25s;
-  }
-  .days button:hover { border-color: var(--forest); }
-  .days button[aria-pressed="true"] { background: var(--forest); color: #fff; border-color: var(--forest); box-shadow: 0 6px 16px rgba(47,107,79,.35); }
-
-  /* ---------- ITINERARIO ---------- */
-  .resumen {
-    display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(90deg, var(--soft), var(--bg));
-    color: var(--lake-dark); padding: .55rem 1rem; border-radius: 14px; font-weight: 700; margin-bottom: 1.1rem; font-size: .95rem;
-    animation: fadeUp .5s ease both;
-  }
-  .timeline { position: relative; padding-left: 1.6rem; }
+  .summary { display: inline-flex; gap: .5rem; align-items: center; background: var(--soft); color: var(--lake-dark); padding: .5rem .95rem; border-radius: 14px; font-weight: 800; font-size: .9rem; margin-bottom: 1.2rem; }
+  .timeline { position: relative; padding-left: 28px; }
   .timeline::before {
-    content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 3px; border-radius: 3px;
-    background: linear-gradient(var(--lake), var(--forest)); transform-origin: top; animation: grow 1.2s ease both;
+    content: ""; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; background: var(--grad);
+    transform-origin: top; transform: scaleY(0); transition: transform 1.8s var(--ease);
   }
-  @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  .timeline.drawn::before { transform: scaleY(1); }
   .stop {
-    position: relative; background: var(--bg); border-radius: 18px; padding: 1rem 1.1rem; margin-bottom: .9rem;
-    border: 1px solid transparent; transition: transform .25s, box-shadow .25s, border-color .25s;
-    animation: slideIn .5s ease both;
+    position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: center;
+    background: #fbfdfd; border: 1px solid var(--line); border-radius: 20px; padding: 10px 14px 10px 10px; margin-bottom: 12px;
+    opacity: 0; transform: translateX(-20px); transition: opacity .9s var(--ease), transform .9s var(--ease), box-shadow .4s, border-color .3s;
   }
-  .stop:nth-child(2) { animation-delay: .1s; }
-  .stop:nth-child(3) { animation-delay: .2s; }
-  .stop:nth-child(4) { animation-delay: .3s; }
-  .stop:nth-child(5) { animation-delay: .4s; }
-  .stop:nth-child(6) { animation-delay: .5s; }
-  .stop:hover { transform: translateX(6px); box-shadow: var(--shadow); border-color: var(--border); }
+  .stop.in { opacity: 1; transform: none; }
+  .stop:hover { box-shadow: 0 18px 32px -20px rgba(18,63,82,.45); border-color: #cfe2e8; }
   .stop::before {
-    content: ""; position: absolute; left: -1.6rem; top: 1.3rem; width: 17px; height: 17px; border-radius: 50%;
-    background: var(--surface); border: 3px solid var(--ember); transform: translateX(-1px);
-    box-shadow: 0 0 0 0 rgba(224,128,63,.5); animation: ping 2.4s ease-out infinite;
+    content: ""; position: absolute; left: -24px; top: 50%; margin-top: -8px; width: 16px; height: 16px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--ember);
   }
-  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(224,128,63,.5); } 70%,100% { box-shadow: 0 0 0 10px rgba(224,128,63,0); } }
-  @keyframes slideIn { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
-  .time { font-weight: 700; color: var(--ember); font-size: .9rem; }
-  .stop h3 { margin-top: .15rem; font-size: 1.1rem; }
-  .tag {
-    display: inline-block; font-size: .78rem; font-weight: 600; background: var(--surface); color: var(--forest);
-    border: 1px solid var(--border); padding: .2rem .65rem; border-radius: 999px; margin: .4rem .3rem 0 0;
-  }
-  .note { font-size: .85rem; color: var(--muted); margin-top: .9rem; font-style: italic; }
+  .stop.in::before { animation: ping 2.6s var(--ease) infinite; }
+  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(232,128,74,.45); } 70%,100% { box-shadow: 0 0 0 10px rgba(232,128,74,0); } }
+  .thumb { width: 64px; height: 64px; border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--line); }
+  .thumb svg { width: 100%; height: 100%; }
+  .stop .time { font-size: .76rem; font-weight: 800; color: var(--ember); letter-spacing: .05em; text-transform: uppercase; }
+  .stop h4 { font-size: 1.04rem; font-weight: 800; margin: .1rem 0 .15rem; }
+  .stop .place { font-size: .88rem; color: var(--mute); }
 
-  /* ---------- FICHAS ---------- */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
-  .card {
-    position: relative; border-radius: 20px; padding: 1.2rem; background: var(--bg); border: 1px solid var(--border);
-    border-top: 5px solid var(--lake); transition: transform .3s, box-shadow .3s; overflow: hidden;
+  .skel { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: center; border-radius: 20px; background: #eaf1f4; margin-bottom: 12px; padding: 12px; position: relative; overflow: hidden; }
+  .skel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent); transform: translateX(-100%); animation: shimmer 1.4s infinite; }
+  @keyframes shimmer { to { transform: translateX(100%); } }
+  .skel .box { width: 64px; height: 64px; border-radius: 16px; background: #d9e5ea; }
+  .skel .l { height: 10px; border-radius: 6px; background: #d9e5ea; margin-bottom: 10px; }
+  .skel .l.s { width: 30%; } .skel .l.m { width: 60%; height: 14px; } .skel .l.w { width: 85%; margin-bottom: 0; }
+
+  .nav-steps {
+    position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 10px;
+    padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(rgba(255,255,255,0), #fff 40%);
   }
-  .card::before {
-    content: ""; position: absolute; right: -30px; top: -30px; width: 90px; height: 90px; border-radius: 50%;
-    background: radial-gradient(circle, var(--soft), transparent 70%); transition: transform .5s;
+  .btn {
+    border: 1px solid var(--line); background: #fff; color: var(--ink); padding: .85rem 1.25rem; border-radius: 999px; cursor: pointer;
+    font-weight: 700; transition: transform .35s var(--spring), box-shadow .3s, opacity .3s;
   }
-  .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-  .card:hover::before { transform: scale(2.2); }
-  .card.destacada { border-top-color: var(--ember); }
-  .card.destacada::after {
-    content: "En tu ruta"; position: absolute; top: 12px; right: 12px; font-size: .7rem; font-weight: 700;
-    background: var(--ember); color: #fff; padding: .2rem .55rem; border-radius: 999px;
+  .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 22px -12px rgba(18,63,82,.45); }
+  .btn:active:not(:disabled) { transform: scale(.97); }
+  .btn:disabled { opacity: .35; cursor: default; }
+  .btn.primary { background: var(--lake-dark); color: #fff; border-color: var(--lake-dark); margin-left: auto; }
+
+  /* ---------- ATRACTIVOS ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; margin-top: 2.2rem; }
+  .spot {
+    position: relative; height: 330px; border-radius: 30px; overflow: hidden; cursor: pointer; color: #fff; isolation: isolate;
+    box-shadow: 0 20px 44px -26px rgba(18,63,82,.6); transform: translateZ(0);
+    transition: transform .6s var(--ease), box-shadow .6s var(--ease);
   }
-  .card .type {
-    display: inline-block; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
-    color: var(--forest); font-weight: 700; margin-bottom: .35rem;
+  .spot.wide { grid-column: span 2; height: 380px; }
+  .spot:hover { transform: translateY(-4px); box-shadow: 0 30px 56px -26px rgba(18,63,82,.6); }
+  .spot .art { position: absolute; inset: 0; z-index: -2; transition: transform 1.2s var(--ease); }
+  .spot .art svg { width: 100%; height: 100%; }
+  .spot::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(6,24,32,.9) 0%, rgba(6,24,32,.05) 62%); }
+  .spot .info { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px; transform: translateY(calc(100% - 92px)); transition: transform .8s var(--ease); }
+  .spot .tag {
+    display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase;
+    background: rgba(255,255,255,.2); backdrop-filter: blur(6px); padding: .3rem .65rem; border-radius: 999px;
   }
-  .card p { font-size: .93rem; color: var(--muted); margin: 0; }
+  .spot h3 { font-size: 1.32rem; font-weight: 800; margin: .55rem 0 .4rem; }
+  .spot .desc { font-size: .92rem; color: #e3f1f4; opacity: 0; transform: translateY(12px); transition: opacity .6s .12s var(--ease), transform .6s .12s var(--ease); }
+  .spot .badge {
+    position: absolute; top: 16px; right: 16px; font-size: .7rem; font-weight: 800; background: var(--coral); padding: .3rem .7rem; border-radius: 999px;
+    box-shadow: 0 8px 18px -8px var(--coral);
+  }
+  .spot:hover .art, .spot.tap .art { transform: scale(1.1); }
+  .spot:hover .info, .spot.tap .info { transform: translateY(0); }
+  .spot:hover .desc, .spot.tap .desc { opacity: 1; transform: none; }
+  .spot .cloudy { animation: driftSvg 40s linear infinite; }
+  .spot .sunpulse { animation: pulse 6s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes driftSvg { from { transform: translateX(-60px); } to { transform: translateX(460px); } }
+  @media (max-width: 640px) { .spot.wide { grid-column: span 1; } }
 
   /* ---------- CUIDADO ---------- */
-  .care-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .9rem; margin-top: .6rem; }
-  .care-item {
-    background: var(--bg); border-radius: 18px; padding: 1.1rem; transition: transform .3s, background .3s;
+  .eco { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 2.2rem; }
+  .eco-card {
+    display: flex; gap: 16px; align-items: center; background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 18px 20px;
+    box-shadow: 0 2px 10px -6px rgba(18,63,82,.15); transition: transform .6s var(--ease), box-shadow .6s var(--ease);
   }
-  .care-item:hover { transform: translateY(-4px) rotate(-.5deg); background: var(--soft); }
-  .care-item .ico { font-size: 1.7rem; display: inline-block; margin-bottom: .35rem; transition: transform .4s; }
-  .care-item:hover .ico { transform: rotate(12deg) scale(1.2); }
-  .care-item p { font-size: .92rem; color: var(--muted); margin: 0; }
-  .tip {
-    margin-top: 1.1rem; border-radius: 18px; padding: 1.1rem 1.2rem; color: #fff; position: relative; overflow: hidden;
-    background: linear-gradient(120deg, var(--forest), var(--lake), var(--forest)); background-size: 200% 200%;
-    animation: gradientShift 8s ease infinite;
+  .eco-card:hover { transform: translateX(8px); box-shadow: var(--shadow); }
+  .eco-card .ic {
+    width: 52px; height: 52px; border-radius: 17px; display: grid; place-items: center; font-size: 1.5rem; flex-shrink: 0;
+    background: linear-gradient(135deg,#d8f3ee,#f2fbf9); transition: transform .6s var(--spring);
   }
-  .tip strong { display: block; margin-bottom: .2rem; }
+  .eco-card:hover .ic { transform: rotate(-12deg) scale(1.12); }
+  .eco-card p { margin: 0; color: var(--ink-2); font-size: .97rem; }
+  @media (min-width: 760px) { .eco { grid-template-columns: repeat(2, 1fr); } }
+  .emergency { display: grid; gap: 12px; margin-top: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .emergency { grid-template-columns: repeat(3, 1fr); } }
+  .em { display: flex; justify-content: space-between; align-items: center; background: #fff5f2; border: 1px solid #ffe0d6; border-radius: 20px; padding: 16px 20px; }
+  .em strong { font-size: .95rem; }
+  .em a { font-size: 1.4rem; font-weight: 800; color: var(--coral); text-decoration: none; }
 
-  /* ---------- EMERGENCIAS ---------- */
-  .emerg { display: grid; gap: .75rem; }
-  .emerg div {
-    display: flex; gap: .85rem; align-items: flex-start; background: var(--bg); border-radius: 16px; padding: .9rem 1.05rem;
-    transition: transform .25s, box-shadow .25s;
+  /* ---------- DESCARGA ---------- */
+  .offline {
+    margin-top: 44px; border-radius: 34px; padding: 46px 26px; text-align: center; color: #fff; position: relative; overflow: hidden;
+    background: linear-gradient(120deg, #0d3346, #1f6f8b 50%, #3e9a8a, #0d3346); background-size: 250% 250%; animation: gradientShift 14s ease infinite;
   }
-  .emerg div:hover { transform: translateX(4px); box-shadow: var(--shadow); }
-  .emerg .ico { font-size: 1.4rem; }
-  .emerg a { color: var(--lake); font-weight: 600; }
+  .offline::before, .offline::after { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; background: rgba(255,255,255,.07); }
+  .offline::before { top: -110px; left: -60px; animation: blob 14s ease-in-out infinite; }
+  .offline::after { bottom: -120px; right: -40px; animation: blob 18s ease-in-out infinite reverse; }
+  @keyframes blob { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-20px); } }
+  .offline > * { position: relative; }
+  .offline h3 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; margin-bottom: .5rem; }
+  .offline p { color: #cde6ec; max-width: 32rem; margin: 0 auto 1.5rem; }
+  .dl {
+    position: relative; overflow: hidden; border: none; cursor: pointer; color: var(--lake-dark); background: #fff; font-weight: 800; font-size: 1rem;
+    padding: 1.05rem 1.9rem; border-radius: 999px; display: inline-flex; align-items: center; gap: .6rem;
+    box-shadow: 0 16px 34px -12px rgba(0,0,0,.5); transition: transform .45s var(--spring), box-shadow .45s;
+  }
+  .dl:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 26px 46px -14px rgba(0,0,0,.55); }
+  .dl .bounce { display: inline-block; animation: bounce 1.8s var(--ease) infinite; }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  .dl .prog { position: absolute; left: 0; bottom: 0; height: 4px; width: 0; background: var(--grad); transition: width .4s var(--ease); }
+  .dl.done .bounce { animation: none; }
+  .dl.busy { pointer-events: none; }
 
-  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 1rem 1rem 2.5rem; }
+  .foot { text-align: center; color: var(--mute); font-size: .85rem; padding: 36px 18px 64px; }
+  .foot strong { color: var(--ink); font-size: 1.02rem; display: block; margin-bottom: .25rem; }
 
-  /* ---------- BOTÓN VOLVER ARRIBA ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 160%); z-index: 90;
+    background: var(--lake-dark); color: #fff; padding: 13px 20px; border-radius: 18px; font-size: .92rem; font-weight: 600;
+    box-shadow: var(--shadow); transition: transform .7s var(--spring); max-width: calc(100% - 32px); text-align: center;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+
   #top {
-    position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 48px; height: 48px;
-    border-radius: 50%; border: none; background: var(--lake); color: #fff; font-size: 1.2rem; cursor: pointer;
-    box-shadow: var(--shadow); opacity: 0; transform: translateY(20px); transition: opacity .3s, transform .3s; z-index: 20;
+    position: fixed; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); width: 50px; height: 50px; border-radius: 50%;
+    border: none; background: var(--lake-dark); color: #fff; font-size: 1.15rem; cursor: pointer; box-shadow: var(--shadow);
+    opacity: 0; transform: scale(.8); pointer-events: none; transition: opacity .4s, transform .6s var(--spring); z-index: 40;
   }
-  #top.show { opacity: 1; transform: translateY(0); }
+  #top.show { opacity: 1; transform: none; pointer-events: auto; }
 
-  /* ---------- RESPONSIVE + MOVIMIENTO REDUCIDO ---------- */
-  @media (max-width: 560px) {
-    .hero { padding: 2.8rem 1rem 4.5rem; }
-    section { padding: 1.25rem; border-radius: 20px; }
-    .stats div { min-width: 84px; }
-    .sun { width: 60px; height: 60px; right: 6%; }
+  @media (max-width: 640px) {
+    .hero { padding-top: 6.4rem; }
+    .planner { border-radius: 26px; }
+    .slide { padding: 22px 18px 108px; }
+    .style-card { padding: 16px 14px; }
+    .style-card .emo { font-size: 2rem; }
+    .dur strong { font-size: 2.3rem; }
+    .stop { grid-template-columns: 56px 1fr; }
+    .thumb { width: 56px; height: 56px; }
+    .skel { grid-template-columns: 56px 1fr; }
+    .skel .box { width: 56px; height: 56px; }
+    .stats div { min-width: 100px; }
+    .sun { width: 64px; height: 64px; right: 6%; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
-    section { opacity: 1; transform: none; }
-    .hero p, .stats div { opacity: 1; }
+    html { scroll-behavior: auto; }
+    .rv, .hero h1, .hero .sub, .cta, .kicker, .stats div { opacity: 1 !important; transform: none !important; }
   }
 </style>
 </head>
 <body>
 
-<header class="hero">
+<!-- ENCABEZADO FIJO -->
+<div class="topbar" id="topbar">
+  <div class="topbar-inner lg lg-sheen">
+    <a class="brand" href="#inicio"><span class="logo">🌋</span><span data-i18n="brand">Guía Lagos y Volcanes</span></a>
+    <div class="lang" id="lang">
+      <button class="lang-btn lg" id="langBtn" aria-haspopup="listbox" aria-expanded="false" style="border-radius:999px">
+        <span id="langLabel">🇨🇱 Español</span><span class="chev">▼</span>
+      </button>
+      <ul class="lang-menu" role="listbox" aria-label="Idioma">
+        <li><button role="option" aria-selected="true" data-lang="es">🇨🇱 Español <span>✓</span></button></li>
+        <li><button role="option" aria-selected="false" data-lang="en">🇬🇧 English <span></span></button></li>
+        <li><button role="option" aria-selected="false" data-lang="pt">🇧🇷 Português <span></span></button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
   <div class="sun" aria-hidden="true"></div>
   <div class="cloud c1" aria-hidden="true"></div>
   <div class="cloud c2" aria-hidden="true"></div>
   <div class="cloud c3" aria-hidden="true"></div>
-  <span class="kicker">Guía digital · Sur de Chile</span>
-  <h1>Ruta Lagos y Volcanes<br><span class="shine">en Bolsillo</span></h1>
-  <p>Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.</p>
-  <div class="stats">
-    <div><strong data-count="3">0</strong><span>regiones</span></div>
-    <div><strong data-count="6">0</strong><span>circuitos</span></div>
-    <div><strong data-count="2000" data-suffix="+">0</strong><span>km de ruta</span></div>
+
+  <div class="hero-inner">
+    <span class="kicker" data-i18n="hero_kicker">Guía digital · Sur de Chile</span>
+    <h1><span data-i18n="hero_t1">Ruta Lagos y Volcanes</span><br><span class="shine" data-i18n="hero_t2">en Bolsillo</span></h1>
+    <p class="sub" data-i18n="hero_sub">Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.</p>
+    <a class="cta" href="#planificador"><span data-i18n="hero_cta">Planificar mi viaje</span> <span class="arr">→</span></a>
+    <div class="stats">
+      <div><strong data-count="3">3</strong><span data-i18n="stat_reg">regiones</span></div>
+      <div><strong data-count="6">6</strong><span data-i18n="stat_circ">circuitos</span></div>
+      <div><strong data-count="2000" data-suffix="+">2.000+</strong><span data-i18n="stat_km">km de ruta</span></div>
+    </div>
   </div>
+
   <svg class="waves" viewBox="0 0 2880 90" preserveAspectRatio="none" aria-hidden="true">
-    <defs>
-      <path id="w" d="M0 45 Q 180 0 360 45 T 720 45 T 1080 45 T 1440 45 T 1800 45 T 2160 45 T 2520 45 T 2880 45 L2880 90 L0 90 Z"/>
-    </defs>
+    <defs><path id="w" d="M0 45 Q 180 0 360 45 T 720 45 T 1080 45 T 1440 45 T 1800 45 T 2160 45 T 2520 45 T 2880 45 L2880 90 L0 90 Z"/></defs>
     <use href="#w" fill="#e6f0f3" opacity=".35"/>
     <use href="#w" fill="#e6f0f3" opacity=".5" y="8"/>
     <use href="#w" fill="var(--bg)" y="18"/>
   </svg>
 </header>
 
-<nav aria-label="Secciones">
-  <a href="#elige">Elige tu viaje</a>
-  <a href="#recorrido">Tu recorrido</a>
-  <a href="#atractivos">Atractivos</a>
-  <a href="#conserva">Viaja responsable</a>
-  <a href="#emergencias">Emergencias</a>
-</nav>
+<div class="sections-wrap">
+  <nav class="sections lg lg-sheen" aria-label="Secciones">
+    <a href="#planificador" data-i18n="nav_plan">Planifica</a>
+    <a href="#atractivos" data-i18n="nav_spots">Atractivos</a>
+    <a href="#cuidado" data-i18n="nav_care">Cuidado</a>
+    <a href="#descarga" data-i18n="nav_dl">Descarga</a>
+  </nav>
+</div>
 
-<main>
+<main class="page">
 
-  <section id="elige" aria-labelledby="t-elige">
-    <div class="sec-head"><div class="sec-icon">🧭</div><h2 id="t-elige">Elige tu viaje</h2></div>
-    <p class="muted">Selecciona tu estilo de viaje y los días disponibles. Armamos el recorrido por ti.</p>
-    <div class="label">Tipo de viaje</div>
-    <div class="options" role="group" aria-label="Tipo de viaje">
-      <button class="opt" data-perfil="aventura" aria-pressed="false"><span class="ico">🥾</span><strong>Aventura</strong><small>Senderos, volcanes y montaña</small></button>
-      <button class="opt" data-perfil="naturaleza" aria-pressed="true"><span class="ico">🌲</span><strong>Naturaleza</strong><small>Lagos, bosques y fotografía</small></button>
-      <button class="opt" data-perfil="cultura" aria-pressed="false"><span class="ico">🏛️</span><strong>Cultura</strong><small>Colonización alemana y patrimonio</small></button>
-      <button class="opt" data-perfil="bienestar" aria-pressed="false"><span class="ico">♨️</span><strong>Bienestar</strong><small>Termas, calma y descanso</small></button>
+<!-- PLANIFICADOR -->
+<section id="planificador" aria-labelledby="t-plan">
+  <div class="sec-title rv">
+    <span class="eyebrow" data-i18n="pl_eyebrow">Planificador</span>
+    <h2 id="t-plan" data-i18n="pl_title">Tu recorrido, en 3 pasos</h2>
+    <p data-i18n="pl_sub">Elige tu estilo, cuántos días tienes y te mostramos un itinerario listo para seguir.</p>
+  </div>
+
+  <div class="planner rv">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="steps">
+      <span class="on" data-i18n="step1">1 · Estilo</span>
+      <span data-i18n="step2">2 · Duración</span>
+      <span data-i18n="step3">3 · Itinerario</span>
     </div>
-    <div class="label">Días disponibles</div>
-    <div class="days" role="group" aria-label="Días disponibles">
-      <button data-dias="1" aria-pressed="false">1 día</button>
-      <button data-dias="2" aria-pressed="true">2 días</button>
-      <button data-dias="3" aria-pressed="false">3 días</button>
+    <div class="viewport">
+      <div class="slide active" data-slide="0">
+        <h3 data-i18n="q_style">¿Cómo quieres viajar?</h3>
+        <p class="hint" data-i18n="h_style">Pasa el cursor o toca una opción.</p>
+        <div class="styles">
+          <button class="style-card" data-perfil="aventura" aria-pressed="false"><span class="emo">🥾</span><h4 data-i18n="st_aventura">Aventura</h4><small data-i18n="sd_aventura">Senderos y volcanes</small></button>
+          <button class="style-card" data-perfil="naturaleza" aria-pressed="true"><span class="emo">🌲</span><h4 data-i18n="st_naturaleza">Naturaleza</h4><small data-i18n="sd_naturaleza">Lagos y bosques</small></button>
+          <button class="style-card" data-perfil="cultura" aria-pressed="false"><span class="emo">🏛️</span><h4 data-i18n="st_cultura">Cultura</h4><small data-i18n="sd_cultura">Historia y patrimonio</small></button>
+          <button class="style-card" data-perfil="bienestar" aria-pressed="false"><span class="emo">♨️</span><h4 data-i18n="st_bienestar">Bienestar</h4><small data-i18n="sd_bienestar">Termas y calma</small></button>
+        </div>
+      </div>
+
+      <div class="slide" data-slide="1">
+        <h3 data-i18n="q_dur">¿Cuánto tiempo tienes?</h3>
+        <p class="hint" data-i18n="h_dur">Ajustamos el recorrido a tus días.</p>
+        <div class="durations">
+          <button class="dur" data-dias="1" aria-pressed="false"><strong>1</strong><span data-i18n="d_day">día</span></button>
+          <button class="dur" data-dias="2" aria-pressed="true"><strong>2</strong><span data-i18n="d_days">días</span></button>
+          <button class="dur" data-dias="3" aria-pressed="false"><strong>3</strong><span data-i18n="d_days">días</span></button>
+        </div>
+      </div>
+
+      <div class="slide" data-slide="2">
+        <h3 data-i18n="it_title">Tu itinerario</h3>
+        <div class="summary" id="summary"></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
     </div>
-  </section>
-
-  <section id="recorrido" aria-labelledby="t-recorrido">
-    <div class="sec-head"><div class="sec-icon">🗺️</div><h2 id="t-recorrido">Tu recorrido</h2></div>
-    <div class="resumen" id="resumen"></div>
-    <div class="timeline" id="itinerario"></div>
-    <p class="note">Horarios y tiempos referenciales. Confírmalos con cada prestador antes de salir.</p>
-  </section>
-
-  <section id="atractivos" aria-labelledby="t-atractivos">
-    <div class="sec-head"><div class="sec-icon">📸</div><h2 id="t-atractivos">Atractivos de la ruta</h2></div>
-    <p class="muted">Los destacados son los que aparecen en tu recorrido.</p>
-    <div class="cards" id="fichas"></div>
-  </section>
-
-  <section id="conserva" aria-labelledby="t-conserva">
-    <div class="sec-head"><div class="sec-icon">🌱</div><h2 id="t-conserva">Viaja responsable</h2></div>
-    <div class="care-grid">
-      <div class="care-item"><span class="ico">♻️</span><p>Lleva tu basura de vuelta, también en la orilla de los lagos.</p></div>
-      <div class="care-item"><span class="ico">🚶</span><p>Mantente en los senderos señalizados para proteger el suelo y la vegetación.</p></div>
-      <div class="care-item"><span class="ico">🦅</span><p>No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
-      <div class="care-item"><span class="ico">🤝</span><p>Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
-      <div class="care-item"><span class="ico">✅</span><p>Contrata actividades de aventura solo con prestadores registrados.</p></div>
+    <div class="nav-steps">
+      <button class="btn" id="prev" disabled data-i18n="btn_prev">← Atrás</button>
+      <button class="btn primary" id="next" data-i18n="btn_next">Siguiente →</button>
     </div>
-    <div class="tip"><strong>Consejo de viaje</strong>Descarga esta página antes de salir y guárdala en tu celular para usarla sin conexión.</div>
-  </section>
+  </div>
+</section>
 
-  <section id="emergencias" aria-labelledby="t-emerg">
-    <div class="sec-head"><div class="sec-icon">🆘</div><h2 id="t-emerg">Emergencias y contacto</h2></div>
-    <div class="emerg">
-      <div><span class="ico">🚑</span><p><strong>Emergencias generales:</strong> 131 (SAMU), 133 (Bomberos y Carabineros). <em class="muted">Verificar vigencia antes de publicar.</em></p></div>
-      <div><span class="ico">⛰️</span><p><strong>En montaña:</strong> avisa a tu alojamiento o guía antes de salir y lleva agua, abrigo y linterna.</p></div>
-      <div><span class="ico">ℹ️</span><p><strong>Información turística:</strong> oficina de turismo de la comuna o <a href="https://www.rutalagosyvolcanes.cl/">rutalagosyvolcanes.cl</a></p></div>
-    </div>
-  </section>
+<!-- ATRACTIVOS -->
+<section id="atractivos" aria-labelledby="t-spots">
+  <div class="sec-title rv">
+    <span class="eyebrow" data-i18n="sp_eyebrow">Atractivos</span>
+    <h2 id="t-spots" data-i18n="sp_title">Lugares clave de la ruta</h2>
+    <p data-i18n="sp_sub">Pasa el cursor o toca una tarjeta para conocer cada lugar.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- CUIDADO -->
+<section id="cuidado" aria-labelledby="t-eco">
+  <div class="sec-title rv">
+    <span class="eyebrow" data-i18n="care_eyebrow">Cuidado del medio ambiente</span>
+    <h2 id="t-eco" data-i18n="care_title">Viaja sin dejar huella</h2>
+    <p data-i18n="care_sub">Pequeños gestos protegen lagos, volcanes y comunidades.</p>
+  </div>
+  <div class="eco">
+    <div class="eco-card rv"><div class="ic">♻️</div><p data-i18n="eco1">Lleva tu basura de vuelta, también en la orilla de los lagos.</p></div>
+    <div class="eco-card rv"><div class="ic">🚶</div><p data-i18n="eco2">Mantente en los senderos señalizados para proteger el suelo y la vegetación.</p></div>
+    <div class="eco-card rv"><div class="ic">🦅</div><p data-i18n="eco3">No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
+    <div class="eco-card rv"><div class="ic">🤝</div><p data-i18n="eco4">Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
+  </div>
+  <div class="emergency">
+    <div class="em rv"><strong data-i18n="em_gen">Emergencias generales</strong><a href="tel:131">131</a></div>
+    <div class="em rv"><strong data-i18n="em_fire">Bomberos</strong><a href="tel:132">132</a></div>
+    <div class="em rv"><strong data-i18n="em_police">Carabineros</strong><a href="tel:133">133</a></div>
+  </div>
+</section>
+
+<!-- DESCARGA -->
+<section id="descarga" aria-labelledby="t-off" style="padding-top:10px">
+  <div class="offline rv">
+    <h3 id="t-off" data-i18n="off_title">Llévala contigo sin señal</h3>
+    <p data-i18n="off_text">Descarga la guía y consúltala en cualquier tramo de la ruta, aunque no tengas conexión.</p>
+    <button class="dl" id="dl"><span class="bounce">⬇️</span><span id="dlText">Descargar guía para uso sin conexión</span><span class="prog" id="dlProg"></span></button>
+  </div>
+</section>
 
 </main>
 
-<button id="top" aria-label="Volver arriba">↑</button>
+<footer class="foot">
+  <strong data-i18n="foot_name">Guía Ruta Lagos y Volcanes</strong>
+  <span data-i18n="foot_line">Proyecto ABPRO · Técnico en Turismo · Centro de Formación Técnica San Agustín · 2026</span>
+</footer>
 
-<footer>Proyecto ABPRO · Técnico en Turismo · Centro de Formación Técnica San Agustín · 2026</footer>
+<button id="top" aria-label="Volver arriba">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-  const atractivos = {
-    lago: { nombre: 'Lago Llanquihue', tipo: 'Natural', desc: 'Paisaje lacustre con vista a los volcanes Osorno, Calbuco, Puntiagudo y Tronador.' },
-    osorno: { nombre: 'Volcán Osorno', tipo: 'Natural', desc: 'Forma cónica y nieves características del sur. Montaña y fotografía.' },
-    villarrica: { nombre: 'Parque Nacional Villarrica', tipo: 'Área protegida', desc: 'Volcán Villarrica, bosques de robles y cuevas volcánicas. Senderismo con guía recomendado.' },
-    conguillio: { nombre: 'Parque Nacional Conguillío', tipo: 'Área protegida', desc: 'Bosques milenarios de araucarias y escoriales de lava.' },
-    vpr: { nombre: 'Parque Nacional Vicente Pérez Rosales', tipo: 'Área protegida', desc: 'Uno de los más antiguos de Chile. Saltos de Petrohué y Lago Todos los Santos.' },
-    frutillar: { nombre: 'Museo Colonial Alemán (Frutillar)', tipo: 'Cultural histórico', desc: 'Colonización alemana desde 1852, edificaciones históricas y áreas verdes.' },
-    iglesia: { nombre: 'Iglesia del Sagrado Corazón de Jesús', tipo: 'Patrimonio', desc: 'Arquitectura de colonos alemanes en Puerto Varas. Monumento histórico desde 1992.' },
-    teatro: { nombre: 'Teatro del Lago (Frutillar)', tipo: 'Cultural contemporáneo', desc: 'Espacio cultural frente al lago, con conciertos y arte.' },
-    pewenche: { nombre: 'Rutas Ancestrales Pewenche', tipo: 'Cultural', desc: 'Conocimiento del territorio y tradiciones pewenche en la Araucanía Andina.' }
-  };
-
-  const recorridos = {
-    naturaleza: {
-      1: [
-        ['08:30 – 10:30', 'Caminata por el borde del lago', 'Lago Llanquihue', 'Contemplación y fotografía', ['lago']],
-        ['11:00 – 13:00', 'Mirador y sendero hacia el volcán', 'Volcán Osorno', 'Paisaje volcánico', ['osorno']],
-        ['14:30 – 17:00', 'Recorrido por bosque nativo', 'Parque Nacional Conguillío', 'Araucarias y naturaleza', ['conguillio']]
-      ],
-      2: [
-        ['Día 1 · 08:30 – 10:30', 'Caminata por el borde del lago', 'Lago Llanquihue', 'Contemplación y fotografía', ['lago']],
-        ['Día 1 · 14:00 – 17:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y lagos', ['vpr']],
-        ['Día 2 · 09:00 – 12:30', 'Senderismo en bosque nativo', 'Parque Nacional Conguillío', 'Araucarias y avistamiento de aves', ['conguillio']],
-        ['Día 2 · 14:00 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión y compromiso', []]
-      ],
-      3: [
-        ['Día 1 · 09:00 – 12:00', 'Caminata por el borde del lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
-        ['Día 1 · 14:00 – 17:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y lagos', ['vpr']],
-        ['Día 2 · 09:00 – 13:00', 'Senderismo en bosque nativo', 'Parque Nacional Conguillío', 'Araucarias', ['conguillio']],
-        ['Día 3 · 09:00 – 12:00', 'Mirador al volcán Osorno', 'Volcán Osorno', 'Paisaje y fotografía', ['osorno']],
-        ['Día 3 · 14:00 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión y compromiso', []]
-      ]
+/* =========================================================
+   TEXTOS EN TRES IDIOMAS
+   ========================================================= */
+const T = {
+  es: {
+    title: 'Guía Ruta Lagos y Volcanes', brand: 'Guía Lagos y Volcanes',
+    nav_plan: 'Planifica', nav_spots: 'Atractivos', nav_care: 'Cuidado', nav_dl: 'Descarga',
+    hero_kicker: 'Guía digital · Sur de Chile', hero_t1: 'Ruta Lagos y Volcanes', hero_t2: 'en Bolsillo',
+    hero_sub: 'Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.',
+    hero_cta: 'Planificar mi viaje', stat_reg: 'regiones', stat_circ: 'circuitos', stat_km: 'km de ruta',
+    pl_eyebrow: 'Planificador', pl_title: 'Tu recorrido, en 3 pasos',
+    pl_sub: 'Elige tu estilo, cuántos días tienes y te mostramos un itinerario listo para seguir.',
+    step1: '1 · Estilo', step2: '2 · Duración', step3: '3 · Itinerario',
+    q_style: '¿Cómo quieres viajar?', h_style: 'Pasa el cursor o toca una opción.',
+    st_aventura: 'Aventura', sd_aventura: 'Senderos y volcanes',
+    st_naturaleza: 'Naturaleza', sd_naturaleza: 'Lagos y bosques',
+    st_cultura: 'Cultura', sd_cultura: 'Historia y patrimonio',
+    st_bienestar: 'Bienestar', sd_bienestar: 'Termas y calma',
+    q_dur: '¿Cuánto tiempo tienes?', h_dur: 'Ajustamos el recorrido a tus días.', d_day: 'día', d_days: 'días',
+    it_title: 'Tu itinerario', day: 'Día', sum: (n, p) => `✨ ${n} ${n === 1 ? 'día' : 'días'} · perfil ${p}`,
+    btn_prev: '← Atrás', btn_next: 'Siguiente →', btn_gen: 'Generar itinerario →', btn_restart: 'Reiniciar ↺',
+    sp_eyebrow: 'Atractivos', sp_title: 'Lugares clave de la ruta', sp_sub: 'Pasa el cursor o toca una tarjeta para conocer cada lugar.',
+    inroute: 'En tu ruta',
+    care_eyebrow: 'Cuidado del medio ambiente', care_title: 'Viaja sin dejar huella',
+    care_sub: 'Pequeños gestos protegen lagos, volcanes y comunidades.',
+    eco1: 'Lleva tu basura de vuelta, también en la orilla de los lagos.',
+    eco2: 'Mantente en los senderos señalizados para proteger el suelo y la vegetación.',
+    eco3: 'No alimentes ni persigas la fauna. Mantén distancia con las aves.',
+    eco4: 'Respeta a las comunidades pewenche y pide permiso antes de fotografiar.',
+    em_gen: 'Emergencias generales', em_fire: 'Bomberos', em_police: 'Carabineros',
+    off_title: 'Llévala contigo sin señal', off_text: 'Descarga la guía y consúltala en cualquier tramo de la ruta, aunque no tengas conexión.',
+    dl_btn: 'Descargar guía para uso sin conexión', dl_prep: 'Preparando guía…', dl_done: 'Guía lista sin conexión ✓',
+    t_ready: 'Guía lista. Puedes usarla sin señal.', t_already: 'La guía ya está disponible sin conexión.',
+    t_https: 'Abre la guía desde un servidor (https) para habilitar el modo sin conexión.',
+    foot_name: 'Guía Ruta Lagos y Volcanes',
+    foot_line: 'Proyecto ABPRO · Técnico en Turismo · Centro de Formación Técnica San Agustín · 2026',
+    places: {
+      lago: { n: 'Lago Llanquihue', t: 'Natural', d: 'Paisaje lacustre con vista a los volcanes Osorno, Calbuco, Puntiagudo y Tronador.' },
+      osorno: { n: 'Volcán Osorno', t: 'Natural', d: 'Cono casi perfecto y nieves características del sur. Ideal para montaña y fotografía.' },
+      villarrica: { n: 'Parque Nacional Villarrica', t: 'Área protegida', d: 'Volcán Villarrica, bosques de robles y cuevas volcánicas. Recomendable con guía.' },
+      conguillio: { n: 'Parque Nacional Conguillío', t: 'Área protegida', d: 'Bosques milenarios de araucarias y antiguos escoriales de lava.' },
+      vpr: { n: 'Parque Vicente Pérez Rosales', t: 'Área protegida', d: 'Uno de los parques más antiguos de Chile. Saltos de Petrohué y Lago Todos los Santos.' },
+      frutillar: { n: 'Museo Colonial Alemán', t: 'Cultura histórica', d: 'Colonización alemana desde 1852, edificaciones históricas y jardines.' },
+      iglesia: { n: 'Iglesia del Sagrado Corazón', t: 'Patrimonio', d: 'Arquitectura de colonos alemanes en Puerto Varas. Monumento histórico desde 1992.' },
+      teatro: { n: 'Teatro del Lago', t: 'Cultura contemporánea', d: 'Espacio cultural frente al lago, con conciertos, arte y música.' },
+      pewenche: { n: 'Rutas Ancestrales Pewenche', t: 'Cultura', d: 'Conocimiento del territorio y las tradiciones pewenche en la Araucanía Andina.' },
+      termas: { n: 'Termas y spa', t: 'Bienestar', d: 'Aguas termales naturales de la zona volcánica, con circuitos de descanso.' }
     },
-    aventura: {
-      1: [
-        ['07:30 – 10:00', 'Senderismo guiado', 'Parque Nacional Villarrica', 'Bosques de robles y cuevas volcánicas', ['villarrica']],
-        ['10:30 – 13:00', 'Mirador del volcán', 'Volcán Osorno', 'Montaña y fotografía', ['osorno']],
-        ['14:30 – 17:00', 'Caminata de baja dificultad', 'Lago Llanquihue', 'Descanso y paisaje', ['lago']]
-      ],
-      2: [
-        ['Día 1 · 07:30 – 11:00', 'Senderismo guiado', 'Parque Nacional Villarrica', 'Bosques y cuevas', ['villarrica']],
-        ['Día 1 · 14:30 – 17:00', 'Caminata de baja dificultad', 'Lago Llanquihue', 'Paisaje', ['lago']],
-        ['Día 2 · 08:00 – 13:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y montaña', ['vpr']],
-        ['Día 2 · 14:30 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión', []]
-      ],
-      3: [
-        ['Día 1 · 07:30 – 11:00', 'Senderismo guiado', 'Parque Nacional Villarrica', 'Bosques y cuevas', ['villarrica']],
-        ['Día 1 · 14:30 – 17:00', 'Caminata de baja dificultad', 'Lago Llanquihue', 'Paisaje', ['lago']],
-        ['Día 2 · 08:00 – 13:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y montaña', ['vpr']],
-        ['Día 3 · 08:00 – 12:00', 'Mirador del volcán Osorno', 'Volcán Osorno', 'Montaña y fotografía', ['osorno']],
-        ['Día 3 · 14:00 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión', []]
-      ]
-    },
-    cultura: {
-      1: [
-        ['09:00 – 11:00', 'Visita al Museo Colonial Alemán', 'Frutillar', 'Historia de la colonización', ['frutillar']],
-        ['11:30 – 13:00', 'Iglesia del Sagrado Corazón', 'Puerto Varas', 'Arquitectura y patrimonio', ['iglesia']],
-        ['15:00 – 17:00', 'Teatro del Lago y paseo por la orilla', 'Frutillar', 'Arte y paisaje', ['teatro', 'lago']]
-      ],
-      2: [
-        ['Día 1 · 09:00 – 11:00', 'Visita al Museo Colonial Alemán', 'Frutillar', 'Historia de la colonización', ['frutillar']],
-        ['Día 1 · 15:00 – 17:00', 'Teatro del Lago y paseo por la orilla', 'Frutillar', 'Arte y paisaje', ['teatro', 'lago']],
-        ['Día 2 · 09:30 – 11:30', 'Iglesia del Sagrado Corazón', 'Puerto Varas', 'Patrimonio', ['iglesia']],
-        ['Día 2 · 14:00 – 17:00', 'Rutas ancestrales pewenche (con reserva previa)', 'Araucanía Andina', 'Tradiciones y territorio', ['pewenche']]
-      ],
-      3: [
-        ['Día 1 · 09:00 – 11:00', 'Visita al Museo Colonial Alemán', 'Frutillar', 'Historia', ['frutillar']],
-        ['Día 1 · 15:00 – 17:00', 'Teatro del Lago y paseo por la orilla', 'Frutillar', 'Arte y paisaje', ['teatro', 'lago']],
-        ['Día 2 · 09:30 – 11:30', 'Iglesia del Sagrado Corazón', 'Puerto Varas', 'Patrimonio', ['iglesia']],
-        ['Día 2 · 14:00 – 17:00', 'Rutas ancestrales pewenche (con reserva previa)', 'Araucanía Andina', 'Tradiciones', ['pewenche']],
-        ['Día 3 · 09:00 – 12:00', 'Mirador al volcán Osorno', 'Volcán Osorno', 'Paisaje', ['osorno']]
-      ]
-    },
-    bienestar: {
-      1: [
-        ['09:30 – 11:00', 'Caminata suave junto al lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
-        ['11:30 – 13:00', 'Visita a la iglesia y paseo tranquilo', 'Puerto Varas', 'Patrimonio', ['iglesia']],
-        ['15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Descanso y relajación', []]
-      ],
-      2: [
-        ['Día 1 · 09:30 – 11:00', 'Caminata suave junto al lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
-        ['Día 1 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Descanso', []],
-        ['Día 2 · 09:30 – 11:30', 'Visita al Teatro del Lago', 'Frutillar', 'Arte y tranquilidad', ['teatro']],
-        ['Día 2 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Relajación', []]
-      ],
-      3: [
-        ['Día 1 · 09:30 – 11:00', 'Caminata suave junto al lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
-        ['Día 1 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Descanso', []],
-        ['Día 2 · 09:30 – 11:30', 'Visita al Teatro del Lago', 'Frutillar', 'Arte', ['teatro']],
-        ['Día 2 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Relajación', []],
-        ['Día 3 · 09:00 – 12:00', 'Mirador al volcán Osorno', 'Volcán Osorno', 'Paisaje', ['osorno']]
-      ]
+    stops: {
+      naturaleza: ['Caminata por el borde del lago', 'Mirador hacia el volcán', 'Senderismo en bosque nativo', 'Excursión a Petrohué', 'Caminata tranquila de cierre'],
+      aventura: ['Senderismo guiado', 'Mirador del volcán', 'Excursión a Petrohué', 'Caminata de baja dificultad', 'Bosque nativo y cuevas'],
+      cultura: ['Museo Colonial Alemán', 'Iglesia del Sagrado Corazón', 'Visita al Teatro del Lago', 'Rutas ancestrales pewenche (con reserva)', 'Paseo por la orilla del lago'],
+      bienestar: ['Caminata suave junto al lago', 'Sesión de termas y spa (con reserva)', 'Visita al Teatro del Lago', 'Paseo tranquilo por Puerto Varas', 'Mirador al volcán Osorno']
     }
-  };
-
-  const perfilNombre = { aventura: 'Aventura', naturaleza: 'Naturaleza', cultura: 'Cultura', bienestar: 'Bienestar' };
-  let perfil = 'naturaleza';
-  let dias = 2;
-
-  function el(tag, cls, text) {
-    const e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text !== undefined) e.textContent = text;
-    return e;
+  },
+  en: {
+    title: 'Lakes and Volcanoes Route Guide', brand: 'Lakes & Volcanoes Guide',
+    nav_plan: 'Plan', nav_spots: 'Highlights', nav_care: 'Care', nav_dl: 'Download',
+    hero_kicker: 'Digital guide · Southern Chile', hero_t1: 'Lakes and Volcanoes Route', hero_t2: 'in your pocket',
+    hero_sub: 'Your route organized by your travel style and your time, with information you can check even without signal.',
+    hero_cta: 'Plan my trip', stat_reg: 'regions', stat_circ: 'circuits', stat_km: 'km of route',
+    pl_eyebrow: 'Planner', pl_title: 'Your route, in 3 steps',
+    pl_sub: 'Choose your style and how many days you have, and we will show you an itinerary ready to follow.',
+    step1: '1 · Style', step2: '2 · Duration', step3: '3 · Itinerary',
+    q_style: 'How do you want to travel?', h_style: 'Hover or tap an option.',
+    st_aventura: 'Adventure', sd_aventura: 'Trails and volcanoes',
+    st_naturaleza: 'Nature', sd_naturaleza: 'Lakes and forests',
+    st_cultura: 'Culture', sd_cultura: 'History and heritage',
+    st_bienestar: 'Wellness', sd_bienestar: 'Hot springs and calm',
+    q_dur: 'How much time do you have?', h_dur: 'We adjust the route to your days.', d_day: 'day', d_days: 'days',
+    it_title: 'Your itinerary', day: 'Day', sum: (n, p) => `✨ ${n} ${n === 1 ? 'day' : 'days'} · ${p} profile`,
+    btn_prev: '← Back', btn_next: 'Next →', btn_gen: 'Generate itinerary →', btn_restart: 'Restart ↺',
+    sp_eyebrow: 'Highlights', sp_title: 'Key places on the route', sp_sub: 'Hover or tap a card to discover each place.',
+    inroute: 'On your route',
+    care_eyebrow: 'Caring for the environment', care_title: 'Travel without leaving a trace',
+    care_sub: 'Small gestures protect lakes, volcanoes and communities.',
+    eco1: 'Take your rubbish with you, including from the lakeshore.',
+    eco2: 'Stay on marked trails to protect the soil and vegetation.',
+    eco3: 'Do not feed or chase wildlife. Keep your distance from birds.',
+    eco4: 'Respect Pewenche communities and ask permission before taking photos.',
+    em_gen: 'General emergencies', em_fire: 'Fire department', em_police: 'Police (Carabineros)',
+    off_title: 'Take it with you, offline', off_text: 'Download the guide and use it anywhere along the route, even without a connection.',
+    dl_btn: 'Download guide for offline use', dl_prep: 'Preparing guide…', dl_done: 'Guide ready offline ✓',
+    t_ready: 'Guide ready. You can use it without signal.', t_already: 'The guide is already available offline.',
+    t_https: 'Open the guide from a secure server (https) to enable offline mode.',
+    foot_name: 'Lakes and Volcanoes Route Guide',
+    foot_line: 'ABPRO project · Tourism Technician · San Agustín Technical Training Center · 2026',
+    places: {
+      lago: { n: 'Llanquihue Lake', t: 'Natural', d: 'Lakeside landscape with views of the Osorno, Calbuco, Puntiagudo and Tronador volcanoes.' },
+      osorno: { n: 'Osorno Volcano', t: 'Natural', d: 'Near-perfect cone and snowy peaks typical of the south. Ideal for mountain views and photography.' },
+      villarrica: { n: 'Villarrica National Park', t: 'Protected area', d: 'Villarrica volcano, oak forests and lava caves. Guided visits recommended.' },
+      conguillio: { n: 'Conguillío National Park', t: 'Protected area', d: 'Ancient araucaria forests and old lava fields.' },
+      vpr: { n: 'Vicente Pérez Rosales Park', t: 'Protected area', d: "One of Chile's oldest parks. Petrohué Falls and Todos los Santos Lake." },
+      frutillar: { n: 'German Colonial Museum', t: 'Historic culture', d: 'German settlement since 1852, historic buildings and gardens.' },
+      iglesia: { n: 'Sacred Heart Church', t: 'Heritage', d: 'German colonist architecture in Puerto Varas. Historic monument since 1992.' },
+      teatro: { n: 'Teatro del Lago', t: 'Contemporary culture', d: 'Cultural venue by the lake with concerts, art and music.' },
+      pewenche: { n: 'Pewenche Ancestral Routes', t: 'Culture', d: 'Learn about the land and traditions of the Pewenche people in the Andean Araucanía.' },
+      termas: { n: 'Hot springs & spa', t: 'Wellness', d: 'Natural thermal waters from the volcanic zone, with relaxation circuits.' }
+    },
+    stops: {
+      naturaleza: ['Walk along the lakeshore', 'Viewpoint toward the volcano', 'Hike through native forest', 'Excursion to Petrohué', 'Relaxed closing walk'],
+      aventura: ['Guided trekking', 'Volcano lookout', 'Excursion to Petrohué', 'Easy walk', 'Native forest and caves'],
+      cultura: ['German Colonial Museum', 'Sacred Heart Church', 'Visit to Teatro del Lago', 'Pewenche ancestral routes (booking required)', 'Stroll by the lakeshore'],
+      bienestar: ['Gentle walk by the lake', 'Hot spring & spa session (booking required)', 'Visit to Teatro del Lago', 'Quiet stroll through Puerto Varas', 'Viewpoint over Osorno Volcano']
+    }
+  },
+  pt: {
+    title: 'Guia da Rota Lagos e Vulcões', brand: 'Guia Lagos e Vulcões',
+    nav_plan: 'Planeje', nav_spots: 'Destaques', nav_care: 'Cuidado', nav_dl: 'Baixar',
+    hero_kicker: 'Guia digital · Sul do Chile', hero_t1: 'Rota dos Lagos e Vulcões', hero_t2: 'no seu bolso',
+    hero_sub: 'Seu roteiro organizado pelo seu estilo de viagem e pelo seu tempo, com informações que você pode consultar mesmo sem sinal.',
+    hero_cta: 'Planejar minha viagem', stat_reg: 'regiões', stat_circ: 'circuitos', stat_km: 'km de rota',
+    pl_eyebrow: 'Planejador', pl_title: 'Seu roteiro, em 3 passos',
+    pl_sub: 'Escolha seu estilo e quantos dias tem, e mostramos um roteiro pronto para seguir.',
+    step1: '1 · Estilo', step2: '2 · Duração', step3: '3 · Roteiro',
+    q_style: 'Como você quer viajar?', h_style: 'Passe o cursor ou toque em uma opção.',
+    st_aventura: 'Aventura', sd_aventura: 'Trilhas e vulcões',
+    st_naturaleza: 'Natureza', sd_naturaleza: 'Lagos e florestas',
+    st_cultura: 'Cultura', sd_cultura: 'História e patrimônio',
+    st_bienestar: 'Bem-estar', sd_bienestar: 'Termas e calma',
+    q_dur: 'Quanto tempo você tem?', h_dur: 'Ajustamos o roteiro aos seus dias.', d_day: 'dia', d_days: 'dias',
+    it_title: 'Seu roteiro', day: 'Dia', sum: (n, p) => `✨ ${n} ${n === 1 ? 'dia' : 'dias'} · perfil ${p}`,
+    btn_prev: '← Voltar', btn_next: 'Próximo →', btn_gen: 'Gerar roteiro →', btn_restart: 'Reiniciar ↺',
+    sp_eyebrow: 'Destaques', sp_title: 'Lugares-chave da rota', sp_sub: 'Passe o cursor ou toque em um cartão para conhecer cada lugar.',
+    inroute: 'No seu roteiro',
+    care_eyebrow: 'Cuidado com o meio ambiente', care_title: 'Viaje sem deixar rastros',
+    care_sub: 'Pequenos gestos protegem lagos, vulcões e comunidades.',
+    eco1: 'Leve seu lixo de volta, inclusive o da beira do lago.',
+    eco2: 'Fique nas trilhas sinalizadas para proteger o solo e a vegetação.',
+    eco3: 'Não alimente nem persiga animais. Mantenha distância das aves.',
+    eco4: 'Respeite as comunidades pewenche e peça permissão antes de fotografar.',
+    em_gen: 'Emergências gerais', em_fire: 'Bombeiros', em_police: 'Polícia (Carabineros)',
+    off_title: 'Leve com você, sem sinal', off_text: 'Baixe o guia e consulte em qualquer trecho da rota, mesmo sem conexão.',
+    dl_btn: 'Baixar guia para uso offline', dl_prep: 'Preparando o guia…', dl_done: 'Guia pronto offline ✓',
+    t_ready: 'Guia pronto. Você pode usá-lo sem sinal.', t_already: 'O guia já está disponível offline.',
+    t_https: 'Abra o guia a partir de um servidor seguro (https) para ativar o modo offline.',
+    foot_name: 'Guia da Rota Lagos e Vulcões',
+    foot_line: 'Projeto ABPRO · Técnico em Turismo · Centro de Formação Técnica San Agustín · 2026',
+    places: {
+      lago: { n: 'Lago Llanquihue', t: 'Natural', d: 'Paisagem lacustre com vista para os vulcões Osorno, Calbuco, Puntiagudo e Tronador.' },
+      osorno: { n: 'Vulcão Osorno', t: 'Natural', d: 'Cone quase perfeito e neve típica do sul. Ideal para montanha e fotografia.' },
+      villarrica: { n: 'Parque Nacional Villarrica', t: 'Área protegida', d: 'Vulcão Villarrica, florestas de carvalhos e cavernas vulcânicas. Recomendado com guia.' },
+      conguillio: { n: 'Parque Nacional Conguillío', t: 'Área protegida', d: 'Florestas milenares de araucárias e antigos campos de lava.' },
+      vpr: { n: 'Parque Vicente Pérez Rosales', t: 'Área protegida', d: 'Um dos parques mais antigos do Chile. Saltos de Petrohué e Lago Todos los Santos.' },
+      frutillar: { n: 'Museu Colonial Alemão', t: 'Cultura histórica', d: 'Colonização alemã desde 1852, edificações históricas e jardins.' },
+      iglesia: { n: 'Igreja do Sagrado Coração', t: 'Patrimônio', d: 'Arquitetura dos colonos alemães em Puerto Varas. Monumento histórico desde 1992.' },
+      teatro: { n: 'Teatro del Lago', t: 'Cultura contemporânea', d: 'Espaço cultural à beira do lago, com concertos, arte e música.' },
+      pewenche: { n: 'Rotas Ancestrais Pewenche', t: 'Cultura', d: 'Conhecimento do território e das tradições pewenche na Araucânia Andina.' },
+      termas: { n: 'Termas e spa', t: 'Bem-estar', d: 'Águas termais naturais da zona vulcânica, com circuitos de descanso.' }
+    },
+    stops: {
+      naturaleza: ['Caminhada à beira do lago', 'Mirante para o vulcão', 'Trilha na floresta nativa', 'Excursão a Petrohué', 'Caminhada tranquila de encerramento'],
+      aventura: ['Trilha guiada', 'Mirante do vulcão', 'Excursão a Petrohué', 'Caminhada leve', 'Floresta nativa e cavernas'],
+      cultura: ['Museu Colonial Alemão', 'Igreja do Sagrado Coração', 'Visita ao Teatro del Lago', 'Rotas ancestrais pewenche (com reserva)', 'Passeio pela beira do lago'],
+      bienestar: ['Caminhada suave junto ao lago', 'Sessão de termas e spa (com reserva)', 'Visita ao Teatro del Lago', 'Passeio tranquilo por Puerto Varas', 'Mirante sobre o vulcão Osorno']
+    }
   }
+};
 
-  function render() {
-    const lista = recorridos[perfil][dias] || [];
-    document.getElementById('resumen').textContent =
-      '✨ ' + dias + (dias === 1 ? ' día' : ' días') + ' · perfil ' + perfilNombre[perfil];
-    const cont = document.getElementById('itinerario');
-    cont.innerHTML = '';
-    lista.forEach(([hora, actividad, lugar, experiencia, recursos], i) => {
+/* =========================================================
+   LUGARES, PERFILES E ILUSTRACIONES
+   ========================================================= */
+const LUGARES = {
+  lago:      { scene: 'lake',    p: ['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id: 'L1' },
+  osorno:    { scene: 'volcano', p: ['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id: 'O1' },
+  villarrica:{ scene: 'volcano', p: ['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id: 'V1', smoke: true },
+  conguillio:{ scene: 'forest',  p: ['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id: 'C1' },
+  vpr:       { scene: 'falls',   p: ['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id: 'P1' },
+  frutillar: { scene: 'house',   p: ['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id: 'F1' },
+  iglesia:   { scene: 'church',  p: ['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id: 'I1' },
+  teatro:    { scene: 'theater', p: ['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id: 'T1' },
+  pewenche:  { scene: 'ruka',    p: ['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id: 'R1' },
+  termas:    { scene: 'steam',   p: ['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id: 'S1' }
+};
+const PERFILES = {
+  aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
+  naturaleza: ['lago','osorno','conguillio','vpr','lago'],
+  cultura:    ['frutillar','iglesia','teatro','pewenche','lago'],
+  bienestar:  ['lago','termas','teatro','iglesia','osorno']
+};
+const HORAS = ['09:00', '11:30', '15:00', '17:30'];
+
+function tree(x, y, s, c) {
+  return `<path d="M${x} ${y} L${x-10*s} ${y-40*s} L${x+10*s} ${y-40*s}Z M${x-9*s} ${y-28*s} L${x-20*s} ${y-62*s} L${x+20*s} ${y-62*s} L${x+9*s} ${y-28*s}Z M${x-13*s} ${y-50*s} L${x-26*s} ${y-84*s} L${x+26*s} ${y-84*s} L${x+13*s} ${y-50*s}Z" fill="${c}"/>`;
+}
+
+function scene(key, p, id, extra) {
+  const [s1, s2, far, mid, near] = p;
+  const g = 'g' + id;
+  const defs = `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s1}"/><stop offset="1" stop-color="${s2}"/></linearGradient></defs>`;
+  const sun = `<circle class="sunpulse" cx="320" cy="60" r="26" fill="#fff8d6" opacity=".9"/>`;
+  const cloud = `<g class="cloudy" opacity=".85"><rect x="40" y="58" width="90" height="18" rx="9" fill="#fff"/><rect x="62" y="48" width="44" height="18" rx="9" fill="#fff"/></g>`;
+  const base = `${defs}<rect width="400" height="260" fill="url(#${g})"/>${sun}${cloud}`;
+  let body = '';
+  if (key === 'lake') {
+    body = `<path d="M0 150 L80 96 L150 140 L240 70 L330 140 L400 110 L400 260 L0 260Z" fill="${far}"/>
+      <path d="M0 180 L110 130 L220 170 L330 128 L400 160 L400 260 L0 260Z" fill="${mid}"/>
+      <path d="M0 200 H400 V260 H0Z" fill="${near}"/>
+      <path d="M0 214 Q100 206 200 214 T400 214" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/>
+      <path d="M240 70 L268 140 L212 140Z" fill="#fff" opacity=".85"/>`;
+  } else if (key === 'volcano') {
+    const smoke = extra && extra.smoke ? `<g opacity=".65"><ellipse cx="210" cy="30" rx="34" ry="12" fill="#fff"/><ellipse cx="236" cy="16" rx="26" ry="9" fill="#fff"/></g>` : '';
+    body = `<path d="M0 170 L90 110 L170 160 L260 100 L400 170 L400 260 L0 260Z" fill="${far}"/>
+      <path d="M120 260 L220 60 L320 260Z" fill="${mid}"/>
+      <path d="M220 60 L250 118 L236 112 L224 124 L212 110 L198 118Z" fill="#fff"/>
+      ${smoke}
+      <path d="M0 215 Q120 205 200 216 T400 214 L400 260 L0 260Z" fill="${near}"/>
+      <path d="M0 232 Q100 226 200 234 T400 232" stroke="#fff" stroke-opacity=".45" stroke-width="2" fill="none"/>`;
+  } else if (key === 'forest') {
+    body = `<path d="M0 170 L120 110 L220 160 L330 105 L400 150 L400 260 L0 260Z" fill="${far}"/>
+      <path d="M0 230 Q200 210 400 230 L400 260 L0 260Z" fill="${mid}"/>
+      ${tree(40,236,1.1,near)}${tree(96,232,.9,near)}${tree(150,238,1.3,near)}${tree(214,234,1,near)}${tree(268,236,1.2,near)}${tree(332,232,.95,near)}${tree(372,238,1.1,near)}`;
+  } else if (key === 'falls') {
+    body = `<path d="M0 150 L120 60 L200 120 L300 50 L400 130 L400 260 L0 260Z" fill="${far}"/>
+      <path d="M220 90 L260 90 L262 210 L224 210Z" fill="#fff" opacity=".9"/>
+      <path d="M232 100 L252 100 L254 200 L234 200Z" fill="#dff6ff"/>
+      <path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/>
+      <path d="M180 212 Q240 204 300 212 L300 228 Q240 220 180 228Z" fill="${near}"/>
+      <path d="M0 240 Q200 228 400 240 L400 260 L0 260Z" fill="${near}" opacity=".9"/>`;
+  } else if (key === 'house' || key === 'church' || key === 'theater') {
+    let building = '';
+    if (key === 'house') building = `<rect x="130" y="130" width="140" height="95" fill="#fbf4ea"/><path d="M120 132 L200 74 L280 132Z" fill="${mid}"/><rect x="186" y="170" width="28" height="55" fill="${mid}"/><rect x="146" y="150" width="22" height="22" fill="${near}" opacity=".6"/><rect x="232" y="150" width="22" height="22" fill="${near}" opacity=".6"/>`;
+    if (key === 'church') building = `<rect x="150" y="120" width="100" height="105" fill="#fffdf8"/><path d="M142 122 L200 66 L258 122Z" fill="${mid}"/><rect x="186" y="28" width="28" height="44" fill="#fffdf8"/><path d="M186 28 L200 4 L214 28Z" fill="${mid}"/><rect x="194" y="16" width="12" height="4" fill="${mid}"/><rect x="194" y="10" width="4" height="12" fill="${mid}"/><path d="M186 180 Q200 150 214 180 L214 225 L186 225Z" fill="${near}" opacity=".75"/>`;
+    if (key === 'theater') building = `<path d="M90 190 Q200 90 310 190 L310 225 L90 225Z" fill="#fbf7fb"/><path d="M90 190 Q200 90 310 190" stroke="${mid}" stroke-width="10" fill="none"/><rect x="150" y="190" width="100" height="35" fill="${mid}" opacity=".35"/>`;
+    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/>
+      <path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/>
+      ${building}
+      ${key === 'theater' ? `<path d="M0 232 Q200 226 400 232 L400 260 L0 260Z" fill="${near}" opacity=".9"/>` : ''}
+      ${tree(40,224,1,near)}${tree(360,224,1,near)}`;
+  } else if (key === 'steam') {
+    body = `<path d="M0 150 L140 96 L260 150 L400 110 L400 260 L0 260Z" fill="${far}"/>
+      <path d="M0 200 Q200 180 400 200 L400 260 L0 260Z" fill="${mid}"/>
+      <ellipse cx="200" cy="216" rx="150" ry="22" fill="${near}"/>
+      <path d="M140 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>
+      <path d="M200 196 q12 -22 0 -44 t0 -40" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>
+      <path d="M260 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>`;
+  } else if (key === 'ruka') {
+    body = `<path d="M0 150 L110 70 L210 140 L300 60 L400 140 L400 260 L0 260Z" fill="${far}"/>
+      <path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/>
+      <path d="M150 214 Q200 110 250 214Z" fill="#fff6dd" stroke="${near}" stroke-width="3"/>
+      <path d="M200 214 L200 170" stroke="${near}" stroke-width="3"/>
+      <path d="M0 240 Q200 232 400 240 L400 260 L0 260Z" fill="${near}"/>`;
+  }
+  return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${base}${body}</svg>`;
+}
+
+/* =========================================================
+   ESTADO Y UTILIDADES
+   ========================================================= */
+let lang = 'es';
+try { lang = localStorage.getItem('guia-lang') || 'es'; } catch (e) {}
+if (!T[lang]) lang = 'es';
+let perfil = 'naturaleza', dias = 2, paso = 0;
+
+const $ = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const t = k => T[lang][k];
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; }
+function toast(msg) {
+  const n = $('#toast'); n.textContent = msg; n.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(() => n.classList.remove('show'), 3000);
+}
+function numParadas() { return dias === 1 ? 3 : dias === 2 ? 4 : 5; }
+
+/* =========================================================
+   IDIOMA
+   ========================================================= */
+function applyStatic() {
+  document.documentElement.lang = lang;
+  document.title = T[lang].title;
+  $$('[data-i18n]').forEach(n => { const v = T[lang][n.dataset.i18n]; if (typeof v === 'string') n.textContent = v; });
+  $('#langLabel').textContent = { es: '🇨🇱 Español', en: '🇬🇧 English', pt: '🇧🇷 Português' }[lang];
+  $$('.lang-menu button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.lang === lang)));
+  $('#dlText').textContent = t('dl_btn');
+  updateButtons();
+  renderGrid();
+  if (paso === 2) generarItinerario(false);
+}
+function updateButtons() {
+  $('#prev').disabled = paso === 0;
+  $('#next').textContent = paso === 2 ? t('btn_restart') : (paso === 1 ? t('btn_gen') : t('btn_next'));
+}
+function setLang(code) {
+  lang = code;
+  try { localStorage.setItem('guia-lang', code); } catch (e) {}
+  applyStatic();
+}
+
+/* =========================================================
+   ASISTENTE DE 3 PASOS
+   ========================================================= */
+function irA(n) {
+  paso = Math.max(0, Math.min(2, n));
+  $$('.slide').forEach((s, i) => { s.classList.toggle('active', i === paso); s.classList.toggle('left', i < paso); });
+  $$('.steps span').forEach((s, i) => s.classList.toggle('on', i <= paso));
+  $('#bar').style.width = ((paso + 1) / 3 * 100) + '%';
+  updateButtons();
+  if (paso === 2) generarItinerario(true);
+}
+
+function generarItinerario(conEsqueleto) {
+  const tl = $('#timeline');
+  const total = numParadas();
+  const lista = PERFILES[perfil];
+  $('#summary').textContent = t('sum')(dias, t('st_' + perfil));
+  tl.innerHTML = ''; tl.classList.remove('drawn');
+
+  const pintar = () => {
+    tl.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const id = lista[i % lista.length];
+      const L = LUGARES[id];
+      const info = T[lang].places[id];
+      const dia = Math.floor(i * dias / total) + 1;
+      const hora = HORAS[i % HORAS.length];
       const stop = el('div', 'stop');
-      stop.style.animationDelay = (i * 0.1) + 's';
-      stop.appendChild(el('div', 'time', hora));
-      stop.appendChild(el('h3', '', actividad));
-      stop.appendChild(el('p', 'muted', '📍 ' + lugar + ' · ' + experiencia));
-      recursos.forEach(r => stop.appendChild(el('span', 'tag', atractivos[r].nombre)));
-      cont.appendChild(stop);
-    });
-    renderFichas();
-  }
-
-  function renderFichas() {
-    const cont = document.getElementById('fichas');
-    cont.innerHTML = '';
-    const usados = new Set();
-    (recorridos[perfil][dias] || []).forEach(s => s[4].forEach(r => usados.add(r)));
-    Object.entries(atractivos).forEach(([id, a]) => {
-      const card = el('article', 'card' + (usados.has(id) ? ' destacada' : ''));
-      card.appendChild(el('span', 'type', a.tipo));
-      card.appendChild(el('h3', '', a.nombre));
-      card.appendChild(el('p', '', a.desc));
-      cont.appendChild(card);
-    });
-  }
-
-  document.querySelectorAll('[data-perfil]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      perfil = btn.dataset.perfil;
-      document.querySelectorAll('[data-perfil]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-      render();
-    });
-  });
-  document.querySelectorAll('[data-dias]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      dias = Number(btn.dataset.dias);
-      document.querySelectorAll('[data-dias]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-      render();
-    });
-  });
-
-  // Contadores animados
-  function countUp(node) {
-    const target = Number(node.dataset.count);
-    const suffix = node.dataset.suffix || '';
-    const duration = 1400;
-    const start = performance.now();
-    function step(now) {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      node.textContent = Math.round(target * eased).toLocaleString('es-CL') + suffix;
-      if (t < 1) requestAnimationFrame(step);
+      const thumb = el('div', 'thumb'); thumb.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+      const body = el('div');
+      body.appendChild(el('div', 'time', (dias > 1 ? t('day') + ' ' + dia + ' · ' : '') + hora));
+      body.appendChild(el('h4', '', T[lang].stops[perfil][i % lista.length]));
+      body.appendChild(el('div', 'place', '📍 ' + info.n));
+      stop.appendChild(thumb); stop.appendChild(body);
+      tl.appendChild(stop);
     }
-    requestAnimationFrame(step);
-  }
-  const countObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { countUp(e.target); countObs.unobserve(e.target); } });
-  }, { threshold: .5 });
-  document.querySelectorAll('[data-count]').forEach(n => countObs.observe(n));
-
-  // Revelar secciones al hacer scroll
-  const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-  }, { threshold: .12 });
-  document.querySelectorAll('section').forEach(s => revealObs.observe(s));
-
-  // Resaltar sección activa en el menú
-  const navLinks = document.querySelectorAll('nav a');
-  const navObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
-      }
+    requestAnimationFrame(() => {
+      tl.classList.add('drawn');
+      $$('.stop', tl).forEach((s, i) => setTimeout(() => s.classList.add('in'), 250 + i * 180));
     });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  document.querySelectorAll('main section').forEach(s => navObs.observe(s));
+  };
 
-  // Botón volver arriba
-  const topBtn = document.getElementById('top');
-  window.addEventListener('scroll', () => topBtn.classList.toggle('show', window.scrollY > 600), { passive: true });
-  topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  if (conEsqueleto) {
+    for (let i = 0; i < 3; i++) {
+      const s = el('div', 'skel');
+      s.appendChild(el('div', 'box'));
+      const b = el('div'); b.appendChild(el('div', 'l s')); b.appendChild(el('div', 'l m')); b.appendChild(el('div', 'l w'));
+      s.appendChild(b); tl.appendChild(s);
+    }
+    setTimeout(pintar, 900);
+  } else pintar();
+}
 
-  render();
+$$('.style-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    card.style.transform = `rotateX(${(-y * 14).toFixed(2)}deg) rotateY(${(x * 14).toFixed(2)}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => card.style.transform = '');
+  card.addEventListener('click', () => {
+    perfil = card.dataset.perfil;
+    $$('.style-card').forEach(c => c.setAttribute('aria-pressed', String(c === card)));
+    renderGrid();
+    setTimeout(() => irA(1), 280);
+  });
+});
+$$('.dur').forEach(b => b.addEventListener('click', () => {
+  dias = Number(b.dataset.dias);
+  $$('.dur').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  renderGrid();
+}));
+$('#prev').addEventListener('click', () => irA(paso - 1));
+$('#next').addEventListener('click', () => irA(paso === 2 ? 0 : paso + 1));
+
+/* =========================================================
+   ATRACTIVOS
+   ========================================================= */
+function renderGrid() {
+  const g = $('#grid'); g.innerHTML = '';
+  const enRuta = new Set(PERFILES[perfil].slice(0, numParadas()));
+  Object.keys(LUGARES).forEach((id, i) => {
+    const L = LUGARES[id], info = T[lang].places[id];
+    const card = el('article', 'spot' + (i < 2 ? ' wide' : ''));
+    card.tabIndex = 0;
+    const art = el('div', 'art'); art.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+    const inf = el('div', 'info');
+    inf.appendChild(el('span', 'tag', info.t));
+    inf.appendChild(el('h3', '', info.n));
+    inf.appendChild(el('p', 'desc', info.d));
+    card.appendChild(art); card.appendChild(inf);
+    if (enRuta.has(id)) card.appendChild(el('span', 'badge', t('inroute')));
+    card.addEventListener('click', () => {
+      $$('.spot.tap').forEach(c => { if (c !== card) c.classList.remove('tap'); });
+      card.classList.toggle('tap');
+    });
+    g.appendChild(card);
+    io.observe(card);
+  });
+}
+
+/* =========================================================
+   DESCARGA SIN CONEXIÓN
+   ========================================================= */
+const dl = $('#dl');
+dl.addEventListener('click', async () => {
+  if (dl.classList.contains('done')) { toast(t('t_already')); return; }
+  dl.classList.add('busy'); $('#dlText').textContent = t('dl_prep');
+  let p = 0; const timer = setInterval(() => { p = Math.min(p + 12, 90); $('#dlProg').style.width = p + '%'; }, 120);
+  try {
+    if (!('serviceWorker' in navigator)) throw new Error('sin service worker');
+    const reg = await navigator.serviceWorker.register('sw.js');
+    await navigator.serviceWorker.ready;
+    if (reg.active) reg.active.postMessage('precache');
+    clearInterval(timer); $('#dlProg').style.width = '100%';
+    dl.classList.remove('busy'); dl.classList.add('done');
+    $('#dlText').textContent = t('dl_done');
+    toast(t('t_ready'));
+  } catch (err) {
+    clearInterval(timer); $('#dlProg').style.width = '0';
+    dl.classList.remove('busy'); $('#dlText').textContent = t('dl_btn');
+    toast(t('t_https'));
+  }
+});
+
+/* =========================================================
+   MENÚ DE IDIOMAS
+   ========================================================= */
+const langEl = $('#lang'), langBtn = $('#langBtn');
+langBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  const open = !langEl.classList.contains('open');
+  langEl.classList.toggle('open', open);
+  langBtn.setAttribute('aria-expanded', String(open));
+});
+$$('.lang-menu button').forEach(b => b.addEventListener('click', () => {
+  setLang(b.dataset.lang);
+  langEl.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false');
+}));
+document.addEventListener('click', () => { langEl.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); });
+
+/* =========================================================
+   CONTADORES, REVELADO, SECCIÓN ACTIVA, ENCABEZADO Y BOTÓN SUBIR
+   ========================================================= */
+function countUp(node) {
+  const target = Number(node.dataset.count), suffix = node.dataset.suffix || '';
+  const start = performance.now(), dur = 1800;
+  (function step(now) {
+    const k = Math.min((now - start) / dur, 1), v = Math.round(target * (1 - Math.pow(1 - k, 4)));
+    node.textContent = v.toLocaleString(lang === 'en' ? 'en-US' : lang === 'pt' ? 'pt-BR' : 'es-CL') + suffix;
+    if (k < 1) requestAnimationFrame(step);
+  })(start);
+}
+const countObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { countUp(e.target); countObs.unobserve(e.target); }
+}), { threshold: .6 });
+$$('[data-count]').forEach(n => countObs.observe(n));
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .14 });
+
+const navLinks = $$('nav.sections a');
+const navObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+}), { rootMargin: '-40% 0px -55% 0px' });
+$$('main section').forEach(s => navObs.observe(s));
+
+const topBtn = $('#top');
+let lastY = 0;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  topBtn.classList.toggle('show', y > 700);
+  $('#topbar').classList.toggle('hide', y > 260 && y > lastY && window.innerWidth < 860);
+  lastY = y;
+}, { passive: true });
+topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* =========================================================
+   INICIO
+   ========================================================= */
+$$('.rv').forEach(n => io.observe(n));
+applyStatic();
+irA(0);
 </script>
 </body>
 </html>
