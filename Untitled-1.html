@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ruta Lagos y Volcanes en Bolsillo</title>
+<style>
+  :root {
+    --bg: #f4f7f2; --surface: #ffffff; --text: #1e2d2a; --muted: #5d6f69;
+    --lake: #1f6f8b; --lake-dark: #123f52; --forest: #2f6b4f; --ember: #d9793b;
+    --soft: #e6f0f3; --border: #d7e3e0; --shadow: 0 10px 30px rgba(18, 63, 82, .12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1b1d; --surface: #172629; --text: #e4efec; --muted: #9bb3ad;
+      --lake: #6fc3de; --lake-dark: #d8f1f9; --forest: #8fd1ad; --ember: #f0a06a;
+      --soft: #1d3436; --border: #2a4245; --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  body {
+    margin: 0; font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.55;
+    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative; overflow: hidden; color: #fff; text-align: center;
+    padding: 3.5rem 1.25rem 4.5rem;
+    background: linear-gradient(160deg, #0d3346 0%, #1f6f8b 55%, #3e9a8a 100%);
+  }
+  .hero svg.scene { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; opacity: .95; }
+  .hero .kicker {
+    display: inline-block; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    background: rgba(255,255,255,.16); padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1rem;
+  }
+  .hero h1 { position: relative; margin: 0 0 .6rem; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.1; font-weight: 800; }
+  .hero p { position: relative; margin: 0 auto; max-width: 34rem; font-size: 1.05rem; opacity: .95; }
+  .stats {
+    position: relative; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.75rem;
+  }
+  .stats div { background: rgba(255,255,255,.14); backdrop-filter: blur(4px); padding: .6rem 1rem; border-radius: 14px; min-width: 96px; }
+  .stats strong { display: block; font-size: 1.4rem; }
+  .stats span { font-size: .8rem; opacity: .9; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+    display: flex; gap: .3rem; overflow-x: auto; padding: .55rem .75rem;
+  }
+  nav a {
+    color: var(--lake); text-decoration: none; padding: .45rem .9rem; border-radius: 999px;
+    white-space: nowrap; font-size: .9rem; font-weight: 600;
+  }
+  nav a:hover, nav a:focus-visible { background: var(--soft); }
+
+  main { max-width: 980px; margin: -2.5rem auto 0; padding: 0 1.1rem 2rem; position: relative; }
+  section {
+    background: var(--surface); border-radius: 22px; padding: 1.6rem; margin-bottom: 1.4rem;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .sec-head { display: flex; align-items: center; gap: .75rem; margin-bottom: .6rem; }
+  .sec-icon {
+    width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center;
+    background: var(--soft); font-size: 1.3rem; flex-shrink: 0;
+  }
+  h2 { margin: 0; color: var(--lake-dark); font-size: 1.45rem; }
+  h3 { margin: 0 0 .25rem; font-size: 1.05rem; color: var(--lake-dark); }
+  p { margin: 0 0 .75rem; }
+  .muted { color: var(--muted); font-size: .93rem; }
+  .label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 1rem 0 .5rem; font-weight: 700; }
+
+  /* PERFIL */
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .8rem; }
+  button.opt {
+    font: inherit; text-align: left; cursor: pointer; min-height: 96px;
+    background: var(--bg); color: var(--text); border: 2px solid transparent; border-radius: 18px; padding: 1rem;
+    transition: transform .15s, border-color .15s, box-shadow .15s;
+  }
+  button.opt:hover { transform: translateY(-2px); }
+  button.opt .ico { font-size: 1.6rem; display: block; margin-bottom: .3rem; }
+  button.opt strong { display: block; color: var(--lake-dark); font-size: 1.05rem; }
+  button.opt small { color: var(--muted); }
+  button.opt[aria-pressed="true"] { border-color: var(--lake); box-shadow: 0 0 0 4px var(--soft); background: var(--surface); }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--lake); outline-offset: 2px; }
+
+  .days { display: flex; gap: .55rem; flex-wrap: wrap; }
+  .days button {
+    font: inherit; font-weight: 600; min-width: 96px; min-height: 46px; border-radius: 999px;
+    border: 1.5px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; padding: 0 1.1rem;
+  }
+  .days button[aria-pressed="true"] { background: var(--forest); color: #fff; border-color: var(--forest); }
+
+  /* ITINERARIO */
+  .resumen {
+    display: inline-flex; align-items: center; gap: .5rem; background: var(--soft); color: var(--lake-dark);
+    padding: .5rem .9rem; border-radius: 12px; font-weight: 600; margin-bottom: 1rem; font-size: .95rem;
+  }
+  .timeline { position: relative; padding-left: 1.4rem; }
+  .timeline::before {
+    content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 3px; border-radius: 3px;
+    background: linear-gradient(var(--lake), var(--forest));
+  }
+  .stop { position: relative; background: var(--bg); border-radius: 16px; padding: .9rem 1rem; margin-bottom: .8rem; }
+  .stop::before {
+    content: ""; position: absolute; left: -1.4rem; top: 1.2rem; width: 15px; height: 15px; border-radius: 50%;
+    background: var(--surface); border: 3px solid var(--ember); transform: translateX(-1px);
+  }
+  .time { font-weight: 700; color: var(--ember); font-size: .9rem; }
+  .stop h3 { margin-top: .15rem; font-size: 1.08rem; }
+  .tag {
+    display: inline-block; font-size: .78rem; font-weight: 600; background: var(--surface); color: var(--forest);
+    border: 1px solid var(--border); padding: .18rem .6rem; border-radius: 999px; margin: .4rem .3rem 0 0;
+  }
+  .note { font-size: .85rem; color: var(--muted); margin-top: .8rem; font-style: italic; }
+
+  /* FICHAS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .9rem; }
+  .card {
+    border-radius: 18px; padding: 1.1rem; background: var(--bg); border: 1px solid var(--border);
+    border-top: 5px solid var(--lake); transition: transform .15s, box-shadow .15s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .card.destacada { border-top-color: var(--ember); }
+  .card .type {
+    display: inline-block; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--forest); font-weight: 700; margin-bottom: .35rem;
+  }
+  .card p { font-size: .93rem; color: var(--muted); margin: 0; }
+
+  /* CUIDADO */
+  .care-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .8rem; margin-top: .6rem; }
+  .care-item { background: var(--bg); border-radius: 16px; padding: 1rem; }
+  .care-item .ico { font-size: 1.5rem; display: block; margin-bottom: .3rem; }
+  .care-item p { font-size: .92rem; color: var(--muted); margin: 0; }
+  .tip {
+    margin-top: 1rem; border-radius: 16px; padding: 1rem 1.1rem;
+    background: linear-gradient(120deg, var(--forest), var(--lake)); color: #fff;
+  }
+  .tip strong { display: block; margin-bottom: .2rem; }
+
+  /* EMERGENCIAS */
+  .emerg { display: grid; gap: .7rem; }
+  .emerg div { display: flex; gap: .8rem; align-items: flex-start; background: var(--bg); border-radius: 14px; padding: .85rem 1rem; }
+  .emerg .ico { font-size: 1.3rem; }
+  .emerg a { color: var(--lake); font-weight: 600; }
+
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 1rem 1rem 2.5rem; }
+
+  @media (max-width: 560px) {
+    .hero { padding: 2.6rem 1rem 3.8rem; }
+    section { padding: 1.2rem; border-radius: 18px; }
+    .stats div { min-width: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="scene" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#2f6b4f" opacity=".55" d="M0 160 L180 70 L330 130 L520 40 L700 120 L880 60 L1060 130 L1240 50 L1440 140 L1440 220 L0 220Z"/>
+    <path fill="#123f52" d="M0 190 L220 120 L400 170 L640 100 L860 165 L1080 110 L1300 170 L1440 130 L1440 220 L0 220Z"/>
+  </svg>
+  <span class="kicker">Guía digital · Sur de Chile</span>
+  <h1>Ruta Lagos y Volcanes<br>en Bolsillo</h1>
+  <p>Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.</p>
+  <div class="stats">
+    <div><strong>3</strong><span>regiones</span></div>
+    <div><strong>6</strong><span>circuitos</span></div>
+    <div><strong>2.000+</strong><span>km de ruta</span></div>
+  </div>
+</header>
+
+<nav aria-label="Secciones">
+  <a href="#elige">Elige tu viaje</a>
+  <a href="#recorrido">Tu recorrido</a>
+  <a href="#atractivos">Atractivos</a>
+  <a href="#conserva">Viaja responsable</a>
+  <a href="#emergencias">Emergencias</a>
+</nav>
+
+<main>
+
+  <section id="elige" aria-labelledby="t-elige">
+    <div class="sec-head"><div class="sec-icon">🧭</div><h2 id="t-elige">Elige tu viaje</h2></div>
+    <p class="muted">Selecciona tu estilo de viaje y los días disponibles. Armamos el recorrido por ti.</p>
+    <div class="label">Tipo de viaje</div>
+    <div class="options" role="group" aria-label="Tipo de viaje">
+      <button class="opt" data-perfil="aventura" aria-pressed="false"><span class="ico">🥾</span><strong>Aventura</strong><small>Senderos, volcanes y montaña</small></button>
+      <button class="opt" data-perfil="naturaleza" aria-pressed="true"><span class="ico">🌲</span><strong>Naturaleza</strong><small>Lagos, bosques y fotografía</small></button>
+      <button class="opt" data-perfil="cultura" aria-pressed="false"><span class="ico">🏛️</span><strong>Cultura</strong><small>Colonización alemana y patrimonio</small></button>
+      <button class="opt" data-perfil="bienestar" aria-pressed="false"><span class="ico">♨️</span><strong>Bienestar</strong><small>Termas, calma y descanso</small></button>
+    </div>
+    <div class="label">Días disponibles</div>
+    <div class="days" role="group" aria-label="Días disponibles">
+      <button data-dias="1" aria-pressed="false">1 día</button>
+      <button data-dias="2" aria-pressed="true">2 días</button>
+      <button data-dias="3" aria-pressed="false">3 días</button>
+    </div>
+  </section>
+
+  <section id="recorrido" aria-labelledby="t-recorrido">
+    <div class="sec-head"><div class="sec-icon">🗺️</div><h2 id="t-recorrido">Tu recorrido</h2></div>
+    <div class="resumen" id="resumen"></div>
+    <div class="timeline" id="itinerario"></div>
+    <p class="note">Horarios y tiempos referenciales. Confírmalos con cada prestador antes de salir.</p>
+  </section>
+
+  <section id="atractivos" aria-labelledby="t-atractivos">
+    <div class="sec-head"><div class="sec-icon">📸</div><h2 id="t-atractivos">Atractivos de la ruta</h2></div>
+    <p class="muted">Los destacados son los que aparecen en tu recorrido.</p>
+    <div class="cards" id="fichas"></div>
+  </section>
+
+  <section id="conserva" aria-labelledby="t-conserva">
+    <div class="sec-head"><div class="sec-icon">🌱</div><h2 id="t-conserva">Viaja responsable</h2></div>
+    <div class="care-grid">
+      <div class="care-item"><span class="ico">♻️</span><p>Lleva tu basura de vuelta, también en la orilla de los lagos.</p></div>
+      <div class="care-item"><span class="ico">🚶</span><p>Mantente en los senderos señalizados para proteger el suelo y la vegetación.</p></div>
+      <div class="care-item"><span class="ico">🦅</span><p>No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
+      <div class="care-item"><span class="ico">🤝</span><p>Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
+      <div class="care-item"><span class="ico">✅</span><p>Contrata actividades de aventura solo con prestadores registrados.</p></div>
+    </div>
+    <div class="tip"><strong>Consejo de viaje</strong>Descarga esta página antes de salir y guárdala en tu celular para usarla sin conexión.</div>
+  </section>
+
+  <section id="emergencias" aria-labelledby="t-emerg">
+    <div class="sec-head"><div class="sec-icon">🆘</div><h2 id="t-emerg">Emergencias y contacto</h2></div>
+    <div class="emerg">
+      <div><span class="ico">🚑</span><p><strong>Emergencias generales:</strong> 131 (SAMU), 133 (Bomberos y Carabineros). <em class="muted">Verificar vigencia antes de publicar.</em></p></div>
+      <div><span class="ico">⛰️</span><p><strong>En montaña:</strong> avisa a tu alojamiento o guía antes de salir y lleva agua, abrigo y linterna.</p></div>
+      <div><span class="ico">ℹ️</span><p><strong>Información turística:</strong> oficina de turismo de la comuna o <a href="https://www.rutalagosyvolcanes.cl/">rutalagosyvolcanes.cl</a></p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Proyecto ABPRO · Técnico en Turismo · Centro de Formación Técnica San Agustín · 2026</footer>
+
+<script>
+  const atractivos = {
+    lago: { nombre: 'Lago Llanquihue', tipo: 'Natural', desc: 'Paisaje lacustre con vista a los volcanes Osorno, Calbuco, Puntiagudo y Tronador.' },
+    osorno: { nombre: 'Volcán Osorno', tipo: 'Natural', desc: 'Forma cónica y nieves características del sur. Montaña y fotografía.' },
+    villarrica: { nombre: 'Parque Nacional Villarrica', tipo: 'Área protegida', desc: 'Volcán Villarrica, bosques de robles y cuevas volcánicas. Senderismo con guía recomendado.' },
+    conguillio: { nombre: 'Parque Nacional Conguillío', tipo: 'Área protegida', desc: 'Bosques milenarios de araucarias y escoriales de lava.' },
+    vpr: { nombre: 'Parque Nacional Vicente Pérez Rosales', tipo: 'Área protegida', desc: 'Uno de los más antiguos de Chile. Saltos de Petrohué y Lago Todos los Santos.' },
+    frutillar: { nombre: 'Museo Colonial Alemán (Frutillar)', tipo: 'Cultural histórico', desc: 'Colonización alemana desde 1852, edificaciones históricas y áreas verdes.' },
+    iglesia: { nombre: 'Iglesia del Sagrado Corazón de Jesús', tipo: 'Patrimonio', desc: 'Arquitectura de colonos alemanes en Puerto Varas. Monumento histórico desde 1992.' },
+    teatro: { nombre: 'Teatro del Lago (Frutillar)', tipo: 'Cultural contemporáneo', desc: 'Espacio cultural frente al lago, con conciertos y arte.' },
+    pewenche: { nombre: 'Rutas Ancestrales Pewenche', tipo: 'Cultural', desc: 'Conocimiento del territorio y tradiciones pewenche en la Araucanía Andina.' }
+  };
+
+  const recorridos = {
+    naturaleza: {
+      1: [
+        ['08:30 – 10:30', 'Caminata por el borde del lago', 'Lago Llanquihue', 'Contemplación y fotografía', ['lago']],
+        ['11:00 – 13:00', 'Mirador y sendero hacia el volcán', 'Volcán Osorno', 'Paisaje volcánico', ['osorno']],
+        ['14:30 – 17:00', 'Recorrido por bosque nativo', 'Parque Nacional Conguillío', 'Araucarias y naturaleza', ['conguillio']]
+      ],
+      2: [
+        ['Día 1 · 08:30 – 10:30', 'Caminata por el borde del lago', 'Lago Llanquihue', 'Contemplación y fotografía', ['lago']],
+        ['Día 1 · 14:00 – 17:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y lagos', ['vpr']],
+        ['Día 2 · 09:00 – 12:30', 'Senderismo en bosque nativo', 'Parque Nacional Conguillío', 'Araucarias y avistamiento de aves', ['conguillio']],
+        ['Día 2 · 14:00 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión y compromiso', []]
+      ],
+      3: [
+        ['Día 1 · 09:00 – 12:00', 'Caminata por el borde del lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
+        ['Día 1 · 14:00 – 17:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y lagos', ['vpr']],
+        ['Día 2 · 09:00 – 13:00', 'Senderismo en bosque nativo', 'Parque Nacional Conguillío', 'Araucarias', ['conguillio']],
+        ['Día 3 · 09:00 – 12:00', 'Mirador al volcán Osorno', 'Volcán Osorno', 'Paisaje y fotografía', ['osorno']],
+        ['Día 3 · 14:00 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión y compromiso', []]
+      ]
+    },
+    aventura: {
+      1: [
+        ['07:30 – 10:00', 'Senderismo guiado', 'Parque Nacional Villarrica', 'Bosques de robles y cuevas volcánicas', ['villarrica']],
+        ['10:30 – 13:00', 'Mirador del volcán', 'Volcán Osorno', 'Montaña y fotografía', ['osorno']],
+        ['14:30 – 17:00', 'Caminata de baja dificultad', 'Lago Llanquihue', 'Descanso y paisaje', ['lago']]
+      ],
+      2: [
+        ['Día 1 · 07:30 – 11:00', 'Senderismo guiado', 'Parque Nacional Villarrica', 'Bosques y cuevas', ['villarrica']],
+        ['Día 1 · 14:30 – 17:00', 'Caminata de baja dificultad', 'Lago Llanquihue', 'Paisaje', ['lago']],
+        ['Día 2 · 08:00 – 13:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y montaña', ['vpr']],
+        ['Día 2 · 14:30 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión', []]
+      ],
+      3: [
+        ['Día 1 · 07:30 – 11:00', 'Senderismo guiado', 'Parque Nacional Villarrica', 'Bosques y cuevas', ['villarrica']],
+        ['Día 1 · 14:30 – 17:00', 'Caminata de baja dificultad', 'Lago Llanquihue', 'Paisaje', ['lago']],
+        ['Día 2 · 08:00 – 13:00', 'Excursión a Petrohué', 'Parque Nacional Vicente Pérez Rosales', 'Saltos y montaña', ['vpr']],
+        ['Día 3 · 08:00 – 12:00', 'Mirador del volcán Osorno', 'Volcán Osorno', 'Montaña y fotografía', ['osorno']],
+        ['Día 3 · 14:00 – 16:00', 'Cierre con recomendaciones de conservación', 'Punto de descanso', 'Reflexión', []]
+      ]
+    },
+    cultura: {
+      1: [
+        ['09:00 – 11:00', 'Visita al Museo Colonial Alemán', 'Frutillar', 'Historia de la colonización', ['frutillar']],
+        ['11:30 – 13:00', 'Iglesia del Sagrado Corazón', 'Puerto Varas', 'Arquitectura y patrimonio', ['iglesia']],
+        ['15:00 – 17:00', 'Teatro del Lago y paseo por la orilla', 'Frutillar', 'Arte y paisaje', ['teatro', 'lago']]
+      ],
+      2: [
+        ['Día 1 · 09:00 – 11:00', 'Visita al Museo Colonial Alemán', 'Frutillar', 'Historia de la colonización', ['frutillar']],
+        ['Día 1 · 15:00 – 17:00', 'Teatro del Lago y paseo por la orilla', 'Frutillar', 'Arte y paisaje', ['teatro', 'lago']],
+        ['Día 2 · 09:30 – 11:30', 'Iglesia del Sagrado Corazón', 'Puerto Varas', 'Patrimonio', ['iglesia']],
+        ['Día 2 · 14:00 – 17:00', 'Rutas ancestrales pewenche (con reserva previa)', 'Araucanía Andina', 'Tradiciones y territorio', ['pewenche']]
+      ],
+      3: [
+        ['Día 1 · 09:00 – 11:00', 'Visita al Museo Colonial Alemán', 'Frutillar', 'Historia', ['frutillar']],
+        ['Día 1 · 15:00 – 17:00', 'Teatro del Lago y paseo por la orilla', 'Frutillar', 'Arte y paisaje', ['teatro', 'lago']],
+        ['Día 2 · 09:30 – 11:30', 'Iglesia del Sagrado Corazón', 'Puerto Varas', 'Patrimonio', ['iglesia']],
+        ['Día 2 · 14:00 – 17:00', 'Rutas ancestrales pewenche (con reserva previa)', 'Araucanía Andina', 'Tradiciones', ['pewenche']],
+        ['Día 3 · 09:00 – 12:00', 'Mirador al volcán Osorno', 'Volcán Osorno', 'Paisaje', ['osorno']]
+      ]
+    },
+    bienestar: {
+      1: [
+        ['09:30 – 11:00', 'Caminata suave junto al lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
+        ['11:30 – 13:00', 'Visita a la iglesia y paseo tranquilo', 'Puerto Varas', 'Patrimonio', ['iglesia']],
+        ['15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Descanso y relajación', []]
+      ],
+      2: [
+        ['Día 1 · 09:30 – 11:00', 'Caminata suave junto al lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
+        ['Día 1 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Descanso', []],
+        ['Día 2 · 09:30 – 11:30', 'Visita al Teatro del Lago', 'Frutillar', 'Arte y tranquilidad', ['teatro']],
+        ['Día 2 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Relajación', []]
+      ],
+      3: [
+        ['Día 1 · 09:30 – 11:00', 'Caminata suave junto al lago', 'Lago Llanquihue', 'Contemplación', ['lago']],
+        ['Día 1 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Descanso', []],
+        ['Día 2 · 09:30 – 11:30', 'Visita al Teatro del Lago', 'Frutillar', 'Arte', ['teatro']],
+        ['Día 2 · 15:00 – 17:00', 'Sesión de termas o spa (con reserva)', 'Zona termal de la ruta', 'Relajación', []],
+        ['Día 3 · 09:00 – 12:00', 'Mirador al volcán Osorno', 'Volcán Osorno', 'Paisaje', ['osorno']]
+      ]
+    }
+  };
+
+  const perfilNombre = { aventura: 'Aventura', naturaleza: 'Naturaleza', cultura: 'Cultura', bienestar: 'Bienestar' };
+  let perfil = 'naturaleza';
+  let dias = 2;
+
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function render() {
+    const lista = recorridos[perfil][dias] || [];
+    document.getElementById('resumen').textContent =
+      '✨ ' + dias + (dias === 1 ? ' día' : ' días') + ' · perfil ' + perfilNombre[perfil];
+    const cont = document.getElementById('itinerario');
+    cont.innerHTML = '';
+    lista.forEach(([hora, actividad, lugar, experiencia, recursos]) => {
+      const stop = el('div', 'stop');
+      stop.appendChild(el('div', 'time', hora));
+      stop.appendChild(el('h3', '', actividad));
+      stop.appendChild(el('p', 'muted', '📍 ' + lugar + ' · ' + experiencia));
+      recursos.forEach(r => stop.appendChild(el('span', 'tag', atractivos[r].nombre)));
+      cont.appendChild(stop);
+    });
+    renderFichas();
+  }
+
+  function renderFichas() {
+    const cont = document.getElementById('fichas');
+    cont.innerHTML = '';
+    const usados = new Set();
+    (recorridos[perfil][dias] || []).forEach(s => s[4].forEach(r => usados.add(r)));
+    Object.entries(atractivos).forEach(([id, a]) => {
+      const card = el('article', 'card' + (usados.has(id) ? ' destacada' : ''));
+      card.appendChild(el('span', 'type', a.tipo));
+      card.appendChild(el('h3', '', a.nombre));
+      card.appendChild(el('p', '', a.desc));
+      cont.appendChild(card);
+    });
+  }
+
+  document.querySelectorAll('[data-perfil]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      perfil = btn.dataset.perfil;
+      document.querySelectorAll('[data-perfil]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      render();
+    });
+  });
+  document.querySelectorAll('[data-dias]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      dias = Number(btn.dataset.dias);
+      document.querySelectorAll('[data-dias]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      render();
+    });
+  });
+
+  render();
+</script>
+</body>
+</html>
