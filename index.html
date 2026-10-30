@@ -651,12 +651,7 @@
       <iframe id="x-map-frame" title="Mapa de la zona" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       <div class="map-fallback" id="x-map-fallback"></div>
     </div>
-    <p style="margin-top:14px"><a id="x-map-open" class="map-open" target="_blank" rel="noopener"></a></p>
-  </div>
-  <div class="emergency">
-    <div class="em rv"><strong data-i18n="em_gen">Emergencias generales</strong><a href="tel:131">131</a></div>
-    <div class="em rv"><strong data-i18n="em_fire">Bomberos</strong><a href="tel:132">132</a></div>
-    <div class="em rv"><strong data-i18n="em_police">Carabineros</strong><a href="tel:133">133</a></div>
+    
   </div>
 </section>
 
@@ -1623,9 +1618,6 @@ function renderExtras() {
     return b;
   });
   renderMapa();
-  const open = document.getElementById('x-map-open');
-  open.textContent = X.map_btn + ' →';
-  open.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(frame.dataset.zona + ', Chile');
 
   // Promoción
   set('x-promo-t', X.promo_t); set('x-promo-h', X.promo_h);
