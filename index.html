@@ -1271,63 +1271,51 @@ const T = {
 const LUGARES = {
   lago: {
     scene:'lake', p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',
-    cat:'natural', loc:'Puerto Varas · Frutillar',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Amanecer_sobre_el_Lago_LLanquihue_y_Volc%C3%A1n_Osorno%2C_vista_desde_la_costanera_de_Puerto_Varas.JPG'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Amanecer_sobre_el_Lago_LLanquihue_y_Volc%C3%A1n_Osorno%2C_vista_desde_la_costanera_de_Puerto_Varas.JPG'
   },
   osorno: {
     scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',
-    cat:'natural', loc:'Petrohué',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Volcan_Osorno.jpg'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Volcan_Osorno.jpg'
   },
   villarrica: {
     scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1', smoke:true,
-    cat:'aventura', loc:'Pucón',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Parque_Nacional_Villarrica%2C_Lago_Quillelhue.jpg'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Parque_Nacional_Villarrica%2C_Lago_Quillelhue.jpg'
   },
   conguillio: {
     scene:'forest', p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',
-    cat:'aventura', loc:'Melipeuco',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Araucaria_in_Conguillio.JPG'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Araucaria_in_Conguillio.JPG'
   },
   vpr: {
     scene:'falls', p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',
-    cat:'natural', loc:'Petrohué',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Volcano_Osorno_and_Petrohu%C3%A9_waterfalls.JPG'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Volcano_Osorno_and_Petrohu%C3%A9_waterfalls.JPG'
   },
   frutillar: {
     scene:'house', p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',
-    cat:'cultura', loc:'Frutillar',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Casona_de_Campo..jpg'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Casona_de_Campo..jpg'
   },
   iglesia: {
     scene:'church', p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',
-    cat:'cultura', loc:'Puerto Varas',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_Sagrado_Coraz%C3%B3n_Puerto_Varas.jpg'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_Sagrado_Coraz%C3%B3n_Puerto_Varas.jpg'
   },
   teatro: {
     scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',
-    cat:'cultura', loc:'Frutillar',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Teatro_del_Lago_-_Frutillar_-_Chile.jpg'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Teatro_del_Lago_-_Frutillar_-_Chile.jpg'
   },
   pewenche: {
     scene:'ruka', p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',
-    cat:'cultura', loc:'Araucanía Andina',
-    photo:''
+    photo: ''
   },
   termas: {
     scene:'steam', p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',
-    cat:'bienestar', loc:'Zona volcánica',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Termas_de_Chill%C3%A1n%2C_Chile.jpg'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Termas_de_Chill%C3%A1n%2C_Chile.jpg'
   },
   templo: {
     scene:'church', p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1',
-    cat:'cultura', loc:'Puerto Varas',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_Luterana_Natalia_Aceituno.JPG'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_Luterana_Natalia_Aceituno.JPG'
   },
   ferias: {
     scene:'house', p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1',
-    cat:'cultura', loc:'Frutillar · Pucón',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Feria_Artesanal_en_Puc%C3%B3n.JPG'
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Feria_Artesanal_en_Puc%C3%B3n.JPG'
   }
 };
 const PERFILES = {
@@ -1549,82 +1537,24 @@ $('#next').addEventListener('click', () => irA(paso === 2 ? 0 : paso + 1));
    ATRACTIVOS
    ========================================================= */
 function renderGrid() {
-let spotFilter = 'all';
-
-const SPOT_LABELS = {
-  es: { all:'Todos', natural:'Naturaleza', aventura:'Aventura', cultura:'Cultura', bienestar:'Bienestar' },
-  en: { all:'All',   natural:'Nature',     aventura:'Adventure', cultura:'Culture', bienestar:'Wellness' },
-  pt: { all:'Todos', natural:'Natureza',   aventura:'Aventura',  cultura:'Cultura', bienestar:'Bem-estar' }
-};
-
-function renderSpotFilters() {
-  const box = document.getElementById('spot-filters');
-  if (!box) return;
-  box.innerHTML = '';
-  const labels = SPOT_LABELS[lang] || SPOT_LABELS.es;
-  Object.keys(labels).forEach(k => {
-    const b = el('button', '', labels[k]);
-    b.setAttribute('aria-pressed', String(spotFilter === k));
-    b.addEventListener('click', () => {
-      spotFilter = k;
-      renderGrid();
-    });
-    box.appendChild(b);
-  });
-}
-
-function renderGrid() {
-  const g = document.getElementById('grid');
-  if (!g) return;
-  g.innerHTML = '';
-  renderSpotFilters();
-
+  const g = $('#grid'); g.innerHTML = '';
   const enRuta = new Set(PERFILES[perfil].slice(0, numParadas()));
-  const ids = Object.keys(LUGARES).filter(id => spotFilter === 'all' || LUGARES[id].cat === spotFilter);
-
-  // contador
-  const counter = document.getElementById('spot-count');
-  if (counter) {
-    const word = lang === 'en' ? 'places' : 'lugares';
-    counter.textContent = ids.length + ' ' + word;
-  }
-
-  ids.forEach((id, i) => {
-    const L = LUGARES[id];
-    const info = T[lang].places[id];
-    const card = el('article', 'spot');
-    card.dataset.cat = L.cat || 'natural';
-    if (i < 2 && ids.length >= 4) card.classList.add('wide');
+  Object.keys(LUGARES).forEach((id, i) => {
+    const L = LUGARES[id], info = T[lang].places[id];
+    const card = el('article', 'spot' + (i < 2 ? ' wide' : ''));
     card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', info.n + ' — ' + info.d);
-
     const art = el('div', 'art');
     art.appendChild(renderArt(L, info));
-
     const inf = el('div', 'info');
-    const top = el('div', 'spot-top');
-    top.appendChild(el('span', 'tag', info.t));
-    if (L.loc) top.appendChild(el('span', 'loc', '📍 ' + L.loc));
-    inf.appendChild(top);
+    inf.appendChild(el('span', 'tag', info.t));
     inf.appendChild(el('h3', '', info.n));
     inf.appendChild(el('p', 'desc', info.d));
-    inf.appendChild(el('span', 'arrow', '→'));
-
-    card.appendChild(art);
-    card.appendChild(inf);
-    if (enRuta.has(id)) card.appendChild(el('span', 'badge', '★ ' + t('inroute')));
-
-    const toggle = () => {
-      const isOpen = card.classList.contains('tap');
-      document.querySelectorAll('.spot.tap').forEach(c => c.classList.remove('tap'));
-      if (!isOpen) card.classList.add('tap');
-    };
-    card.addEventListener('click', toggle);
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    card.appendChild(art); card.appendChild(inf);
+    if (enRuta.has(id)) card.appendChild(el('span', 'badge', t('inroute')));
+    card.addEventListener('click', () => {
+      $$('.spot.tap').forEach(c => { if (c !== card) c.classList.remove('tap'); });
+      card.classList.toggle('tap');
     });
-
     g.appendChild(card);
     io.observe(card);
   });
