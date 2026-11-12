@@ -73,24 +73,20 @@
   .lang-menu .soon{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
     color:var(--mute);background:var(--soft);padding:.18rem .55rem;border-radius:999px}
 
+  /* ---------- HERO ---------- */
+  @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  
   .hero{position:relative;min-height:100svh;overflow:hidden;color:#fff;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
     padding:7rem 1.25rem 9rem;
-    background:linear-gradient(-45deg,#0d3346,#1f6f8b,#3e9a8a,#123f52);
-    background-size:300% 300%;animation:gradientShift 14s ease infinite}
-  @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  .sun{position:absolute;top:16%;right:14%;width:96px;height:96px;border-radius:50%;
-    background:radial-gradient(circle,#ffd58a 0%,#f0a050 60%,rgba(240,160,80,0) 72%);
-    animation:pulse 6s ease-in-out infinite}
-  @keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.12);opacity:1}}
-  .cloud{position:absolute;background:rgba(255,255,255,.18);border-radius:100px;height:26px;width:120px;animation:drift linear infinite}
-  .cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
-  .cloud::before{width:50px;height:50px;top:-22px;left:18px}
-  .cloud::after{width:70px;height:70px;top:-36px;left:50px}
-  .cloud.c1{top:22%;left:-160px;animation-duration:40s}
-  .cloud.c2{top:46%;left:-220px;animation-duration:58s;transform:scale(.7)}
-  .cloud.c3{top:12%;left:-260px;animation-duration:72s;transform:scale(1.3);display:none}
-  @keyframes drift{to{transform:translateX(calc(100vw + 400px))}}
+    /* Fondo local para offline */
+    background-image: linear-gradient(to bottom, rgba(13,51,70,0.4), rgba(13,51,70,0.8)), 
+                      url('img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  }
   .hero-inner{position:relative;z-index:2;max-width:980px;width:100%}
   .kicker{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
     background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);padding:.42rem .95rem;border-radius:999px;margin-bottom:1.2rem;
@@ -500,10 +496,6 @@
 </div>
 
 <header class="hero" id="inicio">
-  <div class="sun" aria-hidden="true"></div>
-  <div class="cloud c1" aria-hidden="true"></div>
-  <div class="cloud c2" aria-hidden="true"></div>
-  <div class="cloud c3" aria-hidden="true"></div>
   <div class="hero-inner">
     <span class="kicker">Guía digital · Sur de Chile</span>
     <h1 class="hero-title">
