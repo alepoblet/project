@@ -910,65 +910,64 @@ const LUGARES = {
   lago: {
     scene:'lake', p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',
     cat:'natural', loc:'Puerto Varas · Frutillar',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Amanecer_sobre_el_Lago_LLanquihue_y_Volc%C3%A1n_Osorno%2C_vista_desde_la_costanera_de_Puerto_Varas.JPG?width=800'
+    photo:'img/lago.jpg'                // ← local
   },
   osorno: {
     scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',
     cat:'natural', loc:'Petrohué',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Volcan_Osorno.jpg?width=800'
+    photo:'img/osorno.jpg'              // ← local
   },
   villarrica: {
     scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1', smoke:true,
     cat:'aventura', loc:'Pucón',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Parque_Nacional_Villarrica%2C_Lago_Quillelhue.jpg?width=800'
+    photo:'img/villarrica.jpg'          // ← local
   },
   conguillio: {
     scene:'forest', p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',
     cat:'aventura', loc:'Melipeuco',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Araucaria_in_Conguillio.JPG?width=800'
+    photo:'img/conguillio.jpg'          // ← local
   },
   vpr: {
     scene:'falls', p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',
     cat:'natural', loc:'Petrohué',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Volcano_Osorno_and_Petrohu%C3%A9_waterfalls.JPG?width=800'
+    photo:'img/vpr.jpg'                 // ← local
   },
   frutillar: {
     scene:'house', p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',
     cat:'cultura', loc:'Frutillar',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Casona_de_Campo..jpg?width=800'
+    photo:'img/frutillar.jpg'           // ← local
   },
   iglesia: {
     scene:'church', p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',
     cat:'cultura', loc:'Puerto Varas',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_Sagrado_Coraz%C3%B3n_Puerto_Varas.jpg?width=800'
+    photo:'img/iglesia.jpg'             // ← local
   },
   teatro: {
     scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',
     cat:'cultura', loc:'Frutillar',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Teatro_del_Lago_-_Frutillar_-_Chile.jpg?width=800'
+    photo:'img/teatro.jpg'              // ← local
   },
   pewenche: {
     scene:'ruka', p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',
     cat:'cultura', loc:'Araucanía Andina',
-    photo:''
+    photo:''                            // ← SVG (sin foto)
   },
   termas: {
     scene:'steam', p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',
     cat:'bienestar', loc:'Zona volcánica',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Termas_de_Chill%C3%A1n%2C_Chile.jpg?width=800'
+    photo:'img/termas.jpg'              // ← opcional: si no la descargaste, deja ''
   },
   templo: {
     scene:'church', p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1',
     cat:'cultura', loc:'Puerto Varas',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_Luterana_Natalia_Aceituno.JPG?width=800'
+    photo:'img/templo.jpg'              // ← opcional
   },
   ferias: {
     scene:'house', p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1',
     cat:'cultura', loc:'Frutillar · Pucón',
-    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Feria_Artesanal_en_Puc%C3%B3n.JPG?width=800'
+    photo:''                            // ← SVG (sin foto)
   }
 };
-
 const PERFILES = {
   aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
   naturaleza: ['lago','osorno','conguillio','vpr','lago'],
