@@ -1151,19 +1151,61 @@ const T = {
    LUGARES (con soporte de foto real)
    Para añadir una foto: cambia photo:'' por photo:'img/archivo.jpg'
    ========================================================= */
+/* =========================================================
+   LUGARES (con fotos reales de Wikimedia Commons)
+   Si alguna URL falla, el SVG ilustrado se muestra como respaldo.
+   Para poner tu propia foto: cambia photo:'' por photo:'img/archivo.jpg'
+   ========================================================= */
+const WM = 'https://commons.wikimedia.org/wiki/Special:FilePath/';
 const LUGARES = {
-  lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  photo:'' },
-  osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  photo:'' },
-  villarrica: { scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1',  photo:'', smoke:true },
-  conguillio: { scene:'forest',  p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',  photo:'' },
-  vpr:        { scene:'falls',   p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',  photo:'' },
-  frutillar:  { scene:'house',   p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',  photo:'' },
-  iglesia:    { scene:'church',  p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',  photo:'' },
-  teatro:     { scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',  photo:'' },
-  pewenche:   { scene:'ruka',    p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',  photo:'' },
-  termas:     { scene:'steam',   p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',  photo:'' },
-  templo:     { scene:'church',  p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1', photo:'' },
-  ferias:     { scene:'house',   p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1', photo:'' }
+  lago: {
+    scene:'lake', p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',
+    photo: WM + 'Lago_Llanquihue_y_volc%C3%A1n_Osorno.jpg'
+  },
+  osorno: {
+    scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',
+    photo: WM + 'Volcan_Osorno.jpg'
+  },
+  villarrica: {
+    scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1', smoke:true,
+    photo: WM + 'Parque_Nacional_Villarrica%2C_Lago_Quillelhue.jpg'
+  },
+  conguillio: {
+    scene:'forest', p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',
+    photo: WM + 'Araucaria_in_Conguillio.JPG'
+  },
+  vpr: {
+    scene:'falls', p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',
+    photo: WM + 'Volcano_Osorno_and_Petrohu%C3%A9_waterfalls.JPG'
+  },
+  frutillar: {
+    scene:'house', p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',
+    photo: WM + 'Casona_de_Campo..jpg'
+  },
+  iglesia: {
+    scene:'church', p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',
+    photo: WM + 'Iglesia_Sagrado_Coraz%C3%B3n_Puerto_Varas.jpg'
+  },
+  teatro: {
+    scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',
+    photo: WM + 'Teatro_del_Lago_-_Frutillar_-_Chile.jpg'
+  },
+  pewenche: {
+    scene:'ruka', p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',
+    photo: '' // No hay foto específica en Commons; se muestra el SVG ilustrado.
+  },
+  termas: {
+    scene:'steam', p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',
+    photo: WM + 'Termas_de_Chill%C3%A1n%2C_Chile.jpg'
+  },
+  templo: {
+    scene:'church', p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1',
+    photo: WM + 'Iglesia_Luterana_Natalia_Aceituno.JPG'
+  },
+  ferias: {
+    scene:'house', p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1',
+    photo: '' // Se mantiene el SVG ilustrado.
+  }
 };
 const PERFILES = {
   aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
