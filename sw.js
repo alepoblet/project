@@ -1,5 +1,5 @@
 /* sw.js — Guía Ruta Lagos y Volcanes */
-const CACHE = 'guia-lagos-v12'; // Subimos la versión
+const CACHE = 'guia-lagos-v13'; // Subimos la versión
 
 const CORE = [
   './',
