@@ -1,18 +1,69 @@
 {
   "name": "Guía Ruta Lagos y Volcanes",
   "short_name": "Lagos y Volcanes",
-  "start_url": "./",
+  "description": "Guía digital de la Ruta Lagos y Volcanes: arma tu recorrido, consulta servicios locales y úsala sin conexión.",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f4f8f7",
   "theme_color": "#123f52",
-  "lang": "es",
-  "description": "Guía digital de la Ruta Lagos y Volcanes.",
+  "lang": "es-CL",
+  "dir": "ltr",
+  "categories": ["travel", "navigation", "lifestyle"],
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E",
-      "sizes": "any",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23123f52'/%3E%3Ctext x='50%25' y='54%25' font-size='320' text-anchor='middle' dominant-baseline='middle'%3E%F0%9F%8C%8B%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23123f52'/%3E%3Ctext x='50%25' y='54%25' font-size='320' text-anchor='middle' dominant-baseline='middle'%3E%F0%9F%8C%8B%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Planificar viaje",
+      "short_name": "Planificar",
+      "description": "Arma tu itinerario en 3 pasos",
+      "url": "./index.html#planificador",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%BA%EF%B8%8F%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Atractivos",
+      "short_name": "Atractivos",
+      "description": "Lugares clave de la ruta",
+      "url": "./index.html#atractivos",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8D%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Mapa",
+      "short_name": "Mapa",
+      "description": "Explora las zonas en el mapa",
+      "url": "./index.html#mapa",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%BA%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
     }
   ]
 }
