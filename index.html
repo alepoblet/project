@@ -1410,19 +1410,14 @@ function renderExtras() {
   set('x-food-tip', X.food_tip);
   renderRest();
 
-  // Servicios + arriendos
-  fill('x-srv-grid', X.srv, ([icon, name, desc]) => {
-    const c = el('div', 'card-x');
-    c.appendChild(el('span', 'ico', icon));
-    c.appendChild(el('h4', '', name));
-    c.appendChild(el('p', '', desc));
-    return c;
+// Arriendos: SOLO 3 tarjetas, sin mezclar con transporte
+const srvGrid = document.getElementById('x-srv-grid');
+if (srvGrid) {
+  srvGrid.innerHTML = '';
+  PLACES.arriendo.forEach(x => {
+    srvGrid.appendChild(placeCard(LBL[x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link));
   });
-  const srvGrid = document.getElementById('x-srv-grid');
-  if (srvGrid) PLACES.arriendo.forEach(x => {
-    srvGrid.appendChild(placeCard(LBL[x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z));
-  });
-
+}
   // Accesibilidad
   set('x-acc-t', X.acc_t); set('x-acc-h', X.acc_h);
   fill('x-acc-grid', X.acc, ([h, d]) => {
