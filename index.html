@@ -29,7 +29,7 @@
   p{margin:0 0 .7rem}
   svg{display:block;max-width:100%}
   button{font:inherit}
-  :focus-visible{outline:3px solid var(--lake);outline-offset:3px;border-radius:12px}
+  :focus-visible{outline:none; box-shadow:0 0 0 4px rgba(31,111,139,.3); border-radius:12px;}
 
   /* ---------- VIDRIO LÍQUIDO ---------- */
   .lg{position:relative;
@@ -38,10 +38,6 @@
     -webkit-backdrop-filter:blur(20px) saturate(190%);
     box-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 14px 34px -12px rgba(18,63,82,.35);
     border-radius:999px; border:1px solid rgba(255,255,255,.5);}
-  .lg-sheen::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;pointer-events:none;border-radius:inherit;
-    background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.6) 50%,transparent 100%);
-    animation:glassSheen 7s ease-in-out infinite}
-  @keyframes glassSheen{0%,35%{left:-60%}75%,100%{left:130%}}
 
   /* ---------- ENCABEZADO ---------- */
   .topbar{position:fixed;top:0;left:0;right:0;z-index:70;
@@ -84,10 +80,13 @@
   }
   /* Efecto Parallax solo en PC (evita el bug de iOS) */
   @media (min-width: 1024px) {
-    .hero {
-      background-attachment: fixed;
-    }
+    .hero { background-attachment: fixed; }
   }
+
+  .hero-inner{position:relative;z-index:2;max-width:980px;width:100%}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:.45rem 1rem;border-radius:999px;margin-bottom:1.2rem;
+    backdrop-filter:blur(8px);opacity:0;animation:rise .9s var(--ease) .1s forwards}
   .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:#7ff0e0;animation:live 2s infinite}
   @keyframes live{0%{box-shadow:0 0 0 0 rgba(127,240,224,.6)}100%{box-shadow:0 0 0 10px rgba(127,240,224,0)}}
   .hero-title{font-size:clamp(2.3rem,7vw,5rem);font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:0;
@@ -154,7 +153,8 @@
   .steps{display:flex;justify-content:space-between;padding:20px 24px 0;font-size:.8rem;font-weight:800;color:#9bb0b9}
   .steps span{transition:color .4s}
   .steps span.on{color:var(--lake)}
-  .viewport{position:relative;overflow:hidden;min-height:460px}
+  
+  .viewport{position:relative;overflow:hidden;min-height:480px}
   .slide{position:absolute;inset:0;padding:26px 24px 110px;overflow-y:auto;
     transform:translateX(100%);opacity:0;transition:transform .8s var(--ease),opacity .6s var(--ease);pointer-events:none}
   .slide.left{transform:translateX(-100%)}
@@ -204,7 +204,6 @@
   .stop.in::before{animation:ping 2.6s var(--ease) infinite}
   @keyframes ping{0%{box-shadow:0 0 0 0 rgba(232,128,74,.45)}70%,100%{box-shadow:0 0 0 10px rgba(232,128,74,0)}}
   
-  /* Tiempo de viaje */
   .travel-time { position: relative; display: inline-flex; align-items: center; gap: 6px; 
     margin: 8px 0 8px -6px; padding: 4px 12px; background: var(--bg); border: 1px dashed var(--line);
     color: var(--mute); font-size: 0.75rem; font-weight: 800; border-radius: 999px; z-index: 2; }
@@ -215,15 +214,6 @@
   .stop .time{font-size:.76rem;font-weight:800;color:var(--ember);letter-spacing:.05em;text-transform:uppercase}
   .stop h4{font-size:1.04rem;font-weight:800;margin:.1rem 0 .15rem}
   .stop .place{font-size:.88rem;color:var(--mute)}
-
-  .skel{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;border-radius:20px;background:#eaf1f4;
-    margin-bottom:12px;padding:12px;position:relative;overflow:hidden}
-  .skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
-    transform:translateX(-100%);animation:shimmer 1.4s infinite}
-  @keyframes shimmer{to{transform:translateX(100%)}}
-  .skel .box{width:64px;height:64px;border-radius:16px;background:#d9e5ea}
-  .skel .l{height:10px;border-radius:6px;background:#d9e5ea;margin-bottom:10px}
-  .skel .l.s{width:30%}.skel .l.m{width:60%;height:14px}.skel .l.w{width:85%;margin-bottom:0}
 
   .nav-steps{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;
     padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));
@@ -288,19 +278,12 @@
   .spot .arrow{position:absolute;right:22px;bottom:24px;width:40px;height:40px;border-radius:50%;
     display:grid;place-items:center;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);
     border:1px solid rgba(255,255,255,.3);font-size:1.1rem;font-weight:800;opacity:0;transform:translateX(-8px);
-    transition:opacity .4s var(--ease),transform .5s var(--spring)}
+    transition:opacity .4s var(--ease),transform .5s var(--spring); pointer-events:none;}
   .spot:hover .arrow,.spot.tap .arrow,.spot:focus-visible .arrow{opacity:1;transform:none}
 
   .spot .badge{position:absolute;top:16px;left:16px;font-size:.7rem;font-weight:800;
     background:var(--coral);padding:.35rem .75rem;border-radius:999px;
     box-shadow:0 8px 18px -8px var(--coral);letter-spacing:.04em}
-
-  @media (max-width:640px){
-    .grid{grid-template-columns:1fr;gap:16px}
-    .spot{height:300px}
-    .spot .info{transform:translateY(calc(100% - 100px))}
-    .spot h3{font-size:1.25rem}
-  }
 
   /* ---------- SECCIONES DE SERVICIOS Y EXTRA ---------- */
   .lod-grid { display:grid; gap:16px; grid-template-columns:1fr; }
@@ -348,8 +331,7 @@
   .em-card { background: #fffaf9; border: 1px solid #ffe4d9; border-radius: 24px; padding: 24px; 
     box-shadow: 0 4px 15px -10px rgba(232,128,74,.2); transition: transform .4s var(--ease); }
   .em-card:hover { transform: translateY(-4px); }
-  .em-num { display: flex; align-items: center; gap: 12px; font-size: 2.5rem; font-weight: 900; color: var(--coral); text-decoration: none; margin-bottom: .5rem; line-height: 1; }
-  .em-num:hover { text-decoration: underline; }
+  .em-num { display: flex; align-items: center; gap: 12px; font-size: 2.5rem; font-weight: 900; color: var(--coral); margin-bottom: .5rem; line-height: 1; pointer-events: none; }
   .em-num::before { content: "📞"; font-size: 1.5rem; }
   .em-card h4 { font-size: 1.1rem; font-weight: 800; color: var(--ink); margin-bottom: .2rem; }
   .em-card p { margin: 0; color: var(--mute); font-size: .9rem; }
@@ -429,15 +411,25 @@
     transition:opacity .4s,transform .6s var(--spring);z-index:40}
   #top.show{opacity:1;transform:none;pointer-events:auto}
 
+  /* --- OPTIMIZACIÓN MÓVIL (Arreglo del Planificador y HUD) --- */
   @media (max-width:640px){
     .hero{padding-top:6.4rem}
     .planner{border-radius:26px}
-    .slide{padding:22px 18px 108px}
+    
+    /* Arreglo del planificador para que no se corte */
+    .viewport{ min-height: 560px; } 
+    .slide{padding:22px 18px 110px}
+    .styles{ grid-template-columns: 1fr 1fr; gap:10px; } /* 2 columnas en celular para que quepan bien */
     .style-card{padding:16px 14px}
     .style-card .emo{font-size:2rem}
+    .style-card h4 { font-size: 1rem; }
+    .dur{padding:20px 10px}
     .dur strong{font-size:2.3rem}
+    
     .stop{grid-template-columns:56px 1fr; padding:10px 12px 10px 10px;}
     .thumb{width:56px;height:56px}
+    .travel-time { font-size: 0.7rem; padding: 4px 10px; }
+    
     .skel{grid-template-columns:56px 1fr}
     .skel .box{width:56px;height:56px}
   }
@@ -488,7 +480,7 @@
 </header>
 
 <div class="sections-wrap">
-  <nav class="sections lg lg-sheen" aria-label="Secciones">
+  <nav class="sections lg" aria-label="Secciones">
     <a href="#planificador">Planifica</a>
     <a href="#atractivos">Atractivos</a>
     <a href="#locales" data-tab="dormir">Dormir</a>
@@ -683,7 +675,7 @@ const T = {
         'Guías con certificado de primeros auxilios y experiencia comprobable.',
         'Números de emergencia visibles en todo momento.'
       ],
-      map_t: 'Mapa y zonas', map_h: 'Explora cada zona en el mapa',
+      map_t: 'Mapa y zonas', map_h: 'Explora cada zona en el mapa satelital',
       src_t: 'Fuentes',
       src: [
         'Chile Travel (2026). Ruta Lagos y Volcanes. Servicio Nacional de Turismo.',
@@ -854,7 +846,6 @@ function generarItinerario(conEsqueleto) {
       
       tl.appendChild(stop);
 
-      // Agregar tiempo de viaje entre paradas
       if (i < total - 1) {
         const travel = el('div', 'travel-time');
         travel.textContent = '🚗 ' + TIEMPOS[i % TIEMPOS.length];
@@ -1099,7 +1090,7 @@ function renderExtras() {
     emGrid.innerHTML = '';
     EMERG.forEach(([num, name, desc]) => {
       const c = el('div', 'em-card');
-      const a = el('a', 'em-num', num); a.href = 'tel:' + num;
+      const a = el('span', 'em-num', num); // Ahora es texto, no enlace
       c.appendChild(a); c.appendChild(el('h4', '', name)); c.appendChild(el('p', '', desc));
       emGrid.appendChild(c);
     });
@@ -1124,7 +1115,8 @@ function renderMapa() {
       fb.innerHTML = 'No se pudo cargar el mapa. <a class="map-open" target="_blank" rel="noopener" href="https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '">Abrir en Google Maps →</a>';
     }
   };
-  f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&output=embed';
+  // &t=k fuerza la vista satelital
+  f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&t=k&z=12&output=embed';
 }
 
 function setTab(name) {
