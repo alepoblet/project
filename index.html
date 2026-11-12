@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123f52">
+<meta name="description" content="Guía digital de la Ruta Lagos y Volcanes: arma tu recorrido y úsalo sin conexión.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
+<title>Guía Ruta Lagos y Volcanes</title>
+<style>
+  :root {
+    --ink:#0d2a36; --ink-2:#2b4a57; --mute:#5b7480; --white:#ffffff; --bg:#f4f8f7;
+    --line:rgba(13,42,54,.09);
+    --lake:#1f6f8b; --lake-dark:#123f52; --forest:#2f6b4f; --teal:#2e9c93;
+    --ember:#e8804a; --coral:#ff7a59; --soft:#e6f0f3;
+    --grad:linear-gradient(120deg,#1f6f8b 0%,#2e9c93 100%);
+    --shadow:0 26px 50px -24px rgba(18,63,82,.42);
+    --ease:cubic-bezier(.22,.8,.24,1);
+    --spring:cubic-bezier(.34,1.56,.64,1);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Inter","Segoe UI",system-ui,-apple-system,Arial,sans-serif;color:var(--ink);
+    background:var(--bg);line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased;
+    padding-bottom:env(safe-area-inset-bottom,0px)}
+  h1,h2,h3,h4{margin:0;line-height:1.12;letter-spacing:-.025em}
+  p{margin:0 0 .7rem}
+  svg{display:block;max-width:100%}
+  button{font:inherit}
+  :focus-visible{outline:3px solid var(--lake);outline-offset:3px;border-radius:12px}
+
+  .lg{position:relative;
+    background:linear-gradient(135deg,rgba(255,255,255,.66) 0%,rgba(255,255,255,.3) 55%,rgba(255,255,255,.5) 100%);
+    backdrop-filter:blur(18px) saturate(190%) brightness(1.04);
+    -webkit-backdrop-filter:blur(18px) saturate(190%) brightness(1.04);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35),inset 0 0 22px rgba(255,255,255,.35),
+      0 14px 34px -12px rgba(18,63,82,.35),0 2px 6px rgba(18,63,82,.08)}
+  .lg::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.2px;pointer-events:none;
+    background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.15) 40%,rgba(255,255,255,.7) 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude}
+  .lg-sheen::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.55) 50%,transparent 100%);
+    animation:glassSheen 7s ease-in-out infinite}
+  @keyframes glassSheen{0%,35%{left:-60%}75%,100%{left:130%}}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:70;
+    padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 0;transition:transform .6s var(--ease)}
+  .topbar.hide{transform:translateY(-140%)}
+  .topbar-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:.4rem .45rem .4rem .8rem;border-radius:999px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:.95rem;color:var(--lake-dark);text-decoration:none}
+  .brand .logo{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:1.05rem;
+    background:var(--grad);box-shadow:0 8px 18px -8px var(--lake)}
+  .lang{position:relative}
+  .lang-btn{display:flex;align-items:center;gap:8px;border:none;cursor:pointer;color:var(--lake-dark);font-weight:700;font-size:.86rem;
+    padding:.55rem .95rem;border-radius:999px;transition:transform .35s var(--spring),box-shadow .3s}
+  .lang-btn:hover{transform:translateY(-1px)}
+  .lang-btn .chev{font-size:.6rem;transition:transform .45s var(--ease)}
+  .lang.open .lang-btn .chev{transform:rotate(180deg)}
+  .lang-menu{position:absolute;right:0;top:calc(100% + 10px);min-width:210px;list-style:none;margin:0;padding:6px;
+    background:rgba(255,255,255,.96);border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);
+    opacity:0;transform:translateY(-10px) scale(.96);transform-origin:top right;pointer-events:none;
+    transition:opacity .3s var(--ease),transform .45s var(--spring)}
+  .lang.open .lang-menu{opacity:1;transform:none;pointer-events:auto}
+  .lang-menu button{width:100%;text-align:left;border:none;background:none;padding:.65rem .85rem;border-radius:12px;cursor:pointer;
+    font-size:.92rem;color:var(--ink);display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+  .lang-menu button:hover{background:var(--soft)}
+  .lang-menu button[aria-selected="true"]{color:var(--lake);font-weight:800}
+  .lang-menu button:disabled{opacity:.55;cursor:not-allowed}
+  .lang-menu button:disabled:hover{background:none}
+  .lang-menu .soon{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--mute);background:var(--soft);padding:.18rem .55rem;border-radius:999px}
+
+  .hero{position:relative;min-height:100svh;overflow:hidden;color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    padding:7rem 1.25rem 9rem;
+    background:linear-gradient(-45deg,#0d3346,#1f6f8b,#3e9a8a,#123f52);
+    background-size:300% 300%;animation:gradientShift 14s ease infinite}
+  @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .sun{position:absolute;top:16%;right:14%;width:96px;height:96px;border-radius:50%;
+    background:radial-gradient(circle,#ffd58a 0%,#f0a050 60%,rgba(240,160,80,0) 72%);
+    animation:pulse 6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.12);opacity:1}}
+  .cloud{position:absolute;background:rgba(255,255,255,.18);border-radius:100px;height:26px;width:120px;animation:drift linear infinite}
+  .cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
+  .cloud::before{width:50px;height:50px;top:-22px;left:18px}
+  .cloud::after{width:70px;height:70px;top:-36px;left:50px}
+  .cloud.c1{top:22%;left:-160px;animation-duration:40s}
+  .cloud.c2{top:46%;left:-220px;animation-duration:58s;transform:scale(.7)}
+  .cloud.c3{top:12%;left:-260px;animation-duration:72s;transform:scale(1.3);display:none}
+  @keyframes drift{to{transform:translateX(calc(100vw + 400px))}}
+  .hero-inner{position:relative;z-index:2;max-width:980px;width:100%}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);padding:.42rem .95rem;border-radius:999px;margin-bottom:1.2rem;
+    backdrop-filter:blur(6px);opacity:0;animation:rise .9s var(--ease) .1s forwards}
+  .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:#7ff0e0;animation:live 2s infinite}
+  @keyframes live{0%{box-shadow:0 0 0 0 rgba(127,240,224,.6)}100%{box-shadow:0 0 0 10px rgba(127,240,224,0)}}
+  .hero-title{font-size:clamp(2.3rem,7vw,5rem);font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:0;
+    text-shadow:0 6px 30px rgba(0,0,0,.18)}
+  .hero-title .ln{display:block}
+  .hero-title .w{display:inline-block;white-space:nowrap}
+  .hero-title .accent{color:#ffd58a}
+  .char{display:inline-block;opacity:0;transform:translateY(.45em) rotate(3deg);animation:charIn 1s var(--ease) forwards;animation-delay:var(--d)}
+  @keyframes charIn{to{opacity:1;transform:none}}
+  .hero .sub{font-size:clamp(1rem,2.3vw,1.2rem);max-width:36rem;margin:1.1rem auto 2rem;opacity:0;
+    animation:rise 1s var(--ease) .4s forwards;color:#e3f1f4}
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  .cta{position:relative;display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;cursor:pointer;border:none;
+    padding:1.05rem 1.9rem;border-radius:999px;color:var(--lake-dark);font-weight:800;font-size:1rem;background:#fff;
+    box-shadow:0 16px 34px -12px rgba(0,0,0,.45);opacity:0;animation:rise 1s var(--ease) .55s forwards;
+    transition:transform .45s var(--spring),box-shadow .45s var(--ease)}
+  .cta::before{content:"";position:absolute;inset:-6px;border-radius:999px;border:2px solid #7ff0e0;opacity:0;
+    animation:ring 2.4s var(--ease) infinite}
+  @keyframes ring{0%{transform:scale(.92);opacity:.8}100%{transform:scale(1.28);opacity:0}}
+  .cta:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 24px 44px -14px rgba(0,0,0,.5)}
+  .cta:active{transform:scale(.97)}
+  .cta .arr{transition:transform .4s var(--ease)}
+  .cta:hover .arr{transform:translateX(5px)}
+  .stats{position:relative;z-index:2;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:2.4rem}
+  .stats div{min-width:116px;padding:.75rem 1.1rem;border-radius:18px;
+    opacity:0;animation:rise .8s var(--ease) forwards}
+  .stats div:nth-child(1){animation-delay:.7s}
+  .stats div:nth-child(2){animation-delay:.82s}
+  .stats div:nth-child(3){animation-delay:.94s}
+  .stats strong{display:block;font-size:1.8rem;font-weight:800}
+  .stats span{font-size:.78rem;opacity:.92}
+  .stats div{background:none;border:none;backdrop-filter:none;min-width:0;padding:.4rem .9rem}
+
+  .horizon{position:absolute;left:0;bottom:-1px;width:100%;height:120px;z-index:1;overflow:visible}
+  .horizon .ridge{transform-box:fill-box;transform-origin:50% 100%;animation:ridgeGrow 1.6s var(--ease) .2s both}
+  .horizon .front{animation:frontSway 9s ease-in-out 1.8s infinite}
+  @keyframes ridgeGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes frontSway{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
+
+  .sections-wrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px);z-index:60;display:flex;
+    justify-content:center;padding:0 12px;margin-top:14px;pointer-events:none}
+  nav.sections{pointer-events:auto;display:flex;gap:.25rem;max-width:100%;overflow-x:auto;scrollbar-width:none;
+    padding:.38rem;border-radius:999px}
+  nav.sections::-webkit-scrollbar{display:none}
+  nav.sections a{position:relative;z-index:1;white-space:nowrap;text-decoration:none;color:var(--lake-dark);
+    font-weight:700;font-size:.9rem;padding:.5rem 1rem;border-radius:999px;
+    transition:background .4s var(--ease),color .4s,transform .4s var(--spring),box-shadow .4s}
+  nav.sections a:hover{background:rgba(255,255,255,.6);color:var(--lake);transform:translateY(-1px);
+    box-shadow:inset 0 1px 0 #fff,0 4px 12px -6px rgba(18,63,82,.3)}
+  nav.sections a.active{background:linear-gradient(135deg,#1f6f8b,#2e9c93);color:#fff;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -8px rgba(18,63,82,.55)}
+
+  .page{max-width:1120px;margin:0 auto;padding:0 18px}
+  section{position:relative;padding:70px 0 30px;scroll-margin-top:150px}
+  .eyebrow{font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lake);
+    display:inline-flex;align-items:center;gap:.5rem}
+  .eyebrow::before{content:"";width:24px;height:2px;border-radius:2px;background:var(--grad)}
+  .sec-title h2{font-size:clamp(2.1rem,5vw,3.2rem);font-weight:800;margin:.75rem 0 .6rem}
+  .sec-title p{color:var(--mute);max-width:38rem}
+  .rv{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+  .rv.in{opacity:1;transform:none}
+
+  .planner{margin-top:2.2rem;background:var(--white);border-radius:32px;box-shadow:var(--shadow);overflow:hidden;
+    border:1px solid var(--line)}
+  .progress{height:6px;background:#e3edf0;position:relative}
+  .progress i{position:absolute;left:0;top:0;bottom:0;width:33.3%;background:var(--grad);
+    transition:width .8s var(--ease);border-radius:0 6px 6px 0}
+  .steps{display:flex;justify-content:space-between;padding:18px 24px 0;font-size:.8rem;font-weight:800;color:#9bb0b9}
+  .steps span{transition:color .4s}
+  .steps span.on{color:var(--lake)}
+  .viewport{position:relative;overflow:hidden;min-height:460px}
+  .slide{position:absolute;inset:0;padding:26px 24px 110px;overflow-y:auto;
+    transform:translateX(100%);opacity:0;transition:transform .8s var(--ease),opacity .6s var(--ease);pointer-events:none}
+  .slide.left{transform:translateX(-100%)}
+  .slide.active{transform:none;opacity:1;pointer-events:auto}
+  .slide h3{font-size:1.7rem;font-weight:800;margin-bottom:.35rem}
+  .slide > p.hint{color:var(--mute);margin-bottom:1.4rem}
+
+  .styles{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;perspective:900px}
+  .style-card{position:relative;border:1px solid var(--line);background:#fbfdfd;border-radius:24px;padding:20px 18px;
+    cursor:pointer;text-align:left;transform-style:preserve-3d;will-change:transform;
+    transition:transform .3s var(--ease),box-shadow .5s var(--ease),background .4s,color .4s}
+  .style-card:hover{box-shadow:0 22px 40px -22px rgba(18,63,82,.45)}
+  .style-card .emo{font-size:2.3rem;display:inline-block;transform:translateZ(30px);transition:transform .5s var(--spring)}
+  .style-card h4{font-size:1.15rem;margin:.8rem 0 .2rem;font-weight:800;transform:translateZ(20px)}
+  .style-card small{color:var(--mute);transform:translateZ(10px);display:block;font-size:.85rem}
+  .style-card[aria-pressed="true"]{background:var(--lake-dark);color:#fff;box-shadow:0 24px 44px -20px rgba(18,63,82,.8)}
+  .style-card[aria-pressed="true"] small{color:#b7d6de}
+  .style-card[aria-pressed="true"] .emo{transform:translateZ(30px) scale(1.12)}
+
+  .durations{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .dur{border:1px solid var(--line);background:#fbfdfd;border-radius:26px;padding:26px 12px;cursor:pointer;text-align:center;
+    transition:transform .5s var(--spring),background .4s,color .4s,box-shadow .5s}
+  .dur:hover{transform:translateY(-5px);box-shadow:0 16px 32px -18px rgba(18,63,82,.45)}
+  .dur strong{display:block;font-size:2.8rem;font-weight:800;line-height:1;background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .dur span{font-size:.92rem;color:var(--mute);font-weight:700}
+  .dur[aria-pressed="true"]{background:var(--lake-dark);color:#fff;border-color:var(--lake-dark);
+    box-shadow:0 22px 40px -18px rgba(18,63,82,.8)}
+  .dur[aria-pressed="true"] strong{background:none;-webkit-text-fill-color:#fff;color:#fff}
+  .dur[aria-pressed="true"] span{color:#b7d6de}
+
+  .summary{display:inline-flex;gap:.5rem;align-items:center;background:var(--soft);color:var(--lake-dark);
+    padding:.5rem .95rem;border-radius:14px;font-weight:800;font-size:.9rem;margin-bottom:1.2rem}
+  .timeline{position:relative;padding-left:28px}
+  .timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--grad);
+    transform-origin:top;transform:scaleY(0);transition:transform 1.8s var(--ease)}
+  .timeline.drawn::before{transform:scaleY(1)}
+  .stop{position:relative;display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;
+    background:#fbfdfd;border:1px solid var(--line);border-radius:20px;padding:10px 14px 10px 10px;margin-bottom:12px;
+    opacity:0;transform:translateX(-20px);transition:opacity .9s var(--ease),transform .9s var(--ease),box-shadow .4s,border-color .3s}
+  .stop.in{opacity:1;transform:none}
+  .stop:hover{box-shadow:0 18px 32px -20px rgba(18,63,82,.45);border-color:#cfe2e8}
+  .stop::before{content:"";position:absolute;left:-24px;top:50%;margin-top:-8px;width:16px;height:16px;border-radius:50%;
+    background:#fff;border:3px solid var(--ember)}
+  .stop.in::before{animation:ping 2.6s var(--ease) infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(232,128,74,.45)}70%,100%{box-shadow:0 0 0 10px rgba(232,128,74,0)}}
+  .thumb{width:64px;height:64px;border-radius:16px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line);background:linear-gradient(135deg,#1f6f8b,#2e9c93)}
+  .thumb svg,.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .stop .time{font-size:.76rem;font-weight:800;color:var(--ember);letter-spacing:.05em;text-transform:uppercase}
+  .stop h4{font-size:1.04rem;font-weight:800;margin:.1rem 0 .15rem}
+  .stop .place{font-size:.88rem;color:var(--mute)}
+
+  .skel{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;border-radius:20px;background:#eaf1f4;
+    margin-bottom:12px;padding:12px;position:relative;overflow:hidden}
+  .skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
+    transform:translateX(-100%);animation:shimmer 1.4s infinite}
+  @keyframes shimmer{to{transform:translateX(100%)}}
+  .skel .box{width:64px;height:64px;border-radius:16px;background:#d9e5ea}
+  .skel .l{height:10px;border-radius:6px;background:#d9e5ea;margin-bottom:10px}
+  .skel .l.s{width:30%}.skel .l.m{width:60%;height:14px}.skel .l.w{width:85%;margin-bottom:0}
+
+  .nav-steps{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;
+    padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));
+    background:linear-gradient(rgba(255,255,255,0),#fff 40%)}
+  .btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:.85rem 1.25rem;border-radius:999px;cursor:pointer;
+    font-weight:700;transition:transform .35s var(--spring),box-shadow .3s,opacity .3s}
+  .btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 22px -12px rgba(18,63,82,.45)}
+  .btn:active:not(:disabled){transform:scale(.97)}
+  .btn:disabled{opacity:.35;cursor:default}
+  .btn.primary{background:var(--lake-dark);color:#fff;border-color:var(--lake-dark);margin-left:auto}
+
+  .spot-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:1.6rem}
+  .spot-filters{display:flex;gap:8px;flex-wrap:wrap}
+  .spot-filters button{border:1px solid var(--line);background:var(--white);color:var(--ink-2);border-radius:999px;
+    padding:.55rem 1.1rem;cursor:pointer;font-weight:700;font-size:.88rem;
+    transition:transform .35s var(--spring),background .3s,color .3s,border-color .3s,box-shadow .3s}
+  .spot-filters button:hover{transform:translateY(-2px);border-color:var(--lake);box-shadow:0 8px 18px -10px rgba(18,63,82,.35)}
+  .spot-filters button[aria-pressed="true"]{background:var(--lake-dark);color:#fff;border-color:var(--lake-dark);
+    box-shadow:0 10px 20px -10px rgba(18,63,82,.6)}
+  .spot-count{font-size:.85rem;font-weight:700;color:var(--mute);background:var(--soft);padding:.4rem .85rem;border-radius:999px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin-top:1.8rem;grid-auto-flow:dense}
+
+  .spot{position:relative;height:340px;border-radius:28px;overflow:hidden;cursor:pointer;color:#fff;isolation:isolate;
+    opacity:0;translate:0 30px;transition:opacity .8s var(--ease),translate .8s var(--ease),box-shadow .6s var(--ease),transform .5s var(--ease);
+    box-shadow:0 20px 40px -24px rgba(18,63,82,.6);
+    background:linear-gradient(135deg,#1f6f8b,#2e9c93)}
+  .spot.in{opacity:1;translate:0}
+  .spot.wide{grid-column:span 2;height:400px}
+  .spot:hover,.spot:focus-visible{transform:translateY(-5px);box-shadow:0 32px 56px -24px rgba(18,63,82,.7)}
+  .spot:focus-visible{outline:3px solid #7ff0e0;outline-offset:3px}
+
+  .spot .art{position:absolute;inset:0;z-index:-2;overflow:hidden}
+  .spot .art svg,.spot .art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s var(--ease)}
+  .spot .art img{opacity:0}
+  .spot .art img.loaded{opacity:1}
+  .spot:hover .art svg,.spot:hover .art img,
+  .spot.tap .art svg,.spot.tap .art img,
+  .spot:focus-visible .art svg,.spot:focus-visible .art img{transform:scale(1.08)}
+
+  .spot::after{content:"";position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(to top,rgba(6,24,32,.92) 0%,rgba(6,24,32,.45) 45%,rgba(6,24,32,0) 78%)}
+
+  .spot .info{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 24px;
+    display:flex;flex-direction:column;gap:6px;transform:translateY(calc(100% - 108px));
+    transition:transform .8s var(--ease)}
+  .spot:hover .info,.spot.tap .info,.spot:focus-visible .info{transform:translateY(0)}
+
+  .spot-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .spot .tag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    padding:.3rem .7rem;border-radius:999px;backdrop-filter:blur(6px)}
+  .spot[data-cat="natural"]  .tag{background:rgba(46,156,147,.92)}
+  .spot[data-cat="aventura"] .tag{background:rgba(232,128,74,.94)}
+  .spot[data-cat="cultura"]  .tag{background:rgba(214,168,60,.94)}
+  .spot[data-cat="bienestar"] .tag{background:rgba(160,116,208,.94)}
+  .spot .loc{font-size:.74rem;opacity:.88;font-weight:600}
+
+  .spot h3{font-size:1.4rem;font-weight:800;margin:.35rem 0 0;text-shadow:0 2px 12px rgba(0,0,0,.4);line-height:1.15}
+  .spot.wide h3{font-size:1.7rem}
+
+  .spot .desc{font-size:.92rem;color:#e3f1f4;margin:.15rem 0 0;opacity:0;transform:translateY(12px);
+    transition:opacity .5s .1s var(--ease),transform .5s .1s var(--ease);max-width:42ch}
+  .spot:hover .desc,.spot.tap .desc,.spot:focus-visible .desc{opacity:1;transform:none}
+
+  .spot .arrow{position:absolute;right:22px;bottom:24px;width:40px;height:40px;border-radius:50%;
+    display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.28);font-size:1.1rem;font-weight:800;opacity:0;transform:translateX(-8px);
+    transition:opacity .4s var(--ease),transform .5s var(--spring)}
+  .spot:hover .arrow,.spot.tap .arrow,.spot:focus-visible .arrow{opacity:1;transform:none}
+
+  .spot .badge{position:absolute;top:16px;left:16px;font-size:.7rem;font-weight:800;
+    background:var(--coral);padding:.35rem .75rem;border-radius:999px;
+    box-shadow:0 8px 18px -8px var(--coral);letter-spacing:.04em}
+
+  .spot .cloudy{animation:driftSvg 40s linear infinite}
+  .spot .sunpulse{animation:pulse 6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes driftSvg{from{transform:translateX(-60px)}to{transform:translateX(460px)}}
+
+  @media (max-width:900px){.spot.wide{grid-column:span 2;height:360px}}
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr;gap:16px}
+    .spot,.spot.wide{grid-column:span 1;height:300px}
+    .spot .info{transform:translateY(calc(100% - 100px))}
+    .spot h3,.spot.wide h3{font-size:1.25rem}
+  }
+  @media (prefers-reduced-motion:reduce){.spot{opacity:1 !important;translate:0 !important}}
+
+  .eco{display:grid;grid-template-columns:1fr;gap:14px;margin-top:2.2rem}
+  .eco-card{display:flex;gap:16px;align-items:center;background:var(--white);border:1px solid var(--line);
+    border-radius:24px;padding:18px 20px;box-shadow:0 2px 10px -6px rgba(18,63,82,.15);
+    transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+  .eco-card:hover{transform:translateX(8px);box-shadow:var(--shadow)}
+  .eco-card .ic{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;font-size:1.5rem;flex-shrink:0;
+    background:linear-gradient(135deg,#d8f3ee,#f2fbf9);transition:transform .6s var(--spring)}
+  .eco-card:hover .ic{transform:rotate(-12deg) scale(1.12)}
+  .eco-card p{margin:0;color:var(--ink-2);font-size:.97rem}
+  @media (min-width:760px){.eco{grid-template-columns:repeat(2,1fr)}}
+
+  .qa{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:0 20px;margin-bottom:12px;
+    transition:box-shadow .4s,border-color .4s}
+  .qa[open]{box-shadow:0 16px 30px -22px rgba(18,63,82,.45);border-color:#cfe2e8}
+  .qa summary{cursor:pointer;list-style:none;font-weight:800;padding:18px 0;display:flex;
+    justify-content:space-between;align-items:center;gap:12px;color:var(--lake-dark)}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary::after{content:"+";font-size:1.4rem;color:var(--lake);transition:transform .4s var(--spring)}
+  .qa[open] summary::after{transform:rotate(45deg)}
+  .qa p{padding-bottom:18px;color:var(--ink-2);margin:0}
+
+  .info-grid,.srv-grid,.acc-grid,.res-grid,.lod-grid{display:grid;gap:14px;grid-template-columns:1fr}
+  @media (min-width:720px){
+    .info-grid,.srv-grid,.acc-grid,.res-grid{grid-template-columns:repeat(2,1fr)}
+    .lod-grid{grid-template-columns:repeat(3,1fr)}
+  }
+  @media (min-width:1000px){
+    .srv-grid,.info-grid{grid-template-columns:repeat(3,1fr)}
+  }
+
+  .card-x{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:20px;
+    box-shadow:0 2px 10px -6px rgba(18,63,82,.15);
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+    display:flex;flex-direction:column}
+  .card-x:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .card-x .ico{font-size:1.9rem;display:inline-block;transition:transform .5s var(--spring)}
+  .card-x:hover .ico{transform:scale(1.15) rotate(-6deg)}
+  .card-x h4{font-size:1.08rem;font-weight:800;margin:.6rem 0 .3rem;color:var(--lake-dark)}
+  .card-x p{margin:0;color:var(--mute);font-size:.93rem}
+  .card-x .age{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--teal);margin-bottom:.3rem}
+  .card-x .rating{font-weight:700;color:var(--ember);font-size:.85rem;margin-bottom:.4rem}
+  .card-x .card-actions{margin-top:auto;padding-top:12px;display:flex;align-items:center;
+    gap:14px;flex-wrap:wrap;border-top:1px dashed var(--line)}
+  .card-x .map-btn{border:none;background:none;color:var(--lake-dark);font-weight:800;cursor:pointer;
+    padding:0;font-size:.88rem}
+  .card-x .map-btn:hover{text-decoration:underline}
+  .card-x .ext-link{color:var(--lake);font-size:.88rem;font-weight:800;text-decoration:none;margin-left:auto}
+  .card-x .ext-link:hover{text-decoration:underline}
+
+  .info-item{background:var(--soft);border-radius:18px;padding:16px 18px}
+  .info-item b{display:block;color:var(--lake-dark);margin-bottom:.2rem}
+  .info-item span{color:var(--ink-2);font-size:.93rem}
+
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:1.4rem 0 1rem}
+  .filters button{border:1px solid var(--line);background:var(--white);color:var(--ink-2);border-radius:999px;
+    padding:.55rem 1rem;cursor:pointer;font-weight:700;
+    transition:transform .35s var(--spring),background .3s,color .3s,border-color .3s}
+  .filters button:hover{transform:translateY(-2px);border-color:var(--lake)}
+  .filters button[aria-pressed="true"]{background:var(--lake-dark);color:#fff;border-color:var(--lake-dark)}
+
+  .check-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+  .check-list li{display:flex;gap:12px;align-items:flex-start;background:var(--white);border:1px solid var(--line);
+    border-radius:18px;padding:14px 16px;color:var(--ink-2);transition:transform .4s var(--ease)}
+  .check-list li:hover{transform:translateX(6px)}
+  .check-list li::before{content:"✓";flex-shrink:0;width:26px;height:26px;border-radius:50%;
+    display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:800;font-size:.85rem}
+
+  .em-num{display:inline-block;font-size:2rem;font-weight:800;color:var(--coral);text-decoration:none;margin-bottom:.3rem}
+  .em-num:hover{text-decoration:underline}
+
+  .map-frame-wrap{position:relative;width:100%;height:440px;border-radius:26px;overflow:hidden;background:var(--soft);
+    box-shadow:0 20px 40px -26px rgba(18,63,82,.5)}
+  .map-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .map-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;
+    color:var(--ink-2);font-weight:600;z-index:0;gap:12px}
+  .map-open{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--lake-dark);
+    color:#fff !important;padding:.8rem 1.3rem;border-radius:999px;font-weight:800;
+    transition:transform .4s var(--spring),box-shadow .4s}
+  .map-open:hover{transform:translateY(-2px);box-shadow:0 14px 26px -12px rgba(18,63,82,.6)}
+
+  .tabs-glass{display:inline-flex;gap:.3rem;padding:.4rem;border-radius:999px;margin-bottom:1.8rem;
+    max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .tabs-glass::-webkit-scrollbar{display:none}
+  .tab{position:relative;z-index:1;border:none;background:none;cursor:pointer;color:var(--lake-dark);
+    font-weight:700;font-size:.95rem;padding:.6rem 1.2rem;border-radius:999px;white-space:nowrap;
+    transition:background .4s var(--ease),color .4s,transform .4s var(--spring),box-shadow .4s}
+  .tab:hover{background:rgba(255,255,255,.6);color:var(--lake)}
+  .tab[aria-selected="true"]{background:linear-gradient(135deg,#1f6f8b,#2e9c93);color:#fff;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -8px rgba(18,63,82,.55)}
+  .panel{display:none}
+  .panel.active{display:block;animation:panelIn .7s var(--ease) both}
+  @keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .promo-wrap{display:grid;gap:24px;align-items:center;grid-template-columns:1fr;margin-top:1.6rem}
+  @media (min-width:800px){.promo-wrap{grid-template-columns:340px 1fr}}
+  .poster{position:relative;aspect-ratio:4/5;border-radius:26px;overflow:hidden;color:#fff;isolation:isolate;
+    background:linear-gradient(-45deg,#0d3346,#1f6f8b,#3e9a8a);background-size:300% 300%;
+    animation:gradientShift 12s ease infinite;box-shadow:var(--shadow);transform:rotate(-1.5deg);
+    transition:transform .6s var(--spring)}
+  .poster:hover{transform:rotate(0deg) scale(1.02)}
+  .poster .p-art{position:absolute;inset:0;z-index:-1;opacity:.55}
+  .poster .p-art svg,.poster .p-art img{width:100%;height:100%;object-fit:cover}
+  .poster .p-top{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;opacity:.9}
+  .poster h3{font-size:2rem;font-weight:800;margin-top:auto;text-shadow:0 4px 18px rgba(0,0,0,.3)}
+  .poster p{font-size:.98rem;opacity:.95;margin:.6rem 0 0}
+  .poster .p-qr{position:absolute;right:18px;bottom:18px;width:56px;height:56px;border-radius:12px;background:#fff;
+    display:grid;place-items:center;font-size:1.6rem}
+  .poster-inner{position:absolute;inset:0;padding:26px;display:flex;flex-direction:column}
+  .promo-text h3{font-size:1.6rem;font-weight:800;margin-bottom:.4rem}
+  .promo-text p{color:var(--mute)}
+  .share{margin-top:16px;border:none;cursor:pointer;background:var(--lake-dark);color:#fff;font-weight:800;
+    padding:.9rem 1.4rem;border-radius:999px;transition:transform .4s var(--spring),box-shadow .4s}
+  .share:hover{transform:translateY(-2px);box-shadow:0 14px 26px -12px rgba(18,63,82,.6)}
+
+  .viab-box{margin-top:22px;background:var(--white);border:1px solid var(--line);border-radius:22px;
+    padding:20px 22px;color:var(--ink-2)}
+  .src-list{list-style:none;padding:0;margin:0;color:var(--mute);font-size:.92rem}
+  .src-list li{padding:8px 0;border-bottom:1px dashed var(--line)}
+
+  .offline{margin-top:44px;border-radius:34px;padding:46px 26px;text-align:center;color:#fff;position:relative;
+    overflow:hidden;background:linear-gradient(120deg,#0d3346,#1f6f8b 50%,#3e9a8a,#0d3346);
+    background-size:250% 250%;animation:gradientShift 14s ease infinite}
+  .offline::before,.offline::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+    background:rgba(255,255,255,.07)}
+  .offline::before{top:-110px;left:-60px;animation:blob 14s ease-in-out infinite}
+  .offline::after{bottom:-120px;right:-40px;animation:blob 18s ease-in-out infinite reverse}
+  @keyframes blob{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+  .offline > *{position:relative}
+  .offline h3{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;margin-bottom:.5rem}
+  .offline p{color:#cde6ec;max-width:32rem;margin:0 auto 1.5rem}
+  .dl{position:relative;overflow:hidden;border:none;cursor:pointer;color:var(--lake-dark);background:#fff;
+    font-weight:800;font-size:1rem;padding:1.05rem 1.9rem;border-radius:999px;display:inline-flex;
+    align-items:center;gap:.6rem;box-shadow:0 16px 34px -12px rgba(0,0,0,.5);
+    transition:transform .45s var(--spring),box-shadow .45s}
+  .dl:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 26px 46px -14px rgba(0,0,0,.55)}
+  .dl .bounce{display:inline-block;animation:bounce 1.8s var(--ease) infinite}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+  .dl .prog{position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--grad);transition:width .4s var(--ease)}
+  .dl.done .bounce{animation:none}
+  .dl.busy{pointer-events:none}
+
+  .foot{text-align:center;color:var(--mute);font-size:.85rem;padding:36px 18px 64px}
+  .foot strong{color:var(--ink);font-size:1.02rem;display:block;margin-bottom:.25rem}
+  .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);
+    z-index:90;background:var(--lake-dark);color:#fff;padding:13px 20px;border-radius:18px;font-size:.92rem;
+    font-weight:600;box-shadow:var(--shadow);transition:transform .7s var(--spring);
+    max-width:calc(100% - 32px);text-align:center}
+  .toast.show{transform:translate(-50%,0)}
+  #top{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:50px;height:50px;
+    border-radius:50%;border:none;background:var(--lake-dark);color:#fff;font-size:1.15rem;cursor:pointer;
+    box-shadow:var(--shadow);opacity:0;transform:scale(.8);pointer-events:none;
+    transition:opacity .4s,transform .6s var(--spring);z-index:40}
+  #top.show{opacity:1;transform:none;pointer-events:auto}
+
+  @media (max-width:640px){
+    .hero{padding-top:6.4rem}
+    .planner{border-radius:26px}
+    .slide{padding:22px 18px 108px}
+    .style-card{padding:16px 14px}
+    .style-card .emo{font-size:2rem}
+    .dur strong{font-size:2.3rem}
+    .stop{grid-template-columns:56px 1fr}
+    .thumb{width:56px;height:56px}
+    .skel{grid-template-columns:56px 1fr}
+    .skel .box{width:56px;height:56px}
+    .sun{width:64px;height:64px;right:6%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    html{scroll-behavior:auto}
+    .rv,.hero h1,.hero .sub,.cta,.kicker,.stats div{opacity:1 !important;transform:none !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+  <div class="topbar-inner lg lg-sheen">
+    <a class="brand" href="#inicio"><span class="logo">🌋</span><span>Guía Lagos y Volcanes</span></a>
+    <div class="lang" id="lang">
+      <button class="lang-btn lg" id="langBtn" aria-haspopup="listbox" aria-expanded="false" style="border-radius:999px">
+        <span id="langLabel">🇨🇱 Español</span><span class="chev">▼</span>
+      </button>
+      <ul class="lang-menu" role="listbox" aria-label="Idioma">
+        <li><button role="option" aria-selected="true" data-lang="es">🇨🇱 Español <span>✓</span></button></li>
+        <li><button role="option" aria-selected="false" data-lang="en" disabled>🇬🇧 English <span class="soon">Pronto</span></button></li>
+        <li><button role="option" aria-selected="false" data-lang="pt" disabled>🇧🇷 Português <span class="soon">Em breve</span></button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<header class="hero" id="inicio">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="cloud c1" aria-hidden="true"></div>
+  <div class="cloud c2" aria-hidden="true"></div>
+  <div class="cloud c3" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <span class="kicker">Guía digital · Sur de Chile</span>
+    <h1 class="hero-title">
+      <span class="ln">Ruta Lagos y Volcanes</span>
+      <span class="ln accent">en Bolsillo</span>
+    </h1>
+    <p class="sub">Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.</p>
+    <a class="cta" href="#planificador">Planificar mi viaje <span class="arr">→</span></a>
+    <div class="stats">
+      <div><strong data-count="3">3</strong><span>regiones</span></div>
+      <div><strong data-count="6">6</strong><span>circuitos</span></div>
+      <div><strong data-count="2000" data-suffix="+">2.000+</strong><span>km de ruta</span></div>
+    </div>
+  </div>
+  <svg class="horizon" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path class="ridge" d="M-20 92 L150 42 L300 80 L500 22 L700 76 L900 34 L1090 84 L1270 30 L1460 72 L1460 120 L-20 120Z" fill="#e6f0f3" opacity=".6"/>
+    <path class="front" d="M-60 104 Q300 72 720 100 T1500 96 L1500 120 L-60 120Z" fill="var(--bg)"/>
+  </svg>
+</header>
+
+<div class="sections-wrap">
+  <nav class="sections lg lg-sheen" aria-label="Secciones">
+    <a href="#planificador">Planifica</a>
+    <a href="#atractivos">Atractivos</a>
+    <a href="#locales" data-tab="dormir">Dormir</a>
+    <a href="#locales" data-tab="comer">Comer</a>
+    <a href="#mapa" id="nav-mapa">Mapa</a>
+    <a href="#cuidado">Cuidado</a>
+    <a href="#emergencias" id="nav-em">Emergencias</a>
+  </nav>
+</div>
+
+<main class="page">
+
+<section id="planificador" aria-labelledby="t-plan">
+  <div class="sec-title rv">
+    <span class="eyebrow">Planificador</span>
+    <h2 id="t-plan">Tu recorrido, en 3 pasos</h2>
+    <p>Elige tu estilo, cuántos días tienes y te mostramos un itinerario listo para seguir.</p>
+  </div>
+  <div class="planner rv">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="steps">
+      <span class="on">1 · Estilo</span>
+      <span>2 · Duración</span>
+      <span>3 · Itinerario</span>
+    </div>
+    <div class="viewport">
+      <div class="slide active" data-slide="0">
+        <h3>¿Cómo quieres viajar?</h3>
+        <p class="hint">Pasa el cursor o toca una opción.</p>
+        <div class="styles">
+          <button class="style-card" data-perfil="aventura" aria-pressed="false"><span class="emo">🥾</span><h4>Aventura</h4><small>Senderos y volcanes</small></button>
+          <button class="style-card" data-perfil="naturaleza" aria-pressed="true"><span class="emo">🌲</span><h4>Naturaleza</h4><small>Lagos y bosques</small></button>
+          <button class="style-card" data-perfil="cultura" aria-pressed="false"><span class="emo">🏛️</span><h4>Cultura</h4><small>Historia y patrimonio</small></button>
+          <button class="style-card" data-perfil="bienestar" aria-pressed="false"><span class="emo">♨️</span><h4>Bienestar</h4><small>Termas y calma</small></button>
+        </div>
+      </div>
+      <div class="slide" data-slide="1">
+        <h3>¿Cuánto tiempo tienes?</h3>
+        <p class="hint">Ajustamos el recorrido a tus días.</p>
+        <div class="durations">
+          <button class="dur" data-dias="1" aria-pressed="false"><strong>1</strong><span>día</span></button>
+          <button class="dur" data-dias="2" aria-pressed="true"><strong>2</strong><span>días</span></button>
+          <button class="dur" data-dias="3" aria-pressed="false"><strong>3</strong><span>días</span></button>
+        </div>
+      </div>
+      <div class="slide" data-slide="2">
+        <h3>Tu itinerario</h3>
+        <div class="summary" id="summary"></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </div>
+    <div class="nav-steps">
+      <button class="btn" id="prev" disabled>← Atrás</button>
+      <button class="btn primary" id="next">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section id="atractivos" aria-labelledby="t-spots">
+  <div class="sec-title rv">
+    <span class="eyebrow">Atractivos</span>
+    <h2 id="t-spots">Lugares clave de la ruta</h2>
+    <p>Filtra por categoría y toca una tarjeta para conocer cada lugar.</p>
+  </div>
+  <div class="spot-toolbar rv">
+    <div class="spot-filters" id="spot-filters" role="group" aria-label="Filtrar lugares"></div>
+    <span class="spot-count" id="spot-count"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- SERVICIOS LOCALES (simplificado: 3 + 3 + 3) -->
+<section id="locales" aria-labelledby="x-loc-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-loc-t"></span>
+    <h2 id="x-loc-h"></h2>
+  </div>
+  <div class="tabs-glass lg lg-sheen rv" role="tablist">
+    <button class="tab" role="tab" id="tab-dormir" data-tab="dormir" aria-selected="true" aria-controls="panel-dormir"></button>
+    <button class="tab" role="tab" id="tab-comer" data-tab="comer" aria-selected="false" aria-controls="panel-comer"></button>
+    <button class="tab" role="tab" id="tab-arriendo" data-tab="arriendo" aria-selected="false" aria-controls="panel-arriendo"></button>
+  </div>
+  <div class="panel active" data-panel="dormir" role="tabpanel" id="panel-dormir" aria-labelledby="tab-dormir">
+    <div class="lod-grid rv" id="x-lod-grid"></div>
+  </div>
+  <div class="panel" data-panel="comer" role="tabpanel" id="panel-comer" aria-labelledby="tab-comer">
+    <div class="lod-grid rv" id="x-rest-grid"></div>
+  </div>
+  <div class="panel" data-panel="arriendo" role="tabpanel" id="panel-arriendo" aria-labelledby="tab-arriendo">
+    <div class="lod-grid rv" id="x-srv-grid"></div>
+  </div>
+</section>
+
+<section id="mapa" aria-labelledby="x-map-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-map-t"></span>
+    <h2 id="x-map-h"></h2>
+  </div>
+  <div class="filters rv" id="x-map-grid"></div>
+  <div class="rv map-box" style="margin-top:18px">
+    <div class="map-frame-wrap">
+      <iframe id="x-map-frame" title="Mapa de la zona" referrerpolicy="no-referrer-when-downgrade" allowfullscreen loading="lazy"></iframe>
+      <div class="map-fallback" id="x-map-fallback">Baja hasta el mapa para cargarlo</div>
+    </div>
+  </div>
+</section>
+
+<section id="accesibilidad" aria-labelledby="x-acc-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-acc-t"></span>
+    <h2 id="x-acc-h"></h2>
+  </div>
+  <div class="acc-grid rv" id="x-acc-grid"></div>
+</section>
+
+<section id="calidad" aria-labelledby="x-cal-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-cal-t"></span>
+    <h2 id="x-cal-h"></h2>
+  </div>
+  <ul class="check-list rv" id="x-cal-list"></ul>
+</section>
+
+<section id="cuidado" aria-labelledby="t-eco">
+  <div class="sec-title rv">
+    <span class="eyebrow">Cuidado del medio ambiente</span>
+    <h2 id="t-eco">Viaja sin dejar huella</h2>
+    <p>Pequeños gestos protegen lagos, volcanes y comunidades.</p>
+  </div>
+  <div class="eco">
+    <div class="eco-card rv"><div class="ic">♻️</div><p>Lleva tu basura de vuelta, también en la orilla de los lagos.</p></div>
+    <div class="eco-card rv"><div class="ic">🚶</div><p>Mantente en los senderos señalizados para proteger el suelo y la vegetación.</p></div>
+    <div class="eco-card rv"><div class="ic">🦅</div><p>No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
+    <div class="eco-card rv"><div class="ic">🤝</div><p>Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
+  </div>
+</section>
+
+<section id="emergencias" aria-labelledby="x-em-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-em-t"></span>
+    <h2 id="x-em-h"></h2>
+  </div>
+  <div class="srv-grid rv" id="x-em-grid"></div>
+  <ul class="check-list rv" id="x-em-tips" style="margin-top:18px"></ul>
+</section>
+
+<section id="promo" aria-labelledby="x-promo-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-promo-t"></span>
+    <h2 id="x-promo-h"></h2>
+  </div>
+  <div class="promo-wrap rv">
+    <div class="poster" aria-label="Afiche promocional">
+      <div class="p-art" id="x-poster-art"></div>
+      <div class="poster-inner">
+        <span class="p-top">Guía Lagos y Volcanes</span>
+        <h3 id="x-poster-title"></h3>
+        <p id="x-poster-msg"></p>
+        <span class="p-qr" aria-hidden="true">▦</span>
+      </div>
+    </div>
+    <div class="promo-text">
+      <h3 id="x-promo-sub"></h3>
+      <p id="x-promo-ch"></p>
+      <button class="share" id="share"></button>
+    </div>
+  </div>
+</section>
+
+<section id="resultados" aria-labelledby="x-res-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-res-t"></span>
+    <h2 id="x-res-h"></h2>
+  </div>
+  <div class="res-grid rv" id="x-res-grid"></div>
+  <div class="viab-box rv" id="x-viab"></div>
+</section>
+
+<section id="fuentes" aria-labelledby="x-src-t">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-src-t"></span>
+  </div>
+  <ul class="src-list rv" id="x-src"></ul>
+</section>
+
+<section id="descripcion" aria-labelledby="x-desc-h">
+  <div class="sec-title rv">
+    <span class="eyebrow" id="x-desc-t"></span>
+    <h2 id="x-desc-h"></h2>
+  </div>
+  <div id="x-desc-list" class="rv"></div>
+</section>
+
+<section id="descarga" aria-labelledby="t-off" style="padding-top:10px">
+  <div class="offline rv">
+    <h3 id="t-off">Llévala contigo sin señal</h3>
+    <p>Descarga la guía y consúltala en cualquier tramo de la ruta, aunque no tengas conexión.</p>
+    <button class="dl" id="dl"><span class="bounce">⬇️</span><span id="dlText">Descargar guía para uso sin conexión</span><span class="prog" id="dlProg"></span></button>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <strong>Guía Ruta Lagos y Volcanes</strong>
+  <span>Proyecto ABPRO · Técnico en Turismo · Centro de Formación Técnica San Agustín · 2026</span>
+</footer>
+
+<button id="top" aria-label="Volver arriba">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const T = {
+  es: {
+    x: {
+      desc_t: 'Sobre la propuesta', desc_h: 'Una guía que convierte la ruta en un recorrido claro',
+      desc_q: [
+        ['¿En qué consiste?', 'Una guía digital en formato de página web, optimizada para celular, con recorridos armados según el tipo de turista y el tiempo disponible, un mapa de la ruta y fichas de atractivos.'],
+        ['¿Dónde se desarrolla?', 'En los 6 circuitos de la Ruta Escénica Lagos y Volcanes, con especial atención a las comunas de Frutillar, Puerto Varas, Puerto Octay, Pucón, Villarrica y Panguipulli.'],
+        ['¿Qué necesidad busca solucionar?', 'La dificultad de planificar y orientarse en una ruta de más de 2.000 km, con información dispersa y señal de internet irregular.'],
+        ['¿Qué experiencia se pretende entregar?', 'Un viaje organizado, seguro y sin pérdida de tiempo, que permita descubrir atractivos cercanos y conocer el patrimonio de la zona.'],
+        ['¿Qué elementos la diferencian?', 'Recorridos por perfil de viajero, uso sin conexión, fichas breves con recomendaciones de conservación y enlaces a los servicios locales.'],
+        ['¿Por qué resulta pertinente?', 'Responde al problema central del diagnóstico y facilita el acceso a una oferta que ya existe, pero que está poco articulada.']
+      ],
+      loc_t: 'Servicios locales', loc_h: 'Dónde dormir, comer y arrendar',
+      tab_dormir: 'Dormir', tab_comer: 'Comer', tab_arriendo: 'Arriendos',
+      nav_lod: 'Dormir', nav_food: 'Comer', nav_map: 'Mapa', nav_em: 'Emergencias',
+      acc_t: 'Accesibilidad y conectividad', acc_h: 'Barreras identificadas y cómo las enfrentamos',
+      acc: [
+        ['Señal irregular en tramos alejados', 'Descarga previa de mapas y fichas, con indicación de los puntos con señal.'],
+        ['Señalización insuficiente', 'Códigos QR en paraderos y accesos que enlazan a la ficha del atractivo.'],
+        ['Información en un solo idioma', 'Versión en español, inglés y portugués.'],
+        ['Tiempos de traslado no evidentes', 'Tiempo estimado entre atractivos, según el medio de transporte.']
+      ],
+      cal_t: 'Calidad y seguridad', cal_h: 'Qué revisar antes de cada actividad',
+      cal: [
+        'Información previa sobre dificultad, clima, equipamiento y horarios de cada atractivo.',
+        'Advertencias de seguridad para actividades de montaña.',
+        'Servicios de aventura solo con prestadores inscritos en el Registro Nacional de Prestadores de Servicios Turísticos (decreto N°19).',
+        'Busca el Sello de Calidad Turística, que reconoce a los prestadores que cumplen la normativa.',
+        'Guías con certificado de primeros auxilios y experiencia comprobable.',
+        'Números de emergencia visibles en todo momento.'
+      ],
+      map_t: 'Mapa y zonas', map_h: 'Explora cada zona en el mapa',
+      promo_t: 'Promoción', promo_h: 'Pieza promocional',
+      poster_title: 'Tu ruta, en tu bolsillo', poster_msg: 'Planifica el viaje a los lagos y volcanes sin perderte.',
+      promo_sub: 'Compártela en tus redes', promo_ch: 'Canal: Instagram y la página de la guía. Mensaje principal: planificar sin perderse.',
+      share: 'Compartir enlace', copied: 'Enlace copiado',
+      res_t: 'Resultados esperados', res_h: 'Cómo sabremos que funciona',
+      res: [
+        ['Descargas', 'Cantidad de descargas de la guía.'],
+        ['Atractivos menos conocidos', 'Visitas a las fichas de lugares poco conocidos.'],
+        ['Opinión de viajeros', 'Valoración de los usuarios al final del viaje.']
+      ],
+      viab: 'Viabilidad: no requiere infraestructura física ni grandes inversiones. Se mantiene con revisión anual de la información, un responsable de contenidos y alianzas con municipios y prestadores que difunden la guía.',
+      src_t: 'Fuentes',
+      src: [
+        'Chile Travel (2026). Ruta Lagos y Volcanes. Servicio Nacional de Turismo.',
+        'Chile Travel (2024). Ruta Lagos y Volcanes, un circuito turístico cargado de aventura.',
+        'Ruta Lagos y Volcanes (s. f.). Ruta Escénica Lagos y Volcanes.',
+        'Programa Ruta Escénica Lagos y Volcanes (2021). Guía de aventuras.',
+        'Ilustre Municipalidad de Frutillar. Turismo.',
+        'Chile Travel (2026). Puerto Varas y Frutillar.',
+        'Decreto N°19, Ministerio de Economía, Fomento y Turismo.'
+      ]
+    },
+    day: 'Día', sum: (n, p) => `✨ ${n} ${n === 1 ? 'día' : 'días'} · perfil ${p}`,
+    btn_prev: '← Atrás', btn_next: 'Siguiente →', btn_gen: 'Generar itinerario →', btn_restart: 'Reiniciar ↺',
+    st_aventura: 'Aventura', st_naturaleza: 'Naturaleza', st_cultura: 'Cultura', st_bienestar: 'Bienestar',
+    inroute: 'En tu ruta',
+    t_ready: 'Guía lista. Puedes usarla sin señal.', t_already: 'La guía ya está disponible sin conexión.',
+    t_https: 'Abre la guía desde un servidor (https) para habilitar el modo sin conexión.',
+    dl_btn: 'Descargar guía para uso sin conexión', dl_prep: 'Preparando guía…', dl_done: 'Guía lista sin conexión ✓',
+    places: {
+      lago: { n:'Lago Llanquihue', t:'Natural', d:'Paisaje lacustre con vista a los volcanes Osorno, Calbuco, Puntiagudo y Tronador.' },
+      osorno: { n:'Volcán Osorno', t:'Natural', d:'Cono casi perfecto y nieves características del sur. Ideal para montaña y fotografía.' },
+      villarrica: { n:'Parque Nacional Villarrica', t:'Área protegida', d:'Volcán Villarrica, bosques de robles y cuevas volcánicas. Recomendable con guía.' },
+      conguillio: { n:'Parque Nacional Conguillío', t:'Área protegida', d:'Bosques milenarios de araucarias y antiguos escoriales de lava.' },
+      vpr: { n:'Parque Vicente Pérez Rosales', t:'Área protegida', d:'Uno de los parques más antiguos de Chile. Saltos de Petrohué y Lago Todos los Santos.' },
+      frutillar: { n:'Museo Colonial Alemán', t:'Cultura histórica', d:'Colonización alemana desde 1852, edificaciones históricas y jardines.' },
+      iglesia: { n:'Iglesia del Sagrado Corazón', t:'Patrimonio', d:'Arquitectura de colonos alemanes en Puerto Varas. Monumento histórico desde 1992.' },
+      teatro: { n:'Teatro del Lago', t:'Cultura contemporánea', d:'Espacio cultural frente al lago, con conciertos, arte y música.' },
+      pewenche: { n:'Rutas Ancestrales Pewenche', t:'Cultura', d:'Conocimiento del territorio y las tradiciones pewenche en la Araucanía Andina.' },
+      termas: { n:'Termas y spa', t:'Bienestar', d:'Aguas termales naturales de la zona volcánica, con circuitos de descanso.' },
+      templo: { n:'Templo Luterano (Puerto Varas)', t:'Patrimonio', d:'Iglesia de madera de la década de 1920 que une la arquitectura europea con la carpintería de los colonos alemanes.' },
+      ferias: { n:'Ferias artesanales', t:'Comercio local', d:'Productos hechos a mano y artículos de identidad local. Compra directa a emprendedores.' }
+    },
+    stops: {
+      naturaleza: ['Caminata por el borde del lago', 'Mirador hacia el volcá', 'Senderismo en bosque nativo', 'Excursión a Petrohué', 'Caminata tranquila de cierre'],
+      aventura: ['Senderismo guiado', 'Mirador del volcán', 'Excursión a Petrohué', 'Caminata de baja dificultad', 'Bosque nativo y cuevas'],
+      cultura: ['Museo Colonial Alemán', 'Iglesia del Sagrado Corazón', 'Visita al Teatro del Lago', 'Rutas ancestrales pewenche (con reserva)', 'Paseo por la orilla del lago'],
+      bienestar: ['Caminata suave junto al lago', 'Sesión de termas y spa (con reserva)', 'Visita al Teatro del Lago', 'Paseo tranquilo por Puerto Varas', 'Mirador al volcán Osorno']
+    }
+  }
+};
+const lang = 'es';
+
+const LUGARES = {
+  lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  cat:'natural',  loc:'Puerto Varas · Frutillar', photo:'img/lago.jpg' },
+  osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  cat:'natural',  loc:'Petrohué',                 photo:'img/osorno.jpg' },
+  villarrica: { scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1',  cat:'aventura', loc:'Pucón',                    photo:'img/villarrica.jpg', smoke:true },
+  conguillio: { scene:'forest',  p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',  cat:'aventura', loc:'Melipeuco',                photo:'img/conguillio.jpg' },
+  vpr:        { scene:'falls',   p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',  cat:'natural',  loc:'Petrohué',                 photo:'img/vpr.jpg' },
+  frutillar:  { scene:'house',   p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',  cat:'cultura',  loc:'Frutillar',                photo:'img/frutillar.jpg' },
+  iglesia:    { scene:'church',  p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',  cat:'cultura',  loc:'Puerto Varas',             photo:'img/iglesia.jpg' },
+  teatro:     { scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',  cat:'cultura',  loc:'Frutillar',                photo:'img/teatro.jpg' },
+  pewenche:   { scene:'ruka',    p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',  cat:'cultura',  loc:'Araucanía Andina',         photo:'img/pewe.jpg' },
+  termas:     { scene:'steam',   p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',  cat:'bienestar',loc:'Zona volcánica',           photo:'img/termas.jpg' },
+  templo:     { scene:'church',  p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1', cat:'cultura',  loc:'Puerto Varas',             photo:'img/templo.jpg' },
+  ferias:     { scene:'house',   p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1', cat:'cultura',  loc:'Frutillar · Pucón',        photo:'img/feri.jpg' }
+};
+const PERFILES = {
+  aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
+  naturaleza: ['lago','osorno','conguillio','vpr','lago'],
+  cultura:    ['frutillar','iglesia','teatro','pewenche','lago'],
+  bienestar:  ['lago','termas','teatro','iglesia','osorno']
+};
+const HORAS = ['09:00', '11:30', '15:00', '17:30'];
+const SPOT_LABELS = { all:'Todos', natural:'Naturaleza', aventura:'Aventura', cultura:'Cultura', bienestar:'Bienestar' };
+
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const t  = k => T[lang][k];
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; }
+function toast(msg) {
+  const n = $('#toast'); n.textContent = msg; n.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(() => n.classList.remove('show'), 3000);
+}
+function numParadas() { return dias === 1 ? 3 : dias === 2 ? 4 : 5; }
+
+let perfil = 'naturaleza', dias = 2, paso = 0, spotFilter = 'all';
+
+function tree(x, y, s, c) {
+  return `<path d="M${x} ${y} L${x-10*s} ${y-40*s} L${x+10*s} ${y-40*s}Z M${x-9*s} ${y-28*s} L${x-20*s} ${y-62*s} L${x+20*s} ${y-62*s} L${x+9*s} ${y-28*s}Z M${x-13*s} ${y-50*s} L${x-26*s} ${y-84*s} L${x+26*s} ${y-84*s} L${x+13*s} ${y-50*s}Z" fill="${c}"/>`;
+}
+function scene(key, p, id, extra) {
+  const [s1, s2, far, mid, near] = p;
+  const g = 'g' + id;
+  const defs = `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s1}"/><stop offset="1" stop-color="${s2}"/></linearGradient></defs>`;
+  const sun = `<circle class="sunpulse" cx="320" cy="60" r="26" fill="#fff8d6" opacity=".9"/>`;
+  const cloud = `<g class="cloudy" opacity=".85"><rect x="40" y="58" width="90" height="18" rx="9" fill="#fff"/><rect x="62" y="48" width="44" height="18" rx="9" fill="#fff"/></g>`;
+  const base = `${defs}<rect width="400" height="260" fill="url(#${g})"/>${sun}${cloud}`;
+  let body = '';
+  if (key === 'lake') {
+    body = `<path d="M0 150 L80 96 L150 140 L240 70 L330 140 L400 110 L400 260 L0 260Z" fill="${far}"/><path d="M0 180 L110 130 L220 170 L330 128 L400 160 L400 260 L0 260Z" fill="${mid}"/><path d="M0 200 H400 V260 H0Z" fill="${near}"/><path d="M0 214 Q100 206 200 214 T400 214" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/><path d="M240 70 L268 140 L212 140Z" fill="#fff" opacity=".85"/>`;
+  } else if (key === 'volcano') {
+    const smoke = extra && extra.smoke ? `<g opacity=".65"><ellipse cx="210" cy="30" rx="34" ry="12" fill="#fff"/><ellipse cx="236" cy="16" rx="26" ry="9" fill="#fff"/></g>` : '';
+    body = `<path d="M0 170 L90 110 L170 160 L260 100 L400 170 L400 260 L0 260Z" fill="${far}"/><path d="M120 260 L220 60 L320 260Z" fill="${mid}"/><path d="M220 60 L250 118 L236 112 L224 124 L212 110 L198 118Z" fill="#fff"/>${smoke}<path d="M0 215 Q120 205 200 216 T400 214 L400 260 L0 260Z" fill="${near}"/>`;
+  } else if (key === 'forest') {
+    body = `<path d="M0 170 L120 110 L220 160 L330 105 L400 150 L400 260 L0 260Z" fill="${far}"/><path d="M0 230 Q200 210 400 230 L400 260 L0 260Z" fill="${mid}"/>${tree(40,236,1.1,near)}${tree(96,232,.9,near)}${tree(150,238,1.3,near)}${tree(214,234,1,near)}${tree(268,236,1.2,near)}${tree(332,232,.95,near)}${tree(372,238,1.1,near)}`;
+  } else if (key === 'falls') {
+    body = `<path d="M0 150 L120 60 L200 120 L300 50 L400 130 L400 260 L0 260Z" fill="${far}"/><path d="M220 90 L260 90 L262 210 L224 210Z" fill="#fff" opacity=".9"/><path d="M232 100 L252 100 L254 200 L234 200Z" fill="#dff6ff"/><path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/><path d="M0 240 Q200 228 400 240 L400 260 L0 260Z" fill="${near}"/>`;
+  } else if (key === 'house') {
+    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><rect x="130" y="130" width="140" height="95" fill="#fbf4ea"/><path d="M120 132 L200 74 L280 132Z" fill="${mid}"/><rect x="186" y="170" width="28" height="55" fill="${mid}"/><rect x="146" y="150" width="22" height="22" fill="${near}" opacity=".6"/><rect x="232" y="150" width="22" height="22" fill="${near}" opacity=".6"/>${tree(40,224,1,near)}${tree(360,224,1,near)}`;
+  } else if (key === 'church') {
+    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><rect x="150" y="120" width="100" height="105" fill="#fffdf8"/><path d="M142 122 L200 66 L258 122Z" fill="${mid}"/><rect x="186" y="28" width="28" height="44" fill="#fffdf8"/><path d="M186 28 L200 4 L214 28Z" fill="${mid}"/><path d="M186 180 Q200 150 214 180 L214 225 L186 225Z" fill="${near}" opacity=".75"/>${tree(40,224,1,near)}${tree(360,224,1,near)}`;
+  } else if (key === 'theater') {
+    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><path d="M90 190 Q200 90 310 190 L310 225 L90 225Z" fill="#fbf7fb"/><path d="M90 190 Q200 90 310 190" stroke="${mid}" stroke-width="10" fill="none"/><rect x="150" y="190" width="100" height="35" fill="${mid}" opacity=".35"/>${tree(40,224,1,near)}${tree(360,224,1,near)}`;
+  } else if (key === 'steam') {
+    body = `<path d="M0 150 L140 96 L260 150 L400 110 L400 260 L0 260Z" fill="${far}"/><path d="M0 200 Q200 180 400 200 L400 260 L0 260Z" fill="${mid}"/><ellipse cx="200" cy="216" rx="150" ry="22" fill="${near}"/><path d="M140 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/><path d="M200 196 q12 -22 0 -44 t0 -40" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/><path d="M260 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>`;
+  } else if (key === 'ruka') {
+    body = `<path d="M0 150 L110 70 L210 140 L300 60 L400 140 L400 260 L0 260Z" fill="${far}"/><path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/><path d="M150 214 Q200 110 250 214Z" fill="#fff6dd" stroke="${near}" stroke-width="3"/><path d="M200 214 L200 170" stroke="${near}" stroke-width="3"/>`;
+  }
+  return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${base}${body}</svg>`;
+}
+function renderArt(L, info) {
+  if (L.photo) {
+    const img = document.createElement('img');
+    img.src = L.photo;
+    img.alt = info ? info.n : '';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.onload = () => img.classList.add('loaded');
+    img.onerror = () => {
+      const svgWrap = document.createElement('div');
+      svgWrap.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+      img.replaceWith(svgWrap.firstChild);
+    };
+    return img;
+  }
+  const svgWrap = document.createElement('div');
+  svgWrap.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+  return svgWrap.firstChild;
+}
+
+function updateButtons() {
+  $('#prev').disabled = paso === 0;
+  $('#next').textContent = paso === 2 ? t('btn_restart') : (paso === 1 ? t('btn_gen') : t('btn_next'));
+}
+function irA(n) {
+  paso = Math.max(0, Math.min(2, n));
+  $$('.slide').forEach((s, i) => { s.classList.toggle('active', i === paso); s.classList.toggle('left', i < paso); });
+  $$('.steps span').forEach((s, i) => s.classList.toggle('on', i <= paso));
+  $('#bar').style.width = ((paso + 1) / 3 * 100) + '%';
+  updateButtons();
+  if (paso === 2) generarItinerario(true);
+}
+function generarItinerario(conEsqueleto) {
+  const tl = $('#timeline');
+  const total = numParadas();
+  const lista = PERFILES[perfil];
+  $('#summary').textContent = t('sum')(dias, t('st_' + perfil));
+  tl.innerHTML = ''; tl.classList.remove('drawn');
+  const pintar = () => {
+    tl.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const id = lista[i % lista.length];
+      const L = LUGARES[id];
+      const info = T[lang].places[id];
+      const dia = Math.floor(i * dias / total) + 1;
+      const hora = HORAS[i % HORAS.length];
+      const stop = el('div', 'stop');
+      const thumb = el('div', 'thumb');
+      thumb.appendChild(renderArt(L, info));
+      const body = el('div');
+      body.appendChild(el('div', 'time', (dias > 1 ? t('day') + ' ' + dia + ' · ' : '') + hora));
+      body.appendChild(el('h4', '', T[lang].stops[perfil][i % lista.length]));
+      body.appendChild(el('div', 'place', '📍 ' + info.n));
+      stop.appendChild(thumb); stop.appendChild(body);
+      tl.appendChild(stop);
+    }
+    requestAnimationFrame(() => {
+      tl.classList.add('drawn');
+      $$('.stop', tl).forEach((s, i) => setTimeout(() => s.classList.add('in'), 250 + i * 180));
+    });
+  };
+  if (conEsqueleto) {
+    for (let i = 0; i < 3; i++) {
+      const s = el('div', 'skel');
+      s.appendChild(el('div', 'box'));
+      const b = el('div');
+      b.appendChild(el('div', 'l s')); b.appendChild(el('div', 'l m')); b.appendChild(el('div', 'l w'));
+      s.appendChild(b); tl.appendChild(s);
+    }
+    setTimeout(pintar, 900);
+  } else pintar();
+}
+$$('.style-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    card.style.transform = `rotateX(${(-y * 14).toFixed(2)}deg) rotateY(${(x * 14).toFixed(2)}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => card.style.transform = '');
+  card.addEventListener('click', () => {
+    perfil = card.dataset.perfil;
+    $$('.style-card').forEach(c => c.setAttribute('aria-pressed', String(c === card)));
+    renderGrid();
+    setTimeout(() => irA(1), 280);
+  });
+});
+$$('.dur').forEach(b => b.addEventListener('click', () => {
+  dias = Number(b.dataset.dias);
+  $$('.dur').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+}));
+$('#prev').addEventListener('click', () => irA(paso - 1));
+$('#next').addEventListener('click', () => irA(paso === 2 ? 0 : paso + 1));
+
+function renderSpotFilters() {
+  const box = document.getElementById('spot-filters');
+  if (!box) return;
+  box.innerHTML = '';
+  Object.keys(SPOT_LABELS).forEach(k => {
+    const b = el('button', '', SPOT_LABELS[k]);
+    b.setAttribute('aria-pressed', String(spotFilter === k));
+    b.addEventListener('click', () => { spotFilter = k; renderGrid(); });
+    box.appendChild(b);
+  });
+}
+function renderGrid() {
+  const g = document.getElementById('grid');
+  if (!g) return;
+  g.innerHTML = '';
+  renderSpotFilters();
+  const enRuta = new Set(PERFILES[perfil].slice(0, numParadas()));
+  const ids = Object.keys(LUGARES).filter(id => spotFilter === 'all' || LUGARES[id].cat === spotFilter);
+  const counter = document.getElementById('spot-count');
+  if (counter) counter.textContent = ids.length + ' lugares';
+  ids.forEach((id, i) => {
+    const L = LUGARES[id];
+    const info = T[lang].places[id];
+    const card = el('article', 'spot');
+    card.dataset.cat = L.cat || 'natural';
+    if (i < 2 && ids.length >= 4) card.classList.add('wide');
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', info.n + ' — ' + info.d);
+    const art = el('div', 'art');
+    art.appendChild(renderArt(L, info));
+    const inf = el('div', 'info');
+    const top = el('div', 'spot-top');
+    top.appendChild(el('span', 'tag', info.t));
+    if (L.loc) top.appendChild(el('span', 'loc', '📍 ' + L.loc));
+    inf.appendChild(top);
+    inf.appendChild(el('h3', '', info.n));
+    inf.appendChild(el('p', 'desc', info.d));
+    inf.appendChild(el('span', 'arrow', '→'));
+    card.appendChild(art);
+    card.appendChild(inf);
+    if (enRuta.has(id)) card.appendChild(el('span', 'badge', '★ ' + t('inroute')));
+    const toggle = () => {
+      const isOpen = card.classList.contains('tap');
+      document.querySelectorAll('.spot.tap').forEach(c => c.classList.remove('tap'));
+      if (!isOpen) card.classList.add('tap');
+    };
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+    g.appendChild(card);
+    io.observe(card);
+  });
+}
+
+/* =========================================================
+   SERVICIOS LOCALES — DATOS (3 + 3 + 3)
+   ========================================================= */
+const PLACES = {
+  alojamiento: [
+    { k:'hotel', z:'Puerto Varas', n:'Casa Molino Hotel Boutique', r:9.1, c:366,
+      nota:'Hotel boutique a orillas del lago Llanquihue, con jardines y restaurante.',
+      link:'https://www.booking.com/hotel/cl/casa-molino.es.html' },
+    { k:'hotel', z:'Puerto Varas', n:'Solace Hotel Puerto Varas', r:9.0, c:1432,
+      nota:'Moderno hotel en una zona verde, a 600 metros del lago. Destaca su desayuno.',
+      link:'https://www.booking.com/hotel/cl/solace-puerto-varas.es.html' },
+    { k:'hostal', z:'Pucón', n:'Hostal La Tetera', r:9.2, c:77,
+      nota:'Casa de huéspedes acogedora con seis habitaciones y desayuno casero.',
+      link:'https://www.booking.com/hotel/cl/hostal-la-tetera.es.html' }
+  ],
+  comida: [
+    { z:'Frutillar', n:'Se Cocina', r:4.9, c:56, p:'$$$',
+      nota:'Cocina de autor con productos locales, aclamada por su excelente relación calidad-precio.',
+      link:'https://www.yelp.com/biz/se-cocina-fundo-santa-clara' },
+    { z:'Puerto Varas', n:'Casa Valdés', r:4.6, c:15, p:'$$$$',
+      nota:'Especializado en mariscos frescos. Una parada obligada para una cena especial.',
+      link:'https://www.yelp.com/biz/casa-valdes-puerto-varas' },
+    { z:'Puerto Varas', n:'La Marca', r:4.5, c:13, p:'$$$',
+      nota:'Famoso por sus cortes de carne a la parrilla. Ideal para los amantes del buen vino.',
+      link:'https://www.yelp.com/biz/la-marca-los-lagos' }
+  ],
+  arriendo: [
+    { tipo:'car', z:'Puerto Varas', n:'Mitta Rent a Car', r:4.2, c:150,
+      nota:'Amplia red de sucursales en aeropuertos y ciudades. Ofrece silla para niños y km libre.',
+      link:'https://www.mitta.cl/' },
+    { tipo:'car', z:'Puerto Varas', n:'Surentacar', r:4.0, c:80,
+      nota:'Traslado gratuito desde el Aeropuerto El Tepual y descuentos en cabañas asociadas.',
+      link:'https://www.surentacar.cl/' },
+    { tipo:'car', z:'Frutillar', n:'Mérida Rent a Car', r:4.5, c:45,
+      nota:'Atención cercana y rápida por WhatsApp. Ideales para moverte por Llanquihue y Frutillar.',
+      link:'https://meridarentacar.cl/' }
+  ]
+};
+const LBL = { hotel:'Hotel', hostal:'Hostal', camp:'Camping', reviews:'reseñas', car:'Auto', bike:'Bicicleta' };
+
+function placeCard(tag, n, r, c, nota, zona, link) {
+  const card = el('div', 'card-x');
+  card.appendChild(el('span', 'age', tag));
+  card.appendChild(el('h4', '', n));
+  card.appendChild(el('p', 'rating', '★ ' + r.toFixed(1) + ' · ' + c.toLocaleString('es-CL') + ' ' + LBL.reviews));
+  card.appendChild(el('p', '', nota));
+  const actions = el('div', 'card-actions');
+  const b = el('button', 'map-btn', 'Ver en el mapa →');
+  b.addEventListener('click', () => showZone(zona));
+  actions.appendChild(b);
+  if (link) {
+    const a = el('a', 'ext-link', 'Ver ficha ↗');
+    a.href = link;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    actions.appendChild(a);
+  }
+  card.appendChild(actions);
+  return card;
+}
+function showZone(zona) {
+  const f = document.getElementById('x-map-frame');
+  if (f) { f.dataset.zona = zona; renderMapa(); }
+  document.getElementById('mapa').scrollIntoView({ behavior: 'smooth' });
+}
+
+const EMERG = [
+  ['131','Ambulancia (SAMU)','Atención médica urgente'],
+  ['132','Bomberos','Incendios y rescates'],
+  ['133','Carabineros','Seguridad pública y accidentes de tránsito'],
+  ['134','Policía de Investigaciones (PDI)','Delitos complejos y control migratorio'],
+  ['130','Incendios forestales (CONAF)','Incendios en áreas silvestres'],
+  ['136','Cuerpo de Socorro Andino','Rescate en montaña'],
+  ['137','Búsqueda y salvamento marítimo','Emergencias marítimas'],
+  ['138','Rescate aéreo','Búsqueda y rescate desde el aire']
+];
+const EMERG_TIPS = [
+  'Si hay un accidente con heridos, llama al 131 y al 133, y no muevas los vehículos.',
+  'En la montaña, avisa siempre a tu alojamiento o guía antes de salir.',
+  'Ten a mano tu ubicación: nombre del sector o coordenadas de GPS.'
+];
+
+function renderExtras() {
+  const X = T[lang].x;
+  const set  = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
+  const fill = (id, arr, fn) => { const n = document.getElementById(id); if (!n) return; n.innerHTML = ''; arr.forEach((v, i) => n.appendChild(fn(v, i))); };
+
+  set('x-loc-t', X.loc_t); set('x-loc-h', X.loc_h);
+  document.querySelectorAll('#locales .tab').forEach(b => { b.textContent = X['tab_' + b.dataset.tab]; });
+  const navMapa = document.getElementById('nav-mapa'); if (navMapa) navMapa.textContent = X.nav_map;
+  const navEm = document.getElementById('nav-em'); if (navEm) navEm.textContent = X.nav_em;
+  $$('nav.sections a[data-tab="dormir"]').forEach(a => a.textContent = X.nav_lod);
+  $$('nav.sections a[data-tab="comer"]').forEach(a => a.textContent = X.nav_food);
+
+  // Dormir (3)
+  const gLod = document.getElementById('x-lod-grid');
+  if (gLod) {
+    gLod.innerHTML = '';
+    PLACES.alojamiento.forEach(x => gLod.appendChild(placeCard(LBL[x.k] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
+  }
+  // Comer (3)
+  const gRest = document.getElementById('x-rest-grid');
+  if (gRest) {
+    gRest.innerHTML = '';
+    PLACES.comida.forEach(r => gRest.appendChild(placeCard(r.z + ' · ' + r.p, r.n, r.r, r.c, r.nota, r.z, r.link)));
+  }
+  // Arriendo (3)
+  const gArr = document.getElementById('x-srv-grid');
+  if (gArr) {
+    gArr.innerHTML = '';
+    PLACES.arriendo.forEach(x => gArr.appendChild(placeCard(LBL[x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
+  }
+
+  set('x-desc-t', X.desc_t); set('x-desc-h', X.desc_h);
+  fill('x-desc-list', X.desc_q, ([q, a], i) => {
+    const d = el('details', 'qa'); if (i === 0) d.open = true;
+    d.appendChild(el('summary', '', q));
+    d.appendChild(el('p', '', a));
+    return d;
+  });
+
+  set('x-acc-t', X.acc_t); set('x-acc-h', X.acc_h);
+  fill('x-acc-grid', X.acc, ([h, d]) => {
+    const c = el('div', 'card-x');
+    c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d));
+    return c;
+  });
+
+  set('x-cal-t', X.cal_t); set('x-cal-h', X.cal_h);
+  fill('x-cal-list', X.cal, txt => el('li', '', txt));
+
+  set('x-map-t', X.map_t); set('x-map-h', X.map_h);
+  const zonas = ['Frutillar','Puerto Varas','Puerto Octay','Petrohué','Pucón','Villarrica','Panguipulli','Lago Ranco'];
+  const frame = document.getElementById('x-map-frame');
+  if (frame && !frame.dataset.zona) frame.dataset.zona = 'Frutillar';
+  fill('x-map-grid', zonas, z => {
+    const b = el('button', '', z);
+    b.setAttribute('aria-pressed', String(frame && frame.dataset.zona === z));
+    b.addEventListener('click', () => {
+      if (frame) frame.dataset.zona = z;
+      $$('#x-map-grid button').forEach(x => x.setAttribute('aria-pressed', String(x.textContent === z)));
+      renderMapa();
+    });
+    return b;
+  });
+
+  set('x-promo-t', X.promo_t); set('x-promo-h', X.promo_h);
+  set('x-poster-title', X.poster_title); set('x-poster-msg', X.poster_msg);
+  set('x-promo-sub', X.promo_sub); set('x-promo-ch', X.promo_ch);
+  const shareBtn = document.getElementById('share');
+  if (shareBtn) shareBtn.textContent = X.share;
+  const art = document.getElementById('x-poster-art');
+  if (art) {
+    art.innerHTML = '';
+    if (LUGARES.lago.photo) {
+      const img = document.createElement('img');
+      img.src = LUGARES.lago.photo; img.alt = '';
+      img.onerror = () => {
+        art.innerHTML = scene('lake', LUGARES.lago.p, 'PO1');
+        const svg = art.querySelector('svg'); if (svg) svg.style.height = '100%';
+      };
+      art.appendChild(img);
+    } else {
+      art.innerHTML = scene('lake', LUGARES.lago.p, 'PO1');
+      const svg = art.querySelector('svg'); if (svg) svg.style.height = '100%';
+    }
+  }
+
+  set('x-res-t', X.res_t); set('x-res-h', X.res_h); set('x-viab', X.viab);
+  fill('x-res-grid', X.res, ([h, d]) => {
+    const c = el('div', 'card-x');
+    c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d));
+    return c;
+  });
+
+  set('x-src-t', X.src_t);
+  fill('x-src', X.src, s => el('li', '', s));
+
+  set('x-em-t', 'Emergencias'); set('x-em-h', 'Números de emergencia en Chile');
+  const emGrid = document.getElementById('x-em-grid');
+  if (emGrid) {
+    emGrid.innerHTML = '';
+    EMERG.forEach(([num, name, desc]) => {
+      const c = el('div', 'card-x');
+      const a = el('a', 'em-num', num); a.href = 'tel:' + num;
+      c.appendChild(a); c.appendChild(el('h4', '', name)); c.appendChild(el('p', '', desc));
+      emGrid.appendChild(c);
+    });
+  }
+  const emTips = document.getElementById('x-em-tips');
+  if (emTips) {
+    emTips.innerHTML = '';
+    EMERG_TIPS.forEach(t => emTips.appendChild(el('li', '', t)));
+  }
+}
+
+function renderMapa() {
+  const f = document.getElementById('x-map-frame');
+  const fb = document.getElementById('x-map-fallback');
+  if (!f) return;
+  const zona = f.dataset.zona || 'Frutillar';
+  if (fb) { fb.style.display = 'grid'; fb.textContent = 'Cargando mapa…'; }
+  f.onload = () => { if (fb) fb.style.display = 'none'; };
+  f.onerror = () => {
+    if (fb) {
+      fb.style.display = 'grid';
+      fb.innerHTML = 'No se pudo cargar el mapa. <a class="map-open" target="_blank" rel="noopener" href="https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '">Abrir en Google Maps →</a>';
+    }
+  };
+  f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&output=embed';
+}
+
+function setTab(name) {
+  $$('#locales .tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
+  $$('#locales .panel').forEach(p => p.classList.toggle('active', p.dataset.panel === name));
+  const locs = document.getElementById('locales');
+  if (locs) {
+    const r = locs.getBoundingClientRect();
+    if (r.top < window.innerHeight * .6 && r.bottom > 0) updateNavActive('locales');
+  }
+}
+$$('#locales .tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+$$('nav.sections a[data-tab]').forEach(a => a.addEventListener('click', () => setTab(a.dataset.tab)));
+
+const shareBtnEl = document.getElementById('share');
+if (shareBtnEl) shareBtnEl.addEventListener('click', async () => {
+  const data = { title: document.title, text: T[lang].x.promo_ch, url: location.href };
+  try {
+    if (navigator.share) { await navigator.share(data); }
+    else { await navigator.clipboard.writeText(location.href); toast(T[lang].x.copied); }
+  } catch (e) {}
+});
+
+const dl = document.getElementById('dl');
+if (dl) dl.addEventListener('click', async () => {
+  if (dl.classList.contains('done')) { toast(t('t_already')); return; }
+  dl.classList.add('busy');
+  document.getElementById('dlText').textContent = t('dl_prep');
+  const prog = document.getElementById('dlProg');
+  let p = 0;
+  const timer = setInterval(() => { p = Math.min(p + 12, 90); prog.style.width = p + '%'; }, 120);
+  try {
+    if (!('serviceWorker' in navigator)) throw new Error('no-sw');
+    if (location.protocol === 'file:') throw new Error('file-proto');
+    const reg = await navigator.serviceWorker.register('sw.js');
+    await navigator.serviceWorker.ready;
+    if (reg.active) reg.active.postMessage('precache');
+    clearInterval(timer); prog.style.width = '100%';
+    dl.classList.remove('busy'); dl.classList.add('done');
+    document.getElementById('dlText').textContent = t('dl_done');
+    toast(t('t_ready'));
+  } catch (err) {
+    clearInterval(timer); prog.style.width = '0';
+    dl.classList.remove('busy');
+    document.getElementById('dlText').textContent = t('dl_btn');
+    if (err.message === 'no-sw') toast('Tu navegador no soporta modo offline.');
+    else if (err.message === 'file-proto') toast(t('t_https'));
+    else toast('No se encontró sw.js. Súbelo junto al index.html.');
+  }
+});
+
+const langEl = $('#lang'), langBtn = $('#langBtn');
+langBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  const open = !langEl.classList.contains('open');
+  langEl.classList.toggle('open', open);
+  langBtn.setAttribute('aria-expanded', String(open));
+});
+document.addEventListener('click', () => { langEl.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { langEl.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); }
+});
+
+function countUp(node) {
+  const target = Number(node.dataset.count), suffix = node.dataset.suffix || '';
+  const start = performance.now(), dur = 1800;
+  (function step(now) {
+    const k = Math.min((now - start) / dur, 1), v = Math.round(target * (1 - Math.pow(1 - k, 4)));
+    node.textContent = v.toLocaleString('es-CL') + suffix;
+    if (k < 1) requestAnimationFrame(step);
+  })(start);
+}
+const countObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { countUp(e.target); countObs.unobserve(e.target); }
+}), { threshold: .6 });
+$$('[data-count]').forEach(n => countObs.observe(n));
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .14 });
+
+const navLinks = $$('nav.sections a');
+function updateNavActive(sectionId) {
+  const tab = document.querySelector('#locales .tab[aria-selected="true"]')?.dataset.tab;
+  navLinks.forEach(a => {
+    const tabAttr = a.dataset.tab;
+    if (tabAttr) {
+      a.classList.toggle('active', sectionId === 'locales' && tabAttr === tab);
+    } else {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + sectionId);
+    }
+  });
+}
+const navObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) updateNavActive(e.target.id);
+}), { rootMargin: '-40% 0px -55% 0px' });
+$$('main section').forEach(s => navObs.observe(s));
+
+const topBtn = $('#top');
+let lastY = 0;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  topBtn.classList.toggle('show', y > 700);
+  $('#topbar').classList.toggle('hide', y > 260 && y > lastY && window.innerWidth < 860);
+  lastY = y;
+}, { passive: true });
+topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+const mapObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      renderMapa();
+      mapObserver.disconnect();
+    }
+  });
+}, { rootMargin: '200px' });
+const mapSection = document.getElementById('mapa');
+if (mapSection) mapObserver.observe(mapSection);
+
+function splitHero() {
+  let i = 0;
+  document.querySelectorAll('.hero-title .ln').forEach(ln => {
+    const txt = ln.textContent;
+    if (ln.dataset.last === txt && ln.querySelector('.char')) return;
+    ln.dataset.last = txt;
+    ln.setAttribute('aria-label', txt);
+    ln.innerHTML = '';
+    txt.split(' ').forEach((word, wi, arr) => {
+      const w = document.createElement('span');
+      w.className = 'w';
+      [...word].forEach(ch => {
+        const c = document.createElement('span');
+        c.className = 'char';
+        c.style.setProperty('--d', (i * 40) + 'ms');
+        c.textContent = ch;
+        w.appendChild(c);
+        i++;
+      });
+      ln.appendChild(w);
+      if (wi < arr.length - 1) { ln.appendChild(document.createTextNode(' ')); i++; }
+    });
+    i += 4;
+  });
+}
+
+$$('.rv').forEach(n => io.observe(n));
+renderExtras();
+renderGrid();
+splitHero();
+irA(0);
+</script>
+</body>
+</html>
