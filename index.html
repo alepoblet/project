@@ -30,7 +30,6 @@
   button{font:inherit}
   :focus-visible{outline:3px solid var(--lake);outline-offset:3px;border-radius:12px}
 
-  /* ---------- VIDRIO LÍQUIDO ---------- */
   .lg{position:relative;
     background:linear-gradient(135deg,rgba(255,255,255,.66) 0%,rgba(255,255,255,.3) 55%,rgba(255,255,255,.5) 100%);
     backdrop-filter:blur(18px) saturate(190%) brightness(1.04);
@@ -46,7 +45,6 @@
     animation:glassSheen 7s ease-in-out infinite}
   @keyframes glassSheen{0%,35%{left:-60%}75%,100%{left:130%}}
 
-  /* ---------- ENCABEZADO ---------- */
   .topbar{position:fixed;top:0;left:0;right:0;z-index:70;
     padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 0;transition:transform .6s var(--ease)}
   .topbar.hide{transform:translateY(-140%)}
@@ -75,7 +73,6 @@
   .lang-menu .soon{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
     color:var(--mute);background:var(--soft);padding:.18rem .55rem;border-radius:999px}
 
-  /* ---------- HERO ---------- */
   .hero{position:relative;min-height:100svh;overflow:hidden;color:#fff;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
     padding:7rem 1.25rem 9rem;
@@ -131,14 +128,12 @@
   .stats span{font-size:.78rem;opacity:.92}
   .stats div{background:none;border:none;backdrop-filter:none;min-width:0;padding:.4rem .9rem}
 
-  /* ---------- HORIZONTE ---------- */
   .horizon{position:absolute;left:0;bottom:-1px;width:100%;height:120px;z-index:1;overflow:visible}
   .horizon .ridge{transform-box:fill-box;transform-origin:50% 100%;animation:ridgeGrow 1.6s var(--ease) .2s both}
   .horizon .front{animation:frontSway 9s ease-in-out 1.8s infinite}
   @keyframes ridgeGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
   @keyframes frontSway{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
 
-  /* ---------- NAV SECCIONES ---------- */
   .sections-wrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px);z-index:60;display:flex;
     justify-content:center;padding:0 12px;margin-top:14px;pointer-events:none}
   nav.sections{pointer-events:auto;display:flex;gap:.25rem;max-width:100%;overflow-x:auto;scrollbar-width:none;
@@ -152,7 +147,6 @@
   nav.sections a.active{background:linear-gradient(135deg,#1f6f8b,#2e9c93);color:#fff;
     box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 8px 18px -8px rgba(18,63,82,.55)}
 
-  /* ---------- SECCIONES ---------- */
   .page{max-width:1120px;margin:0 auto;padding:0 18px}
   section{position:relative;padding:70px 0 30px;scroll-margin-top:150px}
   .eyebrow{font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lake);
@@ -163,7 +157,6 @@
   .rv{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
   .rv.in{opacity:1;transform:none}
 
-  /* ---------- PLANIFICADOR ---------- */
   .planner{margin-top:2.2rem;background:var(--white);border-radius:32px;box-shadow:var(--shadow);overflow:hidden;
     border:1px solid var(--line)}
   .progress{height:6px;background:#e3edf0;position:relative}
@@ -244,7 +237,6 @@
   .btn:disabled{opacity:.35;cursor:default}
   .btn.primary{background:var(--lake-dark);color:#fff;border-color:var(--lake-dark);margin-left:auto}
 
-  /* ---------- ATRACTIVOS (rediseñado) ---------- */
   .spot-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:1.6rem}
   .spot-filters{display:flex;gap:8px;flex-wrap:wrap}
   .spot-filters button{border:1px solid var(--line);background:var(--white);color:var(--ink-2);border-radius:999px;
@@ -321,7 +313,6 @@
   }
   @media (prefers-reduced-motion:reduce){.spot{opacity:1 !important;translate:0 !important}}
 
-  /* ---------- CUIDADO ---------- */
   .eco{display:grid;grid-template-columns:1fr;gap:14px;margin-top:2.2rem}
   .eco-card{display:flex;gap:16px;align-items:center;background:var(--white);border:1px solid var(--line);
     border-radius:24px;padding:18px 20px;box-shadow:0 2px 10px -6px rgba(18,63,82,.15);
@@ -333,7 +324,6 @@
   .eco-card p{margin:0;color:var(--ink-2);font-size:.97rem}
   @media (min-width:760px){.eco{grid-template-columns:repeat(2,1fr)}}
 
-  /* ---------- SECCIONES EXTRA ---------- */
   .qa{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:0 20px;margin-bottom:12px;
     transition:box-shadow .4s,border-color .4s}
   .qa[open]{box-shadow:0 16px 30px -22px rgba(18,63,82,.45);border-color:#cfe2e8}
@@ -344,10 +334,10 @@
   .qa[open] summary::after{transform:rotate(45deg)}
   .qa p{padding-bottom:18px;color:var(--ink-2);margin:0}
 
-  .info-grid,.srv-grid,.acc-grid,.res-grid,.food-grid,.lod-grid{display:grid;gap:14px;grid-template-columns:1fr}
+  .info-grid,.srv-grid,.acc-grid,.res-grid,.lod-grid{display:grid;gap:14px;grid-template-columns:1fr}
   @media (min-width:720px){
     .info-grid,.srv-grid,.acc-grid,.res-grid{grid-template-columns:repeat(2,1fr)}
-    .food-grid,.lod-grid{grid-template-columns:repeat(3,1fr)}
+    .lod-grid{grid-template-columns:repeat(3,1fr)}
   }
   @media (min-width:1000px){
     .srv-grid,.info-grid{grid-template-columns:repeat(3,1fr)}
@@ -355,7 +345,8 @@
 
   .card-x{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:20px;
     box-shadow:0 2px 10px -6px rgba(18,63,82,.15);
-    transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+    display:flex;flex-direction:column}
   .card-x:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
   .card-x .ico{font-size:1.9rem;display:inline-block;transition:transform .5s var(--spring)}
   .card-x:hover .ico{transform:scale(1.15) rotate(-6deg)}
@@ -364,9 +355,13 @@
   .card-x .age{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
     color:var(--teal);margin-bottom:.3rem}
   .card-x .rating{font-weight:700;color:var(--ember);font-size:.85rem;margin-bottom:.4rem}
-  .card-x .map-btn{margin-top:12px;border:none;background:none;color:var(--lake);font-weight:800;cursor:pointer;
+  .card-x .card-actions{margin-top:auto;padding-top:12px;display:flex;align-items:center;
+    gap:14px;flex-wrap:wrap;border-top:1px dashed var(--line)}
+  .card-x .map-btn{border:none;background:none;color:var(--lake-dark);font-weight:800;cursor:pointer;
     padding:0;font-size:.88rem}
   .card-x .map-btn:hover{text-decoration:underline}
+  .card-x .ext-link{color:var(--lake);font-size:.88rem;font-weight:800;text-decoration:none;margin-left:auto}
+  .card-x .ext-link:hover{text-decoration:underline}
 
   .info-item{background:var(--soft);border-radius:18px;padding:16px 18px}
   .info-item b{display:block;color:var(--lake-dark);margin-bottom:.2rem}
@@ -379,12 +374,6 @@
   .filters button:hover{transform:translateY(-2px);border-color:var(--lake)}
   .filters button[aria-pressed="true"]{background:var(--lake-dark);color:#fff;border-color:var(--lake-dark)}
 
-  .lod-note{font-size:.85rem;color:var(--mute);margin-top:14px}
-  .food-card{position:relative;overflow:hidden}
-  .food-card .big{font-size:2.6rem;display:block;margin-bottom:.4rem}
-  .food-tip{margin-top:18px;background:linear-gradient(120deg,#e6f0f3,#f3fbf9);border-radius:20px;
-    padding:16px 20px;color:var(--lake-dark);font-weight:600}
-
   .check-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
   .check-list li{display:flex;gap:12px;align-items:flex-start;background:var(--white);border:1px solid var(--line);
     border-radius:18px;padding:14px 16px;color:var(--ink-2);transition:transform .4s var(--ease)}
@@ -395,7 +384,6 @@
   .em-num{display:inline-block;font-size:2rem;font-weight:800;color:var(--coral);text-decoration:none;margin-bottom:.3rem}
   .em-num:hover{text-decoration:underline}
 
-  /* ---------- MAPA ---------- */
   .map-frame-wrap{position:relative;width:100%;height:440px;border-radius:26px;overflow:hidden;background:var(--soft);
     box-shadow:0 20px 40px -26px rgba(18,63,82,.5)}
   .map-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -406,7 +394,6 @@
     transition:transform .4s var(--spring),box-shadow .4s}
   .map-open:hover{transform:translateY(-2px);box-shadow:0 14px 26px -12px rgba(18,63,82,.6)}
 
-  /* ---------- TABS ---------- */
   .tabs-glass{display:inline-flex;gap:.3rem;padding:.4rem;border-radius:999px;margin-bottom:1.8rem;
     max-width:100%;overflow-x:auto;scrollbar-width:none}
   .tabs-glass::-webkit-scrollbar{display:none}
@@ -420,7 +407,6 @@
   .panel.active{display:block;animation:panelIn .7s var(--ease) both}
   @keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-  /* ---------- PROMO ---------- */
   .promo-wrap{display:grid;gap:24px;align-items:center;grid-template-columns:1fr;margin-top:1.6rem}
   @media (min-width:800px){.promo-wrap{grid-template-columns:340px 1fr}}
   .poster{position:relative;aspect-ratio:4/5;border-radius:26px;overflow:hidden;color:#fff;isolation:isolate;
@@ -447,7 +433,6 @@
   .src-list{list-style:none;padding:0;margin:0;color:var(--mute);font-size:.92rem}
   .src-list li{padding:8px 0;border-bottom:1px dashed var(--line)}
 
-  /* ---------- DESCARGA ---------- */
   .offline{margin-top:44px;border-radius:34px;padding:46px 26px;text-align:center;color:#fff;position:relative;
     overflow:hidden;background:linear-gradient(120deg,#0d3346,#1f6f8b 50%,#3e9a8a,#0d3346);
     background-size:250% 250%;animation:gradientShift 14s ease infinite}
@@ -470,7 +455,6 @@
   .dl.done .bounce{animation:none}
   .dl.busy{pointer-events:none}
 
-  /* ---------- FOOTER, TOAST, TOP ---------- */
   .foot{text-align:center;color:var(--mute);font-size:.85rem;padding:36px 18px 64px}
   .foot strong{color:var(--ink);font-size:1.02rem;display:block;margin-bottom:.25rem}
   .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);
@@ -506,7 +490,6 @@
 </head>
 <body>
 
-<!-- ENCABEZADO -->
 <div class="topbar" id="topbar">
   <div class="topbar-inner lg lg-sheen">
     <a class="brand" href="#inicio"><span class="logo">🌋</span><span>Guía Lagos y Volcanes</span></a>
@@ -523,13 +506,11 @@
   </div>
 </div>
 
-<!-- HERO -->
 <header class="hero" id="inicio">
   <div class="sun" aria-hidden="true"></div>
   <div class="cloud c1" aria-hidden="true"></div>
   <div class="cloud c2" aria-hidden="true"></div>
   <div class="cloud c3" aria-hidden="true"></div>
-
   <div class="hero-inner">
     <span class="kicker">Guía digital · Sur de Chile</span>
     <h1 class="hero-title">
@@ -544,7 +525,6 @@
       <div><strong data-count="2000" data-suffix="+">2.000+</strong><span>km de ruta</span></div>
     </div>
   </div>
-
   <svg class="horizon" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
     <path class="ridge" d="M-20 92 L150 42 L300 80 L500 22 L700 76 L900 34 L1090 84 L1270 30 L1460 72 L1460 120 L-20 120Z" fill="#e6f0f3" opacity=".6"/>
     <path class="front" d="M-60 104 Q300 72 720 100 T1500 96 L1500 120 L-60 120Z" fill="var(--bg)"/>
@@ -565,14 +545,12 @@
 
 <main class="page">
 
-<!-- PLANIFICADOR -->
 <section id="planificador" aria-labelledby="t-plan">
   <div class="sec-title rv">
     <span class="eyebrow">Planificador</span>
     <h2 id="t-plan">Tu recorrido, en 3 pasos</h2>
     <p>Elige tu estilo, cuántos días tienes y te mostramos un itinerario listo para seguir.</p>
   </div>
-
   <div class="planner rv">
     <div class="progress"><i id="bar"></i></div>
     <div class="steps">
@@ -613,7 +591,6 @@
   </div>
 </section>
 
-<!-- ATRACTIVOS -->
 <section id="atractivos" aria-labelledby="t-spots">
   <div class="sec-title rv">
     <span class="eyebrow">Atractivos</span>
@@ -627,7 +604,7 @@
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- SERVICIOS LOCALES -->
+<!-- SERVICIOS LOCALES (simplificado: 3 + 3 + 3) -->
 <section id="locales" aria-labelledby="x-loc-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-loc-t"></span>
@@ -639,22 +616,16 @@
     <button class="tab" role="tab" id="tab-arriendo" data-tab="arriendo" aria-selected="false" aria-controls="panel-arriendo"></button>
   </div>
   <div class="panel active" data-panel="dormir" role="tabpanel" id="panel-dormir" aria-labelledby="tab-dormir">
-    <div class="filters rv" id="x-lod-filters"></div>
     <div class="lod-grid rv" id="x-lod-grid"></div>
-    <div class="info-grid rv" id="x-lod-zones" style="margin-top:14px"></div>
-    <p class="lod-note rv" id="x-lod-note"></p>
   </div>
   <div class="panel" data-panel="comer" role="tabpanel" id="panel-comer" aria-labelledby="tab-comer">
-    <div class="food-grid rv" id="x-food-grid" style="margin-top:14px"></div>
-    <div class="food-tip rv" id="x-food-tip"></div>
-    <div class="lod-grid rv" id="x-rest-grid" style="margin-top:14px"></div>
+    <div class="lod-grid rv" id="x-rest-grid"></div>
   </div>
   <div class="panel" data-panel="arriendo" role="tabpanel" id="panel-arriendo" aria-labelledby="tab-arriendo">
-    <div class="srv-grid rv" id="x-srv-grid"></div>
+    <div class="lod-grid rv" id="x-srv-grid"></div>
   </div>
 </section>
 
-<!-- MAPA -->
 <section id="mapa" aria-labelledby="x-map-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-map-t"></span>
@@ -669,7 +640,6 @@
   </div>
 </section>
 
-<!-- ACCESIBILIDAD -->
 <section id="accesibilidad" aria-labelledby="x-acc-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-acc-t"></span>
@@ -678,7 +648,6 @@
   <div class="acc-grid rv" id="x-acc-grid"></div>
 </section>
 
-<!-- CALIDAD -->
 <section id="calidad" aria-labelledby="x-cal-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-cal-t"></span>
@@ -687,7 +656,6 @@
   <ul class="check-list rv" id="x-cal-list"></ul>
 </section>
 
-<!-- CUIDADO -->
 <section id="cuidado" aria-labelledby="t-eco">
   <div class="sec-title rv">
     <span class="eyebrow">Cuidado del medio ambiente</span>
@@ -702,7 +670,6 @@
   </div>
 </section>
 
-<!-- EMERGENCIAS -->
 <section id="emergencias" aria-labelledby="x-em-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-em-t"></span>
@@ -712,7 +679,6 @@
   <ul class="check-list rv" id="x-em-tips" style="margin-top:18px"></ul>
 </section>
 
-<!-- PROMO -->
 <section id="promo" aria-labelledby="x-promo-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-promo-t"></span>
@@ -736,7 +702,6 @@
   </div>
 </section>
 
-<!-- RESULTADOS -->
 <section id="resultados" aria-labelledby="x-res-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-res-t"></span>
@@ -746,7 +711,6 @@
   <div class="viab-box rv" id="x-viab"></div>
 </section>
 
-<!-- FUENTES -->
 <section id="fuentes" aria-labelledby="x-src-t">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-src-t"></span>
@@ -754,7 +718,6 @@
   <ul class="src-list rv" id="x-src"></ul>
 </section>
 
-<!-- DESCRIPCIÓN -->
 <section id="descripcion" aria-labelledby="x-desc-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-desc-t"></span>
@@ -763,7 +726,6 @@
   <div id="x-desc-list" class="rv"></div>
 </section>
 
-<!-- DESCARGA -->
 <section id="descarga" aria-labelledby="t-off" style="padding-top:10px">
   <div class="offline rv">
     <h3 id="t-off">Llévala contigo sin señal</h3>
@@ -783,9 +745,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* =========================================================
-   TEXTOS (SOLO ESPAÑOL)
-   ========================================================= */
 const T = {
   es: {
     x: {
@@ -800,35 +759,7 @@ const T = {
       ],
       loc_t: 'Servicios locales', loc_h: 'Dónde dormir, comer y arrendar',
       tab_dormir: 'Dormir', tab_comer: 'Comer', tab_arriendo: 'Arriendos',
-      lod_h: 'Dónde dormir, según tu presupuesto y tu estilo',
-      f_all: 'Todos', f_camp: 'Camping', f_hostal: 'Hostal', f_hotel: 'Hotel o cabaña',
-      lod: [
-        { k:'hotel', z:'Puerto Varas', tp:'Hotel o cabaña', p:'$$$', d:'Vista al lago y cercanía a restaurantes y actividades.' },
-        { k:'hostal', z:'Frutillar', tp:'Hostal', p:'$$', d:'Caminable al lago y al Teatro del Lago.' },
-        { k:'camp', z:'Puerto Octay', tp:'Camping', p:'$', d:'Zona tranquila junto al lago, ideal para naturaleza.' },
-        { k:'hotel', z:'Petrohué', tp:'Cabaña o camping', p:'$$', d:'Base para visitar el Parque Vicente Pérez Rosales.' },
-        { k:'hostal', z:'Pucón y Villarrica', tp:'Hostal u hotel', p:'$$', d:'Base para senderismo y actividades de aventura.' },
-        { k:'camp', z:'Panguipulli y Lago Ranco', tp:'Cabaña o camping', p:'$', d:'Bosques y lagos con menos oferta: conviene reservar con anticipación.' }
-      ],
-      lod_note: 'Ejemplos de tipos de oferta por zona. Precio: $ económico, $$ intermedio, $$$ alto (referencial). Verifica precio, disponibilidad y contacto antes de viajar.',
-      food_t: 'Comida local', food_h: 'Dónde comer en la ruta',
-      food: [
-        { e:'🍲', n:'Curanto en hoyo', d:'Preparación tradicional con mariscos, carnes, papas y milcaos cocidos al vapor bajo tierra.' },
-        { e:'🥔', n:'Milcao', d:'Pan de papa tradicional, servido caliente con mantequilla o queso.' },
-        { e:'🍰', n:'Kuchen', d:'Tradición alemana de la zona: tortas de frutas, con crema o streusel.' },
-        { e:'🐟', n:'Salmón y trucha', d:'Pescados de lagos y ríos, preparados a la parrilla, al horno o ahumados.' },
-        { e:'🥤', n:'Mote con huesillo', d:'Bebida refrescante de trigo y durazno deshidratado, típica en verano.' },
-        { e:'🍺', n:'Cerveza artesanal', d:'Cervecerías de la zona, con influencia de la tradición alemana.' }
-      ],
-      food_tip: 'Busca fondas, ferias y mercados locales. Consulta antes horarios y disponibilidad.',
-      srv_h: 'Arriendo de vehículos y bicicletas',
-      srv: [
-        ['🚌', 'Buses', 'Desde Temuco, Pucón, Valdivia, Osorno y Puerto Montt.'],
-        ['✈️', 'Aeropuertos', 'Temuco, Valdivia, Osorno y Puerto Montt, con movilidad local hacia la ruta.'],
-        ['🧭', 'Guiado', 'Guías locales certificados para las actividades de aventura.'],
-        ['ℹ️', 'Información turística', 'Oficinas de turismo en las comunas y puntos de información en los accesos.'],
-        ['📶', 'Conectividad', 'Señal irregular en tramos alejados: descarga la guía antes de salir.']
-      ],
+      nav_lod: 'Dormir', nav_food: 'Comer', nav_map: 'Mapa', nav_em: 'Emergencias',
       acc_t: 'Accesibilidad y conectividad', acc_h: 'Barreras identificadas y cómo las enfrentamos',
       acc: [
         ['Señal irregular en tramos alejados', 'Descarga previa de mapas y fichas, con indicación de los puntos con señal.'],
@@ -868,14 +799,10 @@ const T = {
         'Decreto N°19, Ministerio de Economía, Fomento y Turismo.'
       ]
     },
-    hero_cta: 'Planificar mi viaje',
-    step1: '1 · Estilo', step2: '2 · Duración', step3: '3 · Itinerario',
-    st_aventura: 'Aventura', st_naturaleza: 'Naturaleza', st_cultura: 'Cultura', st_bienestar: 'Bienestar',
-    d_day: 'día', d_days: 'días',
     day: 'Día', sum: (n, p) => `✨ ${n} ${n === 1 ? 'día' : 'días'} · perfil ${p}`,
     btn_prev: '← Atrás', btn_next: 'Siguiente →', btn_gen: 'Generar itinerario →', btn_restart: 'Reiniciar ↺',
+    st_aventura: 'Aventura', st_naturaleza: 'Naturaleza', st_cultura: 'Cultura', st_bienestar: 'Bienestar',
     inroute: 'En tu ruta',
-    em_gen: 'Emergencias generales',
     t_ready: 'Guía lista. Puedes usarla sin señal.', t_already: 'La guía ya está disponible sin conexión.',
     t_https: 'Abre la guía desde un servidor (https) para habilitar el modo sin conexión.',
     dl_btn: 'Descargar guía para uso sin conexión', dl_prep: 'Preparando guía…', dl_done: 'Guía lista sin conexión ✓',
@@ -903,70 +830,19 @@ const T = {
 };
 const lang = 'es';
 
-/* =========================================================
-   LUGARES (con fotos de Wikimedia optimizadas a 800px)
-   ========================================================= */
 const LUGARES = {
-  lago: {
-    scene:'lake', p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',
-    cat:'natural', loc:'Puerto Varas · Frutillar',
-    photo:'img/lago.jpg'                // ← local
-  },
-  osorno: {
-    scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',
-    cat:'natural', loc:'Petrohué',
-    photo:'img/osorno.jpg'              // ← local
-  },
-  villarrica: {
-    scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1', smoke:true,
-    cat:'aventura', loc:'Pucón',
-    photo:'img/villarrica.jpg'          // ← local
-  },
-  conguillio: {
-    scene:'forest', p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',
-    cat:'aventura', loc:'Melipeuco',
-    photo:'img/conguillio.jpg'          // ← local
-  },
-  vpr: {
-    scene:'falls', p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',
-    cat:'natural', loc:'Petrohué',
-    photo:'img/vpr.jpg'                 // ← local
-  },
-  frutillar: {
-    scene:'house', p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',
-    cat:'cultura', loc:'Frutillar',
-    photo:'img/frutillar.jpg'           // ← local
-  },
-  iglesia: {
-    scene:'church', p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',
-    cat:'cultura', loc:'Puerto Varas',
-    photo:'img/iglesia.jpg'             // ← local
-  },
-  teatro: {
-    scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',
-    cat:'cultura', loc:'Frutillar',
-    photo:'img/teatro.jpg'              // ← local
-  },
-  pewenche: {
-    scene:'ruka', p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',
-    cat:'cultura', loc:'Araucanía Andina',
-    photo:''                            // ← SVG (sin foto)
-  },
-  termas: {
-    scene:'steam', p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',
-    cat:'bienestar', loc:'Zona volcánica',
-    photo:'img/termas.jpg'              // ← opcional: si no la descargaste, deja ''
-  },
-  templo: {
-    scene:'church', p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1',
-    cat:'cultura', loc:'Puerto Varas',
-    photo:'img/templo.jpg'              // ← opcional
-  },
-  ferias: {
-    scene:'house', p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1',
-    cat:'cultura', loc:'Frutillar · Pucón',
-    photo:''                            // ← SVG (sin foto)
-  }
+  lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  cat:'natural',  loc:'Puerto Varas · Frutillar', photo:'img/lago.jpg' },
+  osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  cat:'natural',  loc:'Petrohué',                 photo:'img/osorno.jpg' },
+  villarrica: { scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1',  cat:'aventura', loc:'Pucón',                    photo:'img/villarrica.jpg', smoke:true },
+  conguillio: { scene:'forest',  p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',  cat:'aventura', loc:'Melipeuco',                photo:'img/conguillio.jpg' },
+  vpr:        { scene:'falls',   p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',  cat:'natural',  loc:'Petrohué',                 photo:'img/vpr.jpg' },
+  frutillar:  { scene:'house',   p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',  cat:'cultura',  loc:'Frutillar',                photo:'img/frutillar.jpg' },
+  iglesia:    { scene:'church',  p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',  cat:'cultura',  loc:'Puerto Varas',             photo:'img/iglesia.jpg' },
+  teatro:     { scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',  cat:'cultura',  loc:'Frutillar',                photo:'img/teatro.jpg' },
+  pewenche:   { scene:'ruka',    p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',  cat:'cultura',  loc:'Araucanía Andina',         photo:'' },
+  termas:     { scene:'steam',   p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',  cat:'bienestar',loc:'Zona volcánica',           photo:'img/termas.jpg' },
+  templo:     { scene:'church',  p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1', cat:'cultura',  loc:'Puerto Varas',             photo:'img/templo.jpg' },
+  ferias:     { scene:'house',   p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1', cat:'cultura',  loc:'Frutillar · Pucón',        photo:'' }
 };
 const PERFILES = {
   aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
@@ -977,9 +853,6 @@ const PERFILES = {
 const HORAS = ['09:00', '11:30', '15:00', '17:30'];
 const SPOT_LABELS = { all:'Todos', natural:'Naturaleza', aventura:'Aventura', cultura:'Cultura', bienestar:'Bienestar' };
 
-/* =========================================================
-   UTILIDADES
-   ========================================================= */
 const $  = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const t  = k => T[lang][k];
@@ -990,18 +863,11 @@ function toast(msg) {
 }
 function numParadas() { return dias === 1 ? 3 : dias === 2 ? 4 : 5; }
 
-/* =========================================================
-   ESTADO
-   ========================================================= */
-let perfil = 'naturaleza', dias = 2, paso = 0, lodFiltro = 'all', spotFilter = 'all';
+let perfil = 'naturaleza', dias = 2, paso = 0, spotFilter = 'all';
 
-/* =========================================================
-   SVG ILUSTRADO + FOTO
-   ========================================================= */
 function tree(x, y, s, c) {
   return `<path d="M${x} ${y} L${x-10*s} ${y-40*s} L${x+10*s} ${y-40*s}Z M${x-9*s} ${y-28*s} L${x-20*s} ${y-62*s} L${x+20*s} ${y-62*s} L${x+9*s} ${y-28*s}Z M${x-13*s} ${y-50*s} L${x-26*s} ${y-84*s} L${x+26*s} ${y-84*s} L${x+13*s} ${y-50*s}Z" fill="${c}"/>`;
 }
-
 function scene(key, p, id, extra) {
   const [s1, s2, far, mid, near] = p;
   const g = 'g' + id;
@@ -1011,57 +877,27 @@ function scene(key, p, id, extra) {
   const base = `${defs}<rect width="400" height="260" fill="url(#${g})"/>${sun}${cloud}`;
   let body = '';
   if (key === 'lake') {
-    body = `<path d="M0 150 L80 96 L150 140 L240 70 L330 140 L400 110 L400 260 L0 260Z" fill="${far}"/>
-      <path d="M0 180 L110 130 L220 170 L330 128 L400 160 L400 260 L0 260Z" fill="${mid}"/>
-      <path d="M0 200 H400 V260 H0Z" fill="${near}"/>
-      <path d="M0 214 Q100 206 200 214 T400 214" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/>
-      <path d="M240 70 L268 140 L212 140Z" fill="#fff" opacity=".85"/>`;
+    body = `<path d="M0 150 L80 96 L150 140 L240 70 L330 140 L400 110 L400 260 L0 260Z" fill="${far}"/><path d="M0 180 L110 130 L220 170 L330 128 L400 160 L400 260 L0 260Z" fill="${mid}"/><path d="M0 200 H400 V260 H0Z" fill="${near}"/><path d="M0 214 Q100 206 200 214 T400 214" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/><path d="M240 70 L268 140 L212 140Z" fill="#fff" opacity=".85"/>`;
   } else if (key === 'volcano') {
     const smoke = extra && extra.smoke ? `<g opacity=".65"><ellipse cx="210" cy="30" rx="34" ry="12" fill="#fff"/><ellipse cx="236" cy="16" rx="26" ry="9" fill="#fff"/></g>` : '';
-    body = `<path d="M0 170 L90 110 L170 160 L260 100 L400 170 L400 260 L0 260Z" fill="${far}"/>
-      <path d="M120 260 L220 60 L320 260Z" fill="${mid}"/>
-      <path d="M220 60 L250 118 L236 112 L224 124 L212 110 L198 118Z" fill="#fff"/>
-      ${smoke}
-      <path d="M0 215 Q120 205 200 216 T400 214 L400 260 L0 260Z" fill="${near}"/>
-      <path d="M0 232 Q100 226 200 234 T400 232" stroke="#fff" stroke-opacity=".45" stroke-width="2" fill="none"/>`;
+    body = `<path d="M0 170 L90 110 L170 160 L260 100 L400 170 L400 260 L0 260Z" fill="${far}"/><path d="M120 260 L220 60 L320 260Z" fill="${mid}"/><path d="M220 60 L250 118 L236 112 L224 124 L212 110 L198 118Z" fill="#fff"/>${smoke}<path d="M0 215 Q120 205 200 216 T400 214 L400 260 L0 260Z" fill="${near}"/>`;
   } else if (key === 'forest') {
-    body = `<path d="M0 170 L120 110 L220 160 L330 105 L400 150 L400 260 L0 260Z" fill="${far}"/>
-      <path d="M0 230 Q200 210 400 230 L400 260 L0 260Z" fill="${mid}"/>
-      ${tree(40,236,1.1,near)}${tree(96,232,.9,near)}${tree(150,238,1.3,near)}${tree(214,234,1,near)}${tree(268,236,1.2,near)}${tree(332,232,.95,near)}${tree(372,238,1.1,near)}`;
+    body = `<path d="M0 170 L120 110 L220 160 L330 105 L400 150 L400 260 L0 260Z" fill="${far}"/><path d="M0 230 Q200 210 400 230 L400 260 L0 260Z" fill="${mid}"/>${tree(40,236,1.1,near)}${tree(96,232,.9,near)}${tree(150,238,1.3,near)}${tree(214,234,1,near)}${tree(268,236,1.2,near)}${tree(332,232,.95,near)}${tree(372,238,1.1,near)}`;
   } else if (key === 'falls') {
-    body = `<path d="M0 150 L120 60 L200 120 L300 50 L400 130 L400 260 L0 260Z" fill="${far}"/>
-      <path d="M220 90 L260 90 L262 210 L224 210Z" fill="#fff" opacity=".9"/>
-      <path d="M232 100 L252 100 L254 200 L234 200Z" fill="#dff6ff"/>
-      <path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/>
-      <path d="M180 212 Q240 204 300 212 L300 228 Q240 220 180 228Z" fill="${near}"/>
-      <path d="M0 240 Q200 228 400 240 L400 260 L0 260Z" fill="${near}" opacity=".9"/>`;
-  } else if (key === 'house' || key === 'church' || key === 'theater') {
-    let building = '';
-    if (key === 'house') building = `<rect x="130" y="130" width="140" height="95" fill="#fbf4ea"/><path d="M120 132 L200 74 L280 132Z" fill="${mid}"/><rect x="186" y="170" width="28" height="55" fill="${mid}"/><rect x="146" y="150" width="22" height="22" fill="${near}" opacity=".6"/><rect x="232" y="150" width="22" height="22" fill="${near}" opacity=".6"/>`;
-    if (key === 'church') building = `<rect x="150" y="120" width="100" height="105" fill="#fffdf8"/><path d="M142 122 L200 66 L258 122Z" fill="${mid}"/><rect x="186" y="28" width="28" height="44" fill="#fffdf8"/><path d="M186 28 L200 4 L214 28Z" fill="${mid}"/><rect x="194" y="16" width="12" height="4" fill="${mid}"/><rect x="194" y="10" width="4" height="12" fill="${mid}"/><path d="M186 180 Q200 150 214 180 L214 225 L186 225Z" fill="${near}" opacity=".75"/>`;
-    if (key === 'theater') building = `<path d="M90 190 Q200 90 310 190 L310 225 L90 225Z" fill="#fbf7fb"/><path d="M90 190 Q200 90 310 190" stroke="${mid}" stroke-width="10" fill="none"/><rect x="150" y="190" width="100" height="35" fill="${mid}" opacity=".35"/>`;
-    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/>
-      <path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/>
-      ${building}
-      ${key === 'theater' ? `<path d="M0 232 Q200 226 400 232 L400 260 L0 260Z" fill="${near}" opacity=".9"/>` : ''}
-      ${tree(40,224,1,near)}${tree(360,224,1,near)}`;
+    body = `<path d="M0 150 L120 60 L200 120 L300 50 L400 130 L400 260 L0 260Z" fill="${far}"/><path d="M220 90 L260 90 L262 210 L224 210Z" fill="#fff" opacity=".9"/><path d="M232 100 L252 100 L254 200 L234 200Z" fill="#dff6ff"/><path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/><path d="M0 240 Q200 228 400 240 L400 260 L0 260Z" fill="${near}"/>`;
+  } else if (key === 'house') {
+    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><rect x="130" y="130" width="140" height="95" fill="#fbf4ea"/><path d="M120 132 L200 74 L280 132Z" fill="${mid}"/><rect x="186" y="170" width="28" height="55" fill="${mid}"/><rect x="146" y="150" width="22" height="22" fill="${near}" opacity=".6"/><rect x="232" y="150" width="22" height="22" fill="${near}" opacity=".6"/>${tree(40,224,1,near)}${tree(360,224,1,near)}`;
+  } else if (key === 'church') {
+    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><rect x="150" y="120" width="100" height="105" fill="#fffdf8"/><path d="M142 122 L200 66 L258 122Z" fill="${mid}"/><rect x="186" y="28" width="28" height="44" fill="#fffdf8"/><path d="M186 28 L200 4 L214 28Z" fill="${mid}"/><path d="M186 180 Q200 150 214 180 L214 225 L186 225Z" fill="${near}" opacity=".75"/>${tree(40,224,1,near)}${tree(360,224,1,near)}`;
+  } else if (key === 'theater') {
+    body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><path d="M90 190 Q200 90 310 190 L310 225 L90 225Z" fill="#fbf7fb"/><path d="M90 190 Q200 90 310 190" stroke="${mid}" stroke-width="10" fill="none"/><rect x="150" y="190" width="100" height="35" fill="${mid}" opacity=".35"/>${tree(40,224,1,near)}${tree(360,224,1,near)}`;
   } else if (key === 'steam') {
-    body = `<path d="M0 150 L140 96 L260 150 L400 110 L400 260 L0 260Z" fill="${far}"/>
-      <path d="M0 200 Q200 180 400 200 L400 260 L0 260Z" fill="${mid}"/>
-      <ellipse cx="200" cy="216" rx="150" ry="22" fill="${near}"/>
-      <path d="M140 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>
-      <path d="M200 196 q12 -22 0 -44 t0 -40" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>
-      <path d="M260 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>`;
+    body = `<path d="M0 150 L140 96 L260 150 L400 110 L400 260 L0 260Z" fill="${far}"/><path d="M0 200 Q200 180 400 200 L400 260 L0 260Z" fill="${mid}"/><ellipse cx="200" cy="216" rx="150" ry="22" fill="${near}"/><path d="M140 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/><path d="M200 196 q12 -22 0 -44 t0 -40" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/><path d="M260 200 q10 -18 0 -36 t0 -36" stroke="#fff" stroke-width="5" fill="none" opacity=".75" stroke-linecap="round"/>`;
   } else if (key === 'ruka') {
-    body = `<path d="M0 150 L110 70 L210 140 L300 60 L400 140 L400 260 L0 260Z" fill="${far}"/>
-      <path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/>
-      <path d="M150 214 Q200 110 250 214Z" fill="#fff6dd" stroke="${near}" stroke-width="3"/>
-      <path d="M200 214 L200 170" stroke="${near}" stroke-width="3"/>
-      <path d="M0 240 Q200 232 400 240 L400 260 L0 260Z" fill="${near}"/>`;
+    body = `<path d="M0 150 L110 70 L210 140 L300 60 L400 140 L400 260 L0 260Z" fill="${far}"/><path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/><path d="M150 214 Q200 110 250 214Z" fill="#fff6dd" stroke="${near}" stroke-width="3"/><path d="M200 214 L200 170" stroke="${near}" stroke-width="3"/>`;
   }
   return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${base}${body}</svg>`;
 }
-
 function renderArt(L, info) {
   if (L.photo) {
     const img = document.createElement('img');
@@ -1082,9 +918,6 @@ function renderArt(L, info) {
   return svgWrap.firstChild;
 }
 
-/* =========================================================
-   PLANIFICADOR
-   ========================================================= */
 function updateButtons() {
   $('#prev').disabled = paso === 0;
   $('#next').textContent = paso === 2 ? t('btn_restart') : (paso === 1 ? t('btn_gen') : t('btn_next'));
@@ -1103,7 +936,6 @@ function generarItinerario(conEsqueleto) {
   const lista = PERFILES[perfil];
   $('#summary').textContent = t('sum')(dias, t('st_' + perfil));
   tl.innerHTML = ''; tl.classList.remove('drawn');
-
   const pintar = () => {
     tl.innerHTML = '';
     for (let i = 0; i < total; i++) {
@@ -1127,7 +959,6 @@ function generarItinerario(conEsqueleto) {
       $$('.stop', tl).forEach((s, i) => setTimeout(() => s.classList.add('in'), 250 + i * 180));
     });
   };
-
   if (conEsqueleto) {
     for (let i = 0; i < 3; i++) {
       const s = el('div', 'skel');
@@ -1139,7 +970,6 @@ function generarItinerario(conEsqueleto) {
     setTimeout(pintar, 900);
   } else pintar();
 }
-
 $$('.style-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
@@ -1161,9 +991,6 @@ $$('.dur').forEach(b => b.addEventListener('click', () => {
 $('#prev').addEventListener('click', () => irA(paso - 1));
 $('#next').addEventListener('click', () => irA(paso === 2 ? 0 : paso + 1));
 
-/* =========================================================
-   ATRACTIVOS CON FILTROS
-   ========================================================= */
 function renderSpotFilters() {
   const box = document.getElementById('spot-filters');
   if (!box) return;
@@ -1175,19 +1002,15 @@ function renderSpotFilters() {
     box.appendChild(b);
   });
 }
-
 function renderGrid() {
   const g = document.getElementById('grid');
   if (!g) return;
   g.innerHTML = '';
   renderSpotFilters();
-
   const enRuta = new Set(PERFILES[perfil].slice(0, numParadas()));
   const ids = Object.keys(LUGARES).filter(id => spotFilter === 'all' || LUGARES[id].cat === spotFilter);
-
   const counter = document.getElementById('spot-count');
   if (counter) counter.textContent = ids.length + ' lugares';
-
   ids.forEach((id, i) => {
     const L = LUGARES[id];
     const info = T[lang].places[id];
@@ -1197,10 +1020,8 @@ function renderGrid() {
     card.tabIndex = 0;
     card.setAttribute('role', 'button');
     card.setAttribute('aria-label', info.n + ' — ' + info.d);
-
     const art = el('div', 'art');
     art.appendChild(renderArt(L, info));
-
     const inf = el('div', 'info');
     const top = el('div', 'spot-top');
     top.appendChild(el('span', 'tag', info.t));
@@ -1209,11 +1030,9 @@ function renderGrid() {
     inf.appendChild(el('h3', '', info.n));
     inf.appendChild(el('p', 'desc', info.d));
     inf.appendChild(el('span', 'arrow', '→'));
-
     card.appendChild(art);
     card.appendChild(inf);
     if (enRuta.has(id)) card.appendChild(el('span', 'badge', '★ ' + t('inroute')));
-
     const toggle = () => {
       const isOpen = card.classList.contains('tap');
       document.querySelectorAll('.spot.tap').forEach(c => c.classList.remove('tap'));
@@ -1223,115 +1042,69 @@ function renderGrid() {
     card.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
     });
-
     g.appendChild(card);
     io.observe(card);
   });
 }
 
 /* =========================================================
-   SERVICIOS LOCALES — DATOS
+   SERVICIOS LOCALES — DATOS (3 + 3 + 3)
    ========================================================= */
 const PLACES = {
   alojamiento: [
-    {
-      k: 'hotel',
-      z: 'Puerto Varas',
-      n: 'Casa Molino Hotel Boutique',
-      r: 9.1,
-      c: 366,
-      nota: 'Hotel boutique a orillas del lago Llanquihue, con jardines y restaurante. Una experiencia acogedora y bien valorada.',
-      link: 'https://www.booking.com/hotel/cl/casa-molino.es.html'
-    },
-    {
-      k: 'hotel',
-      z: 'Puerto Varas',
-      n: 'Solace Hotel Puerto Varas',
-      r: 9.0,
-      c: 1432,
-      nota: 'Moderno hotel en una zona verde, a 600 metros del lago. Muy popular por su desayuno y ubicación.',
-      link: 'https://www.booking.com/hotel/cl/solace-puerto-varas.es.html'
-    },
-    {
-      k: 'hotel',
-      z: 'Puerto Varas',
-      n: 'Hotel Cabaña Del Lago',
-      r: 8.9,
-      c: 3902,
-      nota: 'Ofrece amplias cabañas y habitaciones con vistas panorámicas al lago y los volcanes. Ideal para familias.',
-      link: 'https://www.booking.com/hotel/cl/cabana-del-lago.es.html'
-    }
+    { k:'hotel', z:'Puerto Varas', n:'Casa Molino Hotel Boutique', r:9.1, c:366,
+      nota:'Hotel boutique a orillas del lago Llanquihue, con jardines y restaurante.',
+      link:'https://www.booking.com/hotel/cl/casa-molino.es.html' },
+    { k:'hotel', z:'Puerto Varas', n:'Solace Hotel Puerto Varas', r:9.0, c:1432,
+      nota:'Moderno hotel en una zona verde, a 600 metros del lago. Destaca su desayuno.',
+      link:'https://www.booking.com/hotel/cl/solace-puerto-varas.es.html' },
+    { k:'hostal', z:'Pucón', n:'Hostal La Tetera', r:9.2, c:77,
+      nota:'Casa de huéspedes acogedora con seis habitaciones y desayuno casero.',
+      link:'https://www.booking.com/hotel/cl/hostal-la-tetera.es.html' }
   ],
   comida: [
-    {
-      z: 'Frutillar',
-      n: 'Se Cocina',
-      r: 4.9,
-      c: 56,
-      p: '$$$',
-      nota: 'Cocina de autor con productos locales, aclamada por su excelente relación calidad-precio. Una parada obligada.',
-      link: 'https://www.yelp.com/biz/se-cocina-fundo-santa-clara'
-    },
-    {
-      z: 'Puerto Varas',
-      n: 'Casa Valdés',
-      r: 4.6,
-      c: 15,
-      p: '$$$$',
-      nota: 'Especializado en mariscos frescos. Considerado por muchos como el mejor restaurante de la zona para una cena especial.',
-      link: 'https://www.yelp.com/biz/casa-valdes-puerto-varas'
-    },
-    {
-      z: 'Puerto Varas',
-      n: 'La Marca',
-      r: 4.5,
-      c: 13,
-      p: '$$$',
-      nota: 'Famoso por sus cortes de carne a la parrilla. Un lugar ideal para los amantes de la buena carne y el vino.',
-      link: 'https://www.yelp.com/biz/la-marca-los-lagos'
-    }
+    { z:'Frutillar', n:'Se Cocina', r:4.9, c:56, p:'$$$',
+      nota:'Cocina de autor con productos locales, aclamada por su excelente relación calidad-precio.',
+      link:'https://www.yelp.com/biz/se-cocina-fundo-santa-clara' },
+    { z:'Puerto Varas', n:'Casa Valdés', r:4.6, c:15, p:'$$$$',
+      nota:'Especializado en mariscos frescos. Una parada obligada para una cena especial.',
+      link:'https://www.yelp.com/biz/casa-valdes-puerto-varas' },
+    { z:'Puerto Varas', n:'La Marca', r:4.5, c:13, p:'$$$',
+      nota:'Famoso por sus cortes de carne a la parrilla. Ideal para los amantes del buen vino.',
+      link:'https://www.yelp.com/biz/la-marca-los-lagos' }
   ],
   arriendo: [
-    {
-      tipo: 'car',
-      z: 'Puerto Varas',
-      n: 'Mitta Rent a Car',
-      r: 4.2,
-      c: 150,
-      nota: 'Amplia red de sucursales en aeropuertos y ciudades. Ofrecen servicios como silla para niños y kilometraje libre.',
-      link: 'https://www.mitta.cl/'
-    },
-    {
-      tipo: 'car',
-      z: 'Puerto Varas',
-      n: 'Surentacar',
-      r: 4.0,
-      c: 80,
-      nota: 'Ofrecen traslado gratuito desde el Aeropuerto El Tepual y descuentos en cabañas asociadas. Una opción práctica.',
-      link: 'https://www.surentacar.cl/'
-    },
-    {
-      tipo: 'car',
-      z: 'Frutillar',
-      n: 'Mérida Rent a Car',
-      r: 4.5,
-      c: 45,
-      nota: 'Atención cercana y rápida por WhatsApp. Ideales para moverte por Llanquihue, Frutillar y el aeropuerto.',
-      link: 'https://meridarentacar.cl/'
-    }
+    { tipo:'car', z:'Puerto Varas', n:'Mitta Rent a Car', r:4.2, c:150,
+      nota:'Amplia red de sucursales en aeropuertos y ciudades. Ofrece silla para niños y km libre.',
+      link:'https://www.mitta.cl/' },
+    { tipo:'car', z:'Puerto Varas', n:'Surentacar', r:4.0, c:80,
+      nota:'Traslado gratuito desde el Aeropuerto El Tepual y descuentos en cabañas asociadas.',
+      link:'https://www.surentacar.cl/' },
+    { tipo:'car', z:'Frutillar', n:'Mérida Rent a Car', r:4.5, c:45,
+      nota:'Atención cercana y rápida por WhatsApp. Ideales para moverte por Llanquihue y Frutillar.',
+      link:'https://meridarentacar.cl/' }
   ]
 };
-const LBL = { hotel:'Hotel', hostal:'Hostal', camp:'Camping', reviews:'reseñas', seeMap:'Ver zona en el mapa', car:'Auto', bike:'Bicicleta' };
+const LBL = { hotel:'Hotel', hostal:'Hostal', camp:'Camping', reviews:'reseñas', car:'Auto', bike:'Bicicleta' };
 
-function placeCard(tag, n, r, c, nota, zona) {
+function placeCard(tag, n, r, c, nota, zona, link) {
   const card = el('div', 'card-x');
   card.appendChild(el('span', 'age', tag));
   card.appendChild(el('h4', '', n));
   card.appendChild(el('p', 'rating', '★ ' + r.toFixed(1) + ' · ' + c.toLocaleString('es-CL') + ' ' + LBL.reviews));
   card.appendChild(el('p', '', nota));
-  const b = el('button', 'map-btn', LBL.seeMap + ' →');
+  const actions = el('div', 'card-actions');
+  const b = el('button', 'map-btn', 'Ver en el mapa →');
   b.addEventListener('click', () => showZone(zona));
-  card.appendChild(b);
+  actions.appendChild(b);
+  if (link) {
+    const a = el('a', 'ext-link', 'Ver ficha ↗');
+    a.href = link;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    actions.appendChild(a);
+  }
+  card.appendChild(actions);
   return card;
 }
 function showZone(zona) {
@@ -1356,15 +1129,11 @@ const EMERG_TIPS = [
   'Ten a mano tu ubicación: nombre del sector o coordenadas de GPS.'
 ];
 
-/* =========================================================
-   RENDER DE SECCIONES EXTRA
-   ========================================================= */
 function renderExtras() {
   const X = T[lang].x;
   const set  = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
   const fill = (id, arr, fn) => { const n = document.getElementById(id); if (!n) return; n.innerHTML = ''; arr.forEach((v, i) => n.appendChild(fn(v, i))); };
 
-  // Servicios locales
   set('x-loc-t', X.loc_t); set('x-loc-h', X.loc_h);
   document.querySelectorAll('#locales .tab').forEach(b => { b.textContent = X['tab_' + b.dataset.tab]; });
   const navMapa = document.getElementById('nav-mapa'); if (navMapa) navMapa.textContent = X.nav_map;
@@ -1372,7 +1141,25 @@ function renderExtras() {
   $$('nav.sections a[data-tab="dormir"]').forEach(a => a.textContent = X.nav_lod);
   $$('nav.sections a[data-tab="comer"]').forEach(a => a.textContent = X.nav_food);
 
-  // Descripción
+  // Dormir (3)
+  const gLod = document.getElementById('x-lod-grid');
+  if (gLod) {
+    gLod.innerHTML = '';
+    PLACES.alojamiento.forEach(x => gLod.appendChild(placeCard(LBL[x.k] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
+  }
+  // Comer (3)
+  const gRest = document.getElementById('x-rest-grid');
+  if (gRest) {
+    gRest.innerHTML = '';
+    PLACES.comida.forEach(r => gRest.appendChild(placeCard(r.z + ' · ' + r.p, r.n, r.r, r.c, r.nota, r.z, r.link)));
+  }
+  // Arriendo (3)
+  const gArr = document.getElementById('x-srv-grid');
+  if (gArr) {
+    gArr.innerHTML = '';
+    PLACES.arriendo.forEach(x => gArr.appendChild(placeCard(LBL[x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
+  }
+
   set('x-desc-t', X.desc_t); set('x-desc-h', X.desc_h);
   fill('x-desc-list', X.desc_q, ([q, a], i) => {
     const d = el('details', 'qa'); if (i === 0) d.open = true;
@@ -1381,44 +1168,6 @@ function renderExtras() {
     return d;
   });
 
-  // Alojamiento
-  const filtros = [['all', X.f_all], ['camp', X.f_camp], ['hostal', X.f_hostal], ['hotel', X.f_hotel]];
-  fill('x-lod-filters', filtros, ([k, label]) => {
-    const b = el('button', '', label);
-    b.setAttribute('aria-pressed', String(lodFiltro === k));
-    b.addEventListener('click', () => { lodFiltro = k; renderLod(); });
-    return b;
-  });
-  renderLod();
-
-  // Zonas de alojamiento
-  fill('x-lod-zones', X.lod, item => {
-    const c = el('div', 'info-item');
-    c.appendChild(el('b', '', item.z + ' · ' + item.tp));
-    c.appendChild(el('span', '', item.p + ' · ' + item.d));
-    return c;
-  });
-
-  // Comida típica
-  fill('x-food-grid', X.food, f => {
-    const c = el('div', 'card-x food-card');
-    c.appendChild(el('span', 'big', f.e));
-    c.appendChild(el('h4', '', f.n));
-    c.appendChild(el('p', '', f.d));
-    return c;
-  });
-  set('x-food-tip', X.food_tip);
-  renderRest();
-
-// Arriendos: SOLO 3 tarjetas, sin mezclar con transporte
-const srvGrid = document.getElementById('x-srv-grid');
-if (srvGrid) {
-  srvGrid.innerHTML = '';
-  PLACES.arriendo.forEach(x => {
-    srvGrid.appendChild(placeCard(LBL[x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link));
-  });
-}
-  // Accesibilidad
   set('x-acc-t', X.acc_t); set('x-acc-h', X.acc_h);
   fill('x-acc-grid', X.acc, ([h, d]) => {
     const c = el('div', 'card-x');
@@ -1426,27 +1175,24 @@ if (srvGrid) {
     return c;
   });
 
-  // Calidad
   set('x-cal-t', X.cal_t); set('x-cal-h', X.cal_h);
   fill('x-cal-list', X.cal, txt => el('li', '', txt));
 
-  // Mapa
   set('x-map-t', X.map_t); set('x-map-h', X.map_h);
   const zonas = ['Frutillar','Puerto Varas','Puerto Octay','Petrohué','Pucón','Villarrica','Panguipulli','Lago Ranco'];
   const frame = document.getElementById('x-map-frame');
-  if (!frame.dataset.zona) frame.dataset.zona = 'Frutillar';
+  if (frame && !frame.dataset.zona) frame.dataset.zona = 'Frutillar';
   fill('x-map-grid', zonas, z => {
     const b = el('button', '', z);
-    b.setAttribute('aria-pressed', String(frame.dataset.zona === z));
+    b.setAttribute('aria-pressed', String(frame && frame.dataset.zona === z));
     b.addEventListener('click', () => {
-      frame.dataset.zona = z;
+      if (frame) frame.dataset.zona = z;
       $$('#x-map-grid button').forEach(x => x.setAttribute('aria-pressed', String(x.textContent === z)));
       renderMapa();
     });
     return b;
   });
 
-  // Promoción
   set('x-promo-t', X.promo_t); set('x-promo-h', X.promo_h);
   set('x-poster-title', X.poster_title); set('x-poster-msg', X.poster_msg);
   set('x-promo-sub', X.promo_sub); set('x-promo-ch', X.promo_ch);
@@ -1458,6 +1204,10 @@ if (srvGrid) {
     if (LUGARES.lago.photo) {
       const img = document.createElement('img');
       img.src = LUGARES.lago.photo; img.alt = '';
+      img.onerror = () => {
+        art.innerHTML = scene('lake', LUGARES.lago.p, 'PO1');
+        const svg = art.querySelector('svg'); if (svg) svg.style.height = '100%';
+      };
       art.appendChild(img);
     } else {
       art.innerHTML = scene('lake', LUGARES.lago.p, 'PO1');
@@ -1465,7 +1215,6 @@ if (srvGrid) {
     }
   }
 
-  // Resultados
   set('x-res-t', X.res_t); set('x-res-h', X.res_h); set('x-viab', X.viab);
   fill('x-res-grid', X.res, ([h, d]) => {
     const c = el('div', 'card-x');
@@ -1473,11 +1222,9 @@ if (srvGrid) {
     return c;
   });
 
-  // Fuentes
   set('x-src-t', X.src_t);
   fill('x-src', X.src, s => el('li', '', s));
 
-  // Emergencias
   set('x-em-t', 'Emergencias'); set('x-em-h', 'Números de emergencia en Chile');
   const emGrid = document.getElementById('x-em-grid');
   if (emGrid) {
@@ -1494,27 +1241,6 @@ if (srvGrid) {
     emTips.innerHTML = '';
     EMERG_TIPS.forEach(t => emTips.appendChild(el('li', '', t)));
   }
-}
-
-function renderLod() {
-  const lista = PLACES.alojamiento.filter(x => lodFiltro === 'all' || x.k === lodFiltro);
-  $$('#x-lod-filters button').forEach((b, i) => {
-    const k = ['all', 'camp', 'hostal', 'hotel'][i];
-    b.setAttribute('aria-pressed', String(lodFiltro === k));
-  });
-  const g = document.getElementById('x-lod-grid');
-  if (!g) return;
-  g.innerHTML = '';
-  lista.forEach(x => g.appendChild(placeCard(LBL[x.k] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z)));
-  const note = document.getElementById('x-lod-note');
-  if (note) note.textContent = T[lang].x.lod_note;
-}
-
-function renderRest() {
-  const g = document.getElementById('x-rest-grid');
-  if (!g) return;
-  g.innerHTML = '';
-  PLACES.comida.forEach(r => g.appendChild(placeCard(r.z + ' · ' + r.p, r.n, r.r, r.c, r.nota, r.z)));
 }
 
 function renderMapa() {
@@ -1545,7 +1271,6 @@ function setTab(name) {
 $$('#locales .tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
 $$('nav.sections a[data-tab]').forEach(a => a.addEventListener('click', () => setTab(a.dataset.tab)));
 
-/* Compartir */
 const shareBtnEl = document.getElementById('share');
 if (shareBtnEl) shareBtnEl.addEventListener('click', async () => {
   const data = { title: document.title, text: T[lang].x.promo_ch, url: location.href };
@@ -1555,9 +1280,6 @@ if (shareBtnEl) shareBtnEl.addEventListener('click', async () => {
   } catch (e) {}
 });
 
-/* =========================================================
-   DESCARGA SIN CONEXIÓN
-   ========================================================= */
 const dl = document.getElementById('dl');
 if (dl) dl.addEventListener('click', async () => {
   if (dl.classList.contains('done')) { toast(t('t_already')); return; }
@@ -1586,9 +1308,6 @@ if (dl) dl.addEventListener('click', async () => {
   }
 });
 
-/* =========================================================
-   MENÚ DE IDIOMA
-   ========================================================= */
 const langEl = $('#lang'), langBtn = $('#langBtn');
 langBtn.addEventListener('click', e => {
   e.stopPropagation();
@@ -1601,9 +1320,6 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { langEl.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); }
 });
 
-/* =========================================================
-   CONTADORES, REVELADO, NAV, ENCABEZADO, SUBIR
-   ========================================================= */
 function countUp(node) {
   const target = Number(node.dataset.count), suffix = node.dataset.suffix || '';
   const start = performance.now(), dur = 1800;
@@ -1649,9 +1365,6 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-/* =========================================================
-   MAPA — CARGA DIFERIDA
-   ========================================================= */
 const mapObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1663,9 +1376,6 @@ const mapObserver = new IntersectionObserver(entries => {
 const mapSection = document.getElementById('mapa');
 if (mapSection) mapObserver.observe(mapSection);
 
-/* =========================================================
-   SPLIT HERO
-   ========================================================= */
 function splitHero() {
   let i = 0;
   document.querySelectorAll('.hero-title .ln').forEach(ln => {
@@ -1692,9 +1402,6 @@ function splitHero() {
   });
 }
 
-/* =========================================================
-   INICIO
-   ========================================================= */
 $$('.rv').forEach(n => io.observe(n));
 renderExtras();
 renderGrid();
