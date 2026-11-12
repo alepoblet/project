@@ -1,5 +1,5 @@
 /* sw.js — Guía Ruta Lagos y Volcanes */
-const CACHE = 'guia-lagos-v1';
+const CACHE = 'guia-lagos-v2';
 
 // Archivos indispensables (si falla alguno, falla la instalación)
 const CORE = [
