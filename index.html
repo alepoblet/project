@@ -78,15 +78,16 @@
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
     padding:7rem 1.25rem 9rem;
     background-image: linear-gradient(to bottom, rgba(13,51,70,0.5), rgba(13,51,70,0.85)), 
-                      url('img/fondo.jpg');
+                      url('img/fondo.webp');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
   }
-  .hero-inner{position:relative;z-index:2;max-width:980px;width:100%}
-  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
-    background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:.45rem 1rem;border-radius:999px;margin-bottom:1.2rem;
-    backdrop-filter:blur(8px);opacity:0;animation:rise .9s var(--ease) .1s forwards}
+  /* Efecto Parallax solo en PC (evita el bug de iOS) */
+  @media (min-width: 1024px) {
+    .hero {
+      background-attachment: fixed;
+    }
+  }
   .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:#7ff0e0;animation:live 2s infinite}
   @keyframes live{0%{box-shadow:0 0 0 0 rgba(127,240,224,.6)}100%{box-shadow:0 0 0 10px rgba(127,240,224,0)}}
   .hero-title{font-size:clamp(2.3rem,7vw,5rem);font-weight:800;letter-spacing:-.035em;line-height:1.04;margin:0;
@@ -450,7 +451,7 @@
 <body>
 
 <div class="topbar" id="topbar">
-  <div class="topbar-inner lg lg-sheen">
+  <div class="topbar-inner lg">
     <a class="brand" href="#inicio"><span class="logo">🌋</span><span>Guía Lagos y Volcanes</span></a>
     <div class="lang" id="lang">
       <button class="lang-btn lg" id="langBtn" aria-haspopup="listbox" aria-expanded="false" style="border-radius:999px; background:rgba(255,255,255,0.4)">
@@ -726,18 +727,18 @@ const T = {
 const lang = 'es';
 
 const LUGARES = {
-  lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  cat:'natural',  loc:'Puerto Varas · Frutillar', photo:'img/lago.jpg' },
-  osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  cat:'natural',  loc:'Petrohué',                 photo:'img/osorno.jpg' },
-  villarrica: { scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1',  cat:'aventura', loc:'Pucón',                    photo:'img/villarrica.jpg', smoke:true },
-  conguillio: { scene:'forest',  p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',  cat:'aventura', loc:'Melipeuco',                photo:'img/conguillio.jpg' },
-  vpr:        { scene:'falls',   p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',  cat:'natural',  loc:'Petrohué',                 photo:'img/vpr.jpg' },
-  frutillar:  { scene:'house',   p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',  cat:'cultura',  loc:'Frutillar',                photo:'img/frutillar.jpg' },
-  iglesia:    { scene:'church',  p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',  cat:'cultura',  loc:'Puerto Varas',             photo:'img/iglesia.jpg' },
-  teatro:     { scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',  cat:'cultura',  loc:'Frutillar',                photo:'img/teatro.jpg' },
-  pewenche:   { scene:'ruka',    p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',  cat:'cultura',  loc:'Araucanía Andina',         photo:'img/pewe.jpg' },
-  termas:     { scene:'steam',   p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',  cat:'bienestar',loc:'Zona volcánica',           photo:'img/termas.jpg' },
-  templo:     { scene:'church',  p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1', cat:'cultura',  loc:'Puerto Varas',             photo:'img/templo.jpg' },
-  ferias:     { scene:'house',   p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1', cat:'cultura',  loc:'Frutillar · Pucón',        photo:'img/feri.jpg' }
+  lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  cat:'natural',  loc:'Puerto Varas · Frutillar', photo:'img/lago.webp' },
+  osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  cat:'natural',  loc:'Petrohué',                 photo:'img/osorno.webp' },
+  villarrica: { scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1',  cat:'aventura', loc:'Pucón',                    photo:'img/villarrica.webp', smoke:true },
+  conguillio: { scene:'forest',  p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',  cat:'aventura', loc:'Melipeuco',                photo:'img/conguillio.webp' },
+  vpr:        { scene:'falls',   p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',  cat:'natural',  loc:'Petrohué',                 photo:'img/vpr.webp' },
+  frutillar:  { scene:'house',   p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',  cat:'cultura',  loc:'Frutillar',                photo:'img/frutillar.webp' },
+  iglesia:    { scene:'church',  p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',  cat:'cultura',  loc:'Puerto Varas',             photo:'img/iglesia.webp' },
+  teatro:     { scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',  cat:'cultura',  loc:'Frutillar',                photo:'img/teatro.webp' },
+  pewenche:   { scene:'ruka',    p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',  cat:'cultura',  loc:'Araucanía Andina',         photo:'img/pewe.webp' },
+  termas:     { scene:'steam',   p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',  cat:'bienestar',loc:'Zona volcánica',           photo:'img/termas.webp' },
+  templo:     { scene:'church',  p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1', cat:'cultura',  loc:'Puerto Varas',             photo:'img/templo.webp' },
+  ferias:     { scene:'house',   p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1', cat:'cultura',  loc:'Frutillar · Pucón',        photo:'img/feri.webp' }
 };
 const PERFILES = {
   aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
