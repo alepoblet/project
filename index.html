@@ -7,33 +7,28 @@
 <meta name="description" content="Guía digital de la Ruta Lagos y Volcanes: arma tu recorrido y úsalo sin conexión.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
-<!-- Fuentes Premium -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 <title>Guía Ruta Lagos y Volcanes</title>
 <style>
   :root {
-    --bg: #f8fafc;
+    --bg: #f4f8f7;
     --surface: #ffffff;
-    --ink: #0f172a;
-    --mute: #64748b;
-    --primary: #0f766e;
-    --primary-light: #14b8a6;
-    --accent: #f59e0b;
-    --danger: #ef4444;
-    --line: #e2e8f0;
+    --ink: #0d2a36;
+    --mute: #5b7480;
+    --primary: #1f6f8b;
+    --primary-dark: #123f52;
+    --accent: #e8804a;
+    --teal: #2e9c93;
+    --line: rgba(13,42,54,.09);
     
     --font-head: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
     
-    --radius-sm: 12px;
-    --radius-md: 24px;
-    --radius-lg: 32px;
-    
-    --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
-    --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
-    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+    --shadow-sm: 0 4px 6px -1px rgba(13,42,54,.05);
+    --shadow-md: 0 20px 40px -20px rgba(13,42,54,.25);
+    --shadow-lg: 0 30px 60px -24px rgba(13,42,54,.4);
     
     --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -50,21 +45,27 @@
   p { margin-bottom: 1rem; }
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; border: none; background: none; cursor: pointer; }
-  :focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.4); border-radius: 8px; }
+  :focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(31, 111, 139, 0.4); border-radius: 8px; }
 
-  /* Aceleración por hardware para animaciones */
-  .gpu { transform: translateZ(0); will-change: transform, opacity; }
-
-  /* ---------- ANIMACIONES GLOBALES ---------- */
+  /* ---------- ANIMACIONES ---------- */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
-  @keyframes zoomBg { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-  @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(20, 184, 166, 0); } 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0); } }
+  @keyframes zoomBg { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(232,128,74,.45); } 70%,100% { box-shadow: 0 0 0 10px rgba(232,128,74,0); } }
+  @keyframes shine { to { background-position: 200% center; } }
   
   .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--ease-smooth); }
   .reveal.active { opacity: 1; transform: none; }
 
-  /* ---------- HEADER & NAV ---------- */
+  /* ---------- VIDRIO (GLASSMORPHISM) ---------- */
+  .glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ---------- HEADER ---------- */
   .topbar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 0;
@@ -73,14 +74,13 @@
   .topbar.hide { transform: translateY(-120%); }
   .topbar-inner {
     max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
-    background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: var(--shadow-sm);
+    padding: 8px 16px; border-radius: 50px;
   }
-  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--ink); }
-  .brand-icon { width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 50%; display: grid; place-items: center; font-size: 1rem; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--primary-dark); }
+  .brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--teal)); color: white; border-radius: 50%; display: grid; place-items: center; font-size: 1rem; box-shadow: 0 4px 10px rgba(31,111,139,.3); }
+  .lang-btn { padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark); background: rgba(255,255,255,0.5); }
 
-  /* ---------- HERO SECTION ---------- */
+  /* ---------- HERO ---------- */
   .hero {
     position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center;
     text-align: center; padding: 120px 20px 80px; color: white; overflow: hidden;
@@ -88,198 +88,215 @@
   .hero-bg {
     position: absolute; inset: 0; z-index: -2;
     background: url('img/fondo.webp') center/cover no-repeat;
-    animation: zoomBg 20s ease-in-out infinite alternate;
+    animation: zoomBg 30s ease-in-out infinite alternate;
   }
   .hero-overlay {
     position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%);
+    background: linear-gradient(to bottom, rgba(13,42,54,0.5) 0%, rgba(13,42,54,0.9) 100%);
   }
   .hero-content { max-width: 800px; animation: fadeUp 1s var(--ease-smooth) both; }
   .badge {
-    display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 50px;
     background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);
-    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px;
-    backdrop-filter: blur(10px);
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;
+    backdrop-filter: blur(10px); color: #7ff0e0;
   }
-  .badge::before { content: ""; width: 6px; height: 6px; background: var(--primary-light); border-radius: 50%; }
-  .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-  .hero p { font-size: clamp(1.1rem, 2vw, 1.3rem); color: #e2e8f0; max-width: 600px; margin: 0 auto 40px; }
+  .badge::before { content: ""; width: 8px; height: 8px; background: #7ff0e0; border-radius: 50%; animation: ping 2s infinite; }
+  .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 800; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+  .hero h1 span { color: #ffd58a; }
+  .hero p { font-size: clamp(1.1rem, 2vw, 1.3rem); color: #e2e8f0; max-width: 600px; margin: 0 auto 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
   .hero-btn {
-    display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--ink);
-    padding: 16px 32px; border-radius: 50px; font-weight: 800; font-size: 1.1rem; font-family: var(--font-head);
+    display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--primary-dark);
+    padding: 16px 36px; border-radius: 50px; font-weight: 800; font-size: 1.1rem; font-family: var(--font-head);
     transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-smooth);
   }
-  .hero-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.4); }
+  .hero-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); }
   .hero-btn svg { transition: transform 0.3s; }
   .hero-btn:hover svg { transform: translateX(4px); }
 
-  /* ---------- NAVEGACIÓN FLOTANTE (STICKY) ---------- */
-  .nav-sticky {
-    position: sticky; top: 20px; z-index: 90; display: flex; justify-content: center; padding: 0 16px;
-    margin-top: -30px; margin-bottom: 40px; pointer-events: none;
-  }
+  /* ---------- NAV STICKY ---------- */
+  .nav-sticky { position: sticky; top: 20px; z-index: 90; display: flex; justify-content: center; padding: 0 16px; margin-top: -30px; margin-bottom: 50px; pointer-events: none; }
   .nav-pill {
-    pointer-events: auto; display: flex; gap: 4px; padding: 6px; background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px); border-radius: 50px; box-shadow: var(--shadow-md); border: 1px solid var(--line);
+    pointer-events: auto; display: flex; gap: 4px; padding: 6px; border-radius: 50px;
     overflow-x: auto; scrollbar-width: none; max-width: 100%;
   }
   .nav-pill::-webkit-scrollbar { display: none; }
   .nav-pill a {
-    padding: 10px 20px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; color: var(--mute);
+    padding: 10px 20px; border-radius: 40px; font-weight: 700; font-size: 0.9rem; color: var(--primary-dark);
     white-space: nowrap; transition: all 0.3s;
   }
-  .nav-pill a:hover { color: var(--ink); background: var(--bg); }
-  .nav-pill a.active { background: var(--ink); color: white; box-shadow: var(--shadow-sm); }
+  .nav-pill a:hover { background: rgba(31,111,139,.1); }
+  .nav-pill a.active { background: var(--primary-dark); color: white; box-shadow: var(--shadow-sm); }
 
-  /* ---------- MAIN LAYOUT ---------- */
-  main { max-width: 1100px; margin: 0 auto; padding: 0 20px; content-visibility: auto; }
-  section { padding: 60px 0; scroll-margin-top: 100px; }
-  
+  /* ---------- MAIN & SECTIONS ---------- */
+  main { max-width: 1120px; margin: 0 auto; padding: 0 20px; content-visibility: auto; }
+  section { padding: 80px 0; scroll-margin-top: 100px; }
   .section-head { margin-bottom: 40px; text-align: center; }
-  .section-head span { color: var(--primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
-  .section-head h2 { font-size: clamp(2rem, 4vw, 3rem); margin-top: 8px; }
-  .section-head p { color: var(--mute); max-width: 500px; margin: 12px auto 0; }
+  .section-head span { color: var(--primary); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; }
+  .section-head h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); margin-top: 12px; color: var(--primary-dark); }
+  .section-head p { color: var(--mute); max-width: 600px; margin: 16px auto 0; font-size: 1.05rem; }
 
   /* ---------- PLANIFICADOR ---------- */
-  .planner { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--line); overflow: hidden; max-width: 800px; margin: 0 auto; }
-  .planner-header { padding: 30px 30px 20px; border-bottom: 1px solid var(--line); text-align: center; }
-  .progress-bar { height: 6px; background: var(--bg); border-radius: 10px; margin-top: 20px; overflow: hidden; }
-  .progress-fill { height: 100%; width: 33.3%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius: 10px; transition: width 0.6s var(--ease-smooth); }
+  .planner { background: var(--surface); border-radius: 32px; box-shadow: var(--shadow-md); overflow: hidden; max-width: 850px; margin: 0 auto; border: 1px solid var(--line); }
+  .planner-header { padding: 30px 30px 20px; text-align: center; }
+  .progress-bar { height: 8px; background: #e3edf0; border-radius: 10px; margin-top: 20px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 33.3%; background: linear-gradient(90deg, var(--primary), var(--teal)); border-radius: 10px; transition: width 0.6s var(--ease-smooth); }
   
-  .planner-body { padding: 30px; min-height: 380px; position: relative; }
+  .planner-body { padding: 30px; min-height: 420px; position: relative; }
   .step { display: none; animation: fadeUp 0.5s var(--ease-smooth) both; }
   .step.active { display: block; }
-  .step h3 { font-size: 1.5rem; margin-bottom: 8px; }
+  .step h3 { font-size: 1.6rem; margin-bottom: 8px; color: var(--primary-dark); }
   .step p { color: var(--mute); margin-bottom: 24px; }
 
-  .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+  .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
   .opt-card {
-    border: 2px solid var(--line); border-radius: var(--radius-md); padding: 20px; text-align: center;
-    cursor: pointer; transition: all 0.3s var(--ease-spring);
+    border: 2px solid var(--line); border-radius: 20px; padding: 24px 16px; text-align: center;
+    cursor: pointer; transition: all 0.3s var(--ease-spring); background: #fbfdfd;
   }
-  .opt-card:hover { border-color: var(--primary-light); transform: translateY(-4px); box-shadow: var(--shadow-sm); }
-  .opt-card.selected { border-color: var(--primary); background: rgba(15, 118, 110, 0.05); box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1); }
-  .opt-card .icon { font-size: 2rem; margin-bottom: 12px; }
+  .opt-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+  .opt-card.selected { border-color: var(--primary); background: rgba(31, 111, 139, 0.05); box-shadow: 0 0 0 4px rgba(31, 111, 139, 0.1); }
+  .opt-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
   .opt-card h4 { font-size: 1.1rem; color: var(--ink); }
-  .opt-card small { color: var(--mute); font-size: 0.8rem; }
+  .opt-card small { color: var(--mute); font-size: 0.85rem; display: block; margin-top: 4px; }
 
-  .timeline { position: relative; padding-left: 20px; margin-top: 20px; }
-  .timeline::before { content: ""; position: absolute; left: 6px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
-  .stop { position: relative; background: var(--bg); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 16px; display: flex; gap: 16px; align-items: center; }
-  .stop::before { content: ""; position: absolute; left: -21px; width: 12px; height: 12px; background: var(--surface); border: 3px solid var(--primary); border-radius: 50%; }
-  .stop-img { width: 50px; height: 50px; border-radius: 12px; background: #cbd5e1; flex-shrink: 0; overflow: hidden; }
+  .timeline { position: relative; padding-left: 24px; margin-top: 20px; }
+  .timeline::before { content: ""; position: absolute; left: 8px; top: 10px; bottom: 10px; width: 3px; background: linear-gradient(to bottom, var(--primary), var(--teal)); border-radius: 3px; }
+  .stop { position: relative; background: #fbfdfd; border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 16px; display: flex; gap: 16px; align-items: center; box-shadow: 0 4px 10px -5px rgba(0,0,0,0.05); }
+  .stop::before { content: ""; position: absolute; left: -24px; width: 16px; height: 16px; background: white; border: 4px solid var(--accent); border-radius: 50%; z-index: 2; animation: ping 2.5s infinite; }
+  .stop-img { width: 60px; height: 60px; border-radius: 12px; background: #e3edf0; flex-shrink: 0; overflow: hidden; }
   .stop-img img, .stop-img svg { width: 100%; height: 100%; object-fit: cover; }
-  .stop-info h4 { font-size: 1rem; margin-bottom: 4px; }
-  .stop-info p { margin: 0; font-size: 0.85rem; color: var(--mute); }
-  .travel-time { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; color: var(--primary); background: rgba(15,118,110,0.1); padding: 4px 10px; border-radius: 50px; margin: 4px 0 4px 20px; }
+  .stop-info h4 { font-size: 1.05rem; margin-bottom: 4px; color: var(--primary-dark); }
+  .stop-info p { margin: 0; font-size: 0.9rem; color: var(--mute); }
+  .travel-time { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 800; color: var(--primary); background: rgba(31,111,139,0.1); padding: 6px 14px; border-radius: 50px; margin: 4px 0 8px 24px; }
 
-  .planner-footer { padding: 20px 30px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; background: var(--bg); }
-  .btn-secondary, .btn-primary { padding: 12px 24px; border-radius: 50px; font-weight: 600; transition: all 0.3s; }
+  .planner-footer { padding: 20px 30px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; background: #fafcfb; }
+  .btn-secondary, .btn-primary { padding: 12px 28px; border-radius: 50px; font-weight: 800; transition: all 0.3s; font-size: 1rem; }
   .btn-secondary { color: var(--mute); background: transparent; }
-  .btn-secondary:hover { color: var(--ink); background: var(--line); }
-  .btn-primary { background: var(--ink); color: white; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .btn-secondary:hover { color: var(--ink); background: #e3edf0; }
+  .btn-primary { background: var(--primary-dark); color: white; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); background: var(--primary); }
 
-  /* ---------- ATRACTIVOS (BENTO GRID) ---------- */
-  .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  /* ---------- ATRACTIVOS ---------- */
+  .filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+  .filters button { padding: 10px 20px; border-radius: 50px; background: var(--surface); border: 1px solid var(--line); color: var(--mute); font-weight: 600; transition: all 0.3s; }
+  .filters button:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+  .filters button.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); box-shadow: var(--shadow-sm); }
+
+  .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .bento-item {
-    position: relative; border-radius: var(--radius-md); overflow: hidden; min-height: 240px;
+    position: relative; border-radius: 28px; overflow: hidden; min-height: 280px;
     display: flex; align-items: flex-end; padding: 24px; color: white; cursor: pointer;
-    box-shadow: var(--shadow-sm); transition: transform 0.4s var(--ease-spring);
+    box-shadow: var(--shadow-md); transition: transform 0.5s var(--ease-spring), box-shadow 0.5s var(--ease-smooth);
+    isolation: isolate;
   }
-  .bento-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-  .bento-item img, .bento-item svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; transition: transform 0.8s var(--ease-smooth); }
-  .bento-item:hover img, .bento-item:hover svg { transform: scale(1.08); }
-  .bento-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); z-index: 0; }
+  .bento-item:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .bento-item img, .bento-item svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1s var(--ease-smooth); }
+  .bento-item:hover img, .bento-item:hover svg { transform: scale(1.1); }
+  .bento-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,24,32,.95) 0%, rgba(6,24,32,.4) 50%, transparent 100%); z-index: -1; }
   
-  /* Asimetría */
   .bento-item:nth-child(1), .bento-item:nth-child(6) { grid-column: span 2; grid-row: span 2; }
-  @media (max-width: 768px) {
+  .bento-item:nth-child(4) { grid-column: span 2; }
+  
+  @media (max-width: 900px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+    .bento-item:nth-child(1), .bento-item:nth-child(6), .bento-item:nth-child(4) { grid-column: span 2; grid-row: span 1; min-height: 220px; }
+  }
+  @media (max-width: 600px) {
     .bento-grid { grid-template-columns: 1fr; }
     .bento-item:nth-child(n) { grid-column: span 1; grid-row: span 1; min-height: 200px; }
   }
-  .bento-content { position: relative; z-index: 1; transform: translateY(10px); transition: transform 0.4s; }
-  .bento-item:hover .bento-content { transform: translateY(0); }
-  .bento-content h3 { font-size: 1.4rem; margin-bottom: 8px; }
-  .bento-content p { font-size: 0.9rem; color: #e2e8f0; margin: 0; opacity: 0; transition: opacity 0.4s; }
-  .bento-item:hover .bento-content p { opacity: 1; }
-  .tag { display: inline-block; padding: 4px 10px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border-radius: 50px; font-size: 0.75rem; font-weight: 600; margin-bottom: 12px; }
 
-  /* ---------- SERVICIOS (CARDS) ---------- */
-  .tabs-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
-  .tab-btn { padding: 10px 24px; border-radius: 50px; font-weight: 600; color: var(--mute); transition: all 0.3s; }
-  .tab-btn.active { background: var(--ink); color: white; }
+  .bento-content { position: relative; z-index: 1; transform: translateY(10px); transition: transform 0.4s; width: 100%; }
+  .bento-item:hover .bento-content { transform: translateY(0); }
+  .bento-content .tag { display: inline-block; padding: 6px 12px; background: rgba(46,156,147,.95); backdrop-filter: blur(4px); border-radius: 50px; font-size: 0.7rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .bento-content h3 { font-size: 1.5rem; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+  .bento-content p { font-size: 0.9rem; color: #cbd5e1; margin: 0; opacity: 0; transition: opacity 0.4s; max-width: 90%; }
+  .bento-item:hover .bento-content p { opacity: 1; }
+  .bento-badge { position: absolute; top: 20px; right: 20px; background: var(--accent); padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; z-index: 2; box-shadow: 0 4px 10px rgba(232,128,74,.5); }
+
+  /* ---------- SERVICIOS ---------- */
+  .tabs-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+  .tab-btn { padding: 12px 24px; border-radius: 50px; font-weight: 800; color: var(--mute); transition: all 0.3s; border: 1px solid var(--line); background: var(--surface); }
+  .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .tab-btn.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); box-shadow: var(--shadow-sm); }
   
-  .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
   .service-card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px;
-    display: flex; flex-direction: column; transition: all 0.3s var(--ease-smooth);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 28px;
+    display: flex; flex-direction: column; transition: all 0.4s var(--ease-smooth);
   }
-  .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary-light); }
-  .service-card h4 { font-size: 1.2rem; margin: 12px 0 8px; }
-  .service-card .rating { color: var(--accent); font-weight: 600; font-size: 0.9rem; margin-bottom: 12px; }
-  .service-card p { color: var(--mute); font-size: 0.95rem; flex-grow: 1; }
-  .service-card .actions { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
-  .service-card .actions button { color: var(--primary); font-weight: 600; font-size: 0.9rem; }
-  .service-card .actions a { color: var(--mute); font-size: 0.9rem; text-decoration: underline; }
+  .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+  .service-card .type { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--teal); letter-spacing: 0.1em; }
+  .service-card h4 { font-size: 1.3rem; margin: 8px 0; color: var(--primary-dark); }
+  .service-card .rating { color: var(--accent); font-weight: 800; font-size: 0.9rem; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+  .service-card p { color: var(--mute); font-size: 0.95rem; flex-grow: 1; line-height: 1.6; }
+  .service-card .actions { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--line); }
+  .service-card .actions button { color: var(--primary); font-weight: 800; font-size: 0.9rem; transition: color 0.3s; }
+  .service-card .actions button:hover { color: var(--primary-dark); }
+  .service-card .actions a { color: var(--mute); font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: color 0.3s; }
+  .service-card .actions a:hover { color: var(--primary); }
 
   /* ---------- MAPA ---------- */
-  .map-wrapper { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--line); height: 450px; position: relative; }
+  .map-wrapper { border-radius: 32px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--line); height: 500px; position: relative; }
   .map-wrapper iframe { width: 100%; height: 100%; border: none; }
-  .map-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
-  .map-filters button { padding: 8px 16px; border-radius: 50px; background: var(--surface); border: 1px solid var(--line); color: var(--mute); font-size: 0.9rem; transition: all 0.3s; }
+  .map-filters { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 24px; }
+  .map-filters button { padding: 10px 20px; border-radius: 50px; background: var(--surface); border: 1px solid var(--line); color: var(--mute); font-weight: 600; transition: all 0.3s; }
   .map-filters button:hover { border-color: var(--primary); color: var(--primary); }
-  .map-filters button.active { background: var(--primary); color: white; border-color: var(--primary); }
+  .map-filters button.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); }
 
-  /* ---------- CALIDAD Y EMERGENCIAS ---------- */
-  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .info-card { background: var(--surface); border: 1px solid var(--line); padding: 24px; border-radius: var(--radius-md); display: flex; gap: 16px; }
-  .info-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--bg); display: grid; place-items: center; font-size: 1.5rem; flex-shrink: 0; }
-  .info-card h4 { font-size: 1.1rem; margin-bottom: 4px; }
-  .info-card p { color: var(--mute); font-size: 0.9rem; margin: 0; }
+  /* ---------- CUIDADO Y CALIDAD ---------- */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .card-info { background: var(--surface); border: 1px solid var(--line); padding: 28px; border-radius: 24px; display: flex; gap: 20px; transition: transform 0.3s; }
+  .card-info:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+  .card-info .icon { width: 56px; height: 56px; border-radius: 16px; background: #f2fbf9; display: grid; place-items: center; font-size: 1.8rem; flex-shrink: 0; }
+  .card-info h4 { font-size: 1.2rem; margin-bottom: 8px; color: var(--primary-dark); }
+  .card-info p { color: var(--mute); font-size: 0.95rem; margin: 0; line-height: 1.6; }
 
-  .em-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-  .em-card { background: #fff1f2; border: 1px solid #fecdd3; padding: 20px; border-radius: var(--radius-md); text-align: center; }
-  .em-num { font-family: var(--font-head); font-size: 2.5rem; font-weight: 800; color: var(--danger); line-height: 1; margin-bottom: 8px; }
-  .em-card h4 { font-size: 1rem; color: var(--ink); margin-bottom: 4px; }
-  .em-card p { font-size: 0.85rem; color: var(--mute); margin: 0; }
+  .check-list { list-style: none; display: grid; gap: 12px; margin-top: 20px; }
+  .check-list li { display: flex; gap: 16px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px; color: var(--ink); font-weight: 500; }
+  .check-list li::before { content: "✓"; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--primary), var(--teal)); color: #fff; font-weight: 800; font-size: 0.9rem; }
 
-  /* ---------- ACORDEÓN (FAQ) ---------- */
-  .faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); margin-bottom: 12px; overflow: hidden; }
-  .faq-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px; font-weight: 600; font-family: var(--font-head); font-size: 1.1rem; text-align: left; }
+  /* ---------- EMERGENCIAS ---------- */
+  .em-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .em-card { background: #fffaf9; border: 1px solid #ffe4d9; padding: 24px; border-radius: 24px; text-align: center; box-shadow: 0 4px 15px -10px rgba(232,128,74,.2); }
+  .em-num { font-family: var(--font-head); font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 8px; pointer-events: none; }
+  .em-card h4 { font-size: 1.1rem; color: var(--ink); margin-bottom: 4px; }
+  .em-card p { font-size: 0.9rem; color: var(--mute); margin: 0; }
+
+  /* ---------- FAQ ---------- */
+  .faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; margin-bottom: 12px; overflow: hidden; }
+  .faq-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 24px; font-weight: 800; font-family: var(--font-head); font-size: 1.1rem; text-align: left; color: var(--primary-dark); }
   .faq-btn span { font-size: 1.5rem; color: var(--primary); transition: transform 0.3s; }
-  .faq-content { padding: 0 20px; max-height: 0; overflow: hidden; transition: all 0.3s var(--ease-smooth); color: var(--mute); }
-  .faq-item.open .faq-content { padding-bottom: 20px; max-height: 300px; }
+  .faq-content { padding: 0 24px; max-height: 0; overflow: hidden; transition: all 0.4s var(--ease-smooth); color: var(--mute); line-height: 1.6; }
+  .faq-item.open .faq-content { padding-bottom: 24px; max-height: 300px; }
   .faq-item.open .faq-btn span { transform: rotate(45deg); }
 
-  /* ---------- DESCARGA OFFLINE ---------- */
+  /* ---------- DESCARGAS ---------- */
   .offline-banner {
-    background: linear-gradient(135deg, var(--ink) 0%, #1e293b 100%); border-radius: var(--radius-lg);
-    padding: 60px 20px; text-align: center; color: white; margin: 60px 0;
-    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #1e293b 100%); border-radius: 32px;
+    padding: 80px 24px; text-align: center; color: white; margin: 60px 0;
+    position: relative; overflow: hidden; box-shadow: var(--shadow-lg);
   }
-  .offline-banner::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(20,184,166,0.2) 0%, transparent 60%); z-index: 0; }
+  .offline-banner::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(46,156,147,0.3) 0%, transparent 60%); z-index: 0; }
   .offline-banner > * { position: relative; z-index: 1; }
-  .offline-banner h2 { font-size: 2.5rem; margin-bottom: 16px; }
-  .offline-banner p { color: #cbd5e1; margin-bottom: 32px; }
+  .offline-banner h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
+  .offline-banner p { color: #cde6ec; margin-bottom: 32px; font-size: 1.1rem; max-width: 500px; margin-inline: auto; }
   .btn-download {
-    background: white; color: var(--ink); padding: 16px 40px; border-radius: 50px; font-weight: 800; font-family: var(--font-head);
-    display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; transition: all 0.3s;
+    background: white; color: var(--primary-dark); padding: 16px 40px; border-radius: 50px; font-weight: 800; font-family: var(--font-head);
+    display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   }
-  .btn-download:hover { transform: scale(1.05); box-shadow: 0 10px 30px -10px rgba(255,255,255,0.3); }
-  .btn-download.done { background: var(--primary-light); color: white; }
+  .btn-download:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 20px 30px rgba(0,0,0,0.3); }
+  .btn-download.done { background: var(--teal); color: white; }
 
   /* ---------- FOOTER ---------- */
-  footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--line); color: var(--mute); font-size: 0.9rem; }
-  footer strong { display: block; color: var(--ink); font-family: var(--font-head); font-size: 1.2rem; margin-bottom: 4px; }
+  footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--line); color: var(--mute); font-size: 0.95rem; }
+  footer strong { display: block; color: var(--primary-dark); font-family: var(--font-head); font-size: 1.4rem; margin-bottom: 8px; }
 
-  /* ---------- RESPONSIVE EXTRA ---------- */
   @media (max-width: 768px) {
-    .planner-body { padding: 20px; min-height: 460px; }
-    .timeline { padding-left: 16px; }
+    .planner-body { padding: 20px; min-height: 480px; }
     .stop { padding: 12px; gap: 12px; }
-    .stop-img { width: 40px; height: 40px; }
-    .travel-time { margin-left: 16px; font-size: 0.75rem; }
+    .stop-img { width: 50px; height: 50px; }
+    .offline-banner { padding: 60px 20px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -290,12 +307,12 @@
 
 <!-- HEADER -->
 <header class="topbar" id="topbar">
-  <div class="topbar-inner">
+  <div class="topbar-inner glass">
     <a href="#" class="brand">
       <div class="brand-icon">🌋</div>
       Lagos y Volcanes
     </a>
-    <div style="font-size: 0.9rem; font-weight: 600; color: var(--mute);">🇨🇱 Español</div>
+    <button class="lang-btn">🇨🇱 Español</button>
   </div>
 </header>
 
@@ -305,8 +322,8 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="badge">Guía Turística Oficial</div>
-    <h1>Descubre la Ruta Lagos y Volcanes</h1>
-    <p>Planifica tu viaje ideal en segundos, explora los mejores atractivos y llévalo todo en tu bolsillo, incluso sin señal.</p>
+    <h1>Ruta Lagos y Volcanes <br><span>en tu Bolsillo</span></h1>
+    <p>Planifica tu viaje ideal en segundos, explora los mejores atractivos y llévalo todo contigo, incluso sin señal.</p>
     <a href="#planificador" class="hero-btn">
       Comenzar a Planificar
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -316,11 +333,12 @@
 
 <!-- NAV STICKY -->
 <div class="nav-sticky">
-  <nav class="nav-pill" id="nav">
+  <nav class="nav-pill glass" id="nav">
     <a href="#planificador" class="active">Planificador</a>
     <a href="#atractivos">Atractivos</a>
     <a href="#servicios">Servicios</a>
     <a href="#mapa">Mapa</a>
+    <a href="#cuidado">Cuidado</a>
     <a href="#emergencias">Emergencias</a>
   </nav>
 </div>
@@ -345,7 +363,7 @@
           <h3>1. ¿Cuál es tu estilo de viaje?</h3>
           <p>Selecciona la experiencia que más te represente.</p>
           <div class="grid-options" id="profile-options">
-            <div class="opt-card" data-val="naturaleza">
+            <div class="opt-card selected" data-val="naturaleza">
               <div class="icon">🌲</div>
               <h4>Naturaleza</h4>
               <small>Lagos y bosques</small>
@@ -401,20 +419,25 @@
       </div>
       <div class="planner-footer">
         <button class="btn-secondary" id="btn-prev" style="visibility: hidden;">Atrás</button>
-        <button class="btn-primary" id="btn-next">Siguiente</button>
+        <button class="btn-primary" id="btn-next">Siguiente →</button>
       </div>
     </div>
   </section>
 
-  <!-- ATRACTIVOS (BENTO GRID) -->
+  <!-- ATRACTIVOS -->
   <section id="atractivos">
     <div class="section-head reveal">
       <span>Explora</span>
       <h2>Lugares Imperdibles</h2>
       <p>Desde las faldas del Volcán Osorno hasta la magia de Frutillar.</p>
     </div>
+    
+    <div class="filters reveal" id="spot-filters">
+      <!-- JS llena esto -->
+    </div>
+
     <div class="bento-grid" id="attractions-grid">
-      <!-- JS lo llena -->
+      <!-- JS llena esto -->
     </div>
   </section>
 
@@ -433,7 +456,7 @@
     </div>
 
     <div class="service-grid reveal" id="services-grid">
-      <!-- JS lo llena -->
+      <!-- JS llena esto -->
     </div>
   </section>
 
@@ -442,7 +465,7 @@
     <div class="section-head reveal">
       <span>Geolocalización</span>
       <h2>Mapa Interactivo</h2>
-      <p>Explora las zonas en vista satelital.</p>
+      <p>Explora las zonas en vista satelital de alta definición.</p>
     </div>
     <div class="map-filters reveal" id="map-filters">
       <button class="active" data-zone="Frutillar">Frutillar</button>
@@ -455,36 +478,72 @@
     </div>
   </section>
 
-  <!-- CALIDAD Y EMERGENCIAS -->
-  <section id="emergencias">
+  <!-- CUIDADO -->
+  <section id="cuidado">
+    <div class="section-head reveal">
+      <span>Eco-Turismo</span>
+      <h2>Viaja sin dejar huella</h2>
+      <p>Pequeños gestos protegen lagos, volcanes y comunidades.</p>
+    </div>
+    <div class="grid-2 reveal">
+      <div class="card-info">
+        <div class="icon">♻️</div>
+        <div>
+          <h4>Cero Basura</h4>
+          <p>Lleva tu basura de vuelta, especialmente en la orilla de los lagos y senderos.</p>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="icon">🚶</div>
+        <div>
+          <h4>Senderos Seguros</h4>
+          <p>Mantente siempre en los caminos señalizados para proteger la flora nativa.</p>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="icon">🦅</div>
+        <div>
+          <h4>Fauna Local</h4>
+          <p>No alimentes ni persigas a los animales. Mantén una distancia respetuosa.</p>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="icon">🤝</div>
+        <div>
+          <h4>Culturas Vivas</h4>
+          <p>Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALIDAD -->
+  <section id="calidad">
     <div class="section-head reveal">
       <span>Seguridad</span>
-      <h2>Calidad y Emergencias</h2>
-      <p>Recomendaciones y números de contacto vitales.</p>
+      <h2>Qué revisar antes de partir</h2>
     </div>
+    <ul class="check-list reveal">
+      <li>Información previa sobre dificultad, clima, equipamiento y horarios de cada atractivo.</li>
+      <li>Advertencias de seguridad para actividades de montaña y volcanes.</li>
+      <li>Contrata servicios de aventura solo con prestadores inscritos en el Registro Nacional (SERNATUR).</li>
+      <li>Busca el Sello de Calidad Turística, que reconoce a los prestadores que cumplen la normativa.</li>
+      <li>Guías con certificado de primeros auxilios y experiencia comprobable.</li>
+    </ul>
+  </section>
 
-    <div class="info-grid reveal" style="margin-bottom: 40px;">
-      <div class="info-card">
-        <div class="info-icon">🛡️</div>
-        <div>
-          <h4>Prestadores Oficiales</h4>
-          <p>Contrata siempre servicios inscritos en el Registro Nacional (SERNATUR).</p>
-        </div>
-      </div>
-      <div class="info-card">
-        <div class="info-icon">🥾</div>
-        <div>
-          <h4>Equipamiento</h4>
-          <p>Lleva ropa de abrigo y calzado adecuado, el clima cambia rápido.</p>
-        </div>
-      </div>
+  <!-- EMERGENCIAS -->
+  <section id="emergencias">
+    <div class="section-head reveal">
+      <span>Urgencias</span>
+      <h2>Números de Emergencia</h2>
+      <p>Guarda estos números. Mantén la calma y sigue las instrucciones oficiales.</p>
     </div>
-
     <div class="em-grid reveal">
       <div class="em-card">
         <div class="em-num">131</div>
         <h4>Ambulancia (SAMU)</h4>
-        <p>Emergencias médicas</p>
+        <p>Atención médica urgente</p>
       </div>
       <div class="em-card">
         <div class="em-num">132</div>
@@ -494,25 +553,39 @@
       <div class="em-card">
         <div class="em-num">133</div>
         <h4>Carabineros</h4>
-        <p>Seguridad y tránsito</p>
+        <p>Seguridad y accidentes</p>
+      </div>
+      <div class="em-card">
+        <div class="em-num">130</div>
+        <h4>Incendios Forestales</h4>
+        <p>CONAF</p>
+      </div>
+      <div class="em-card">
+        <div class="em-num">136</div>
+        <h4>Socorro Andino</h4>
+        <p>Rescate en montaña</p>
       </div>
     </div>
   </section>
 
-  <!-- FAQ (Descripción) -->
+  <!-- FAQ -->
   <section id="faq">
     <div class="section-head reveal">
-      <span>Sobre la Guía</span>
-      <h2>Preguntas Frecuentes</h2>
+      <span>Información</span>
+      <h2>Sobre la Guía</h2>
     </div>
     <div class="reveal">
       <div class="faq-item">
         <button class="faq-btn">¿En qué consiste esta guía? <span>+</span></button>
-        <div class="faq-content"><p>Es una herramienta web progresiva (PWA) diseñada para planificar tu viaje por la Ruta Lagos y Volcanes. Funciona sin internet una vez cargada.</p></div>
+        <div class="faq-content"><p>Es una herramienta web progresiva (PWA) diseñada para planificar tu viaje por la Ruta Lagos y Volcanes. Optimizada para celular y con funcionamiento offline.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-btn">¿Cómo uso el modo offline? <span>+</span></button>
-        <div class="faq-content"><p>Haz clic en el botón "Descargar Guía" al final de la página. Esto guardará todos los datos y mapas en la memoria de tu celular.</p></div>
+        <div class="faq-content"><p>Haz clic en el botón "Descargar Guía" al final de la página. Esto guardará todos los datos, textos y las fotos en la memoria de tu celular para que no necesites internet.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">¿Dónde se desarrolla la ruta? <span>+</span></button>
+        <div class="faq-content"><p>En los 6 circuitos de la Ruta Escénica Lagos y Volcanes, abarcando comunas como Frutillar, Puerto Varas, Puerto Octay, Pucón, Villarrica y Panguipulli.</p></div>
       </div>
     </div>
   </section>
@@ -521,7 +594,7 @@
   <section id="descarga" style="padding-top: 0;">
     <div class="offline-banner reveal">
       <h2>Llévala contigo sin señal</h2>
-      <p>Descarga los mapas y las rutas en tu dispositivo. Ideal para zonas rurales.</p>
+      <p>Descarga los mapas y las rutas en tu dispositivo. Ideal para zonas rurales y montañas.</p>
       <button class="btn-download" id="btn-download">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         <span id="dl-text">Descargar Guía Offline</span>
@@ -538,87 +611,125 @@
 
 <script>
 // --- DATOS ---
-const ATTRACTIONS = [
-  { id:'osorno', title:'Volcán Osorno', desc:'Cono perfecto y nieves eternas.', tag:'Naturaleza', img:'img/osorno.webp' },
-  { id:'lago', title:'Lago Llanquihue', desc:'El espejo de agua más grande de Chile.', tag:'Naturaleza', img:'img/lago.webp' },
-  { id:'frutillar', title:'Museo Colonial Alemán', desc:'Historia y herencia de los colonos.', tag:'Cultura', img:'img/frutillar.webp' },
-  { id:'villarrica', title:'Parque Villarrica', desc:'Bosques nativos y cuevas volcánicas.', tag:'Aventura', img:'img/villarrica.webp' },
-  { id:'conguillio', title:'Parque Conguillío', desc:'Araucarias milenarias y lava.', tag:'Aventura', img:'img/conguillio.webp' },
-  { id:'teatro', title:'Teatro del Lago', desc:'Cultura a orillas del lago.', tag:'Cultura', img:'img/teatro.webp' }
-];
-
-const ITINERARIES = {
-  naturaleza: [
-    { time: '09:00', place: 'Lago Llanquihue', desc: 'Caminata por la costanera', img: 'img/lago.webp' },
-    { time: '11:30', place: 'Volcán Osorno', desc: 'Mirador y fotografía', img: 'img/osorno.webp' },
-    { time: '15:00', place: 'Petrohué', desc: 'Saltos y bosque nativo', img: 'img/vpr.webp' },
-    { time: '17:30', place: 'Frutillar', desc: 'Paseo y gastronomía local', img: 'img/frutillar.webp' }
-  ],
-  aventura: [
-    { time: '08:30', place: 'Parque Villarrica', desc: 'Trekking guiado', img: 'img/villarrica.webp' },
-    { time: '12:00', place: 'Cuevas Volcánicas', desc: 'Exploración subterránea', img: 'img/villarrica.webp' },
-    { time: '15:30', place: 'Parque Conguillío', desc: 'Bosque de araucarias', img: 'img/conguillio.webp' }
-  ],
-  cultura: [
-    { time: '10:00', place: 'Museo Colonial', desc: 'Tour histórico en Frutillar', img: 'img/frutillar.webp' },
-    { time: '12:30', place: 'Iglesia Sagrado Corazón', desc: 'Patrimonio en Puerto Varas', img: 'img/iglesia.webp' },
-    { time: '16:00', place: 'Teatro del Lago', desc: 'Visita arquitectónica', img: 'img/teatro.webp' }
-  ],
-  bienestar: [
-    { time: '09:30', place: 'Termas y Spa', desc: 'Circuito de aguas termales', img: 'img/termas.webp' },
-    { time: '13:00', place: 'Almuerzo saludable', desc: 'Productos locales', img: 'img/frutillar.webp' },
-    { time: '16:00', place: 'Teatro del Lago', desc: 'Relax frente al lago', img: 'img/teatro.webp' }
-  ]
+const LUGARES = {
+  lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  cat:'natural',  loc:'Puerto Varas', photo:'img/lago.webp', title:'Lago Llanquihue', desc:'Paisaje lacustre con vista a los volcanes Osorno y Calbuco.', tag:'Naturaleza' },
+  osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  cat:'natural',  loc:'Petrohué', photo:'img/osorno.webp', title:'Volcán Osorno', desc:'Cono casi perfecto y nieves eternas. Ideal para fotografía.', tag:'Naturaleza' },
+  villarrica: { scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1',  cat:'aventura', loc:'Pucón', photo:'img/villarrica.webp', title:'P. N. Villarrica', desc:'Bosques de robles, cuevas volcánicas y vistas al cráter.', tag:'Aventura', smoke:true },
+  conguillio: { scene:'forest',  p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',  cat:'aventura', loc:'Melipeuco', photo:'img/conguillio.webp', title:'P. N. Conguillío', desc:'Bosques milenarios de araucarias y escoriales de lava.', tag:'Aventura' },
+  vpr:        { scene:'falls',   p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',  cat:'natural',  loc:'Petrohué', photo:'img/vpr.webp', title:'V. Pérez Rosales', desc:'El parque más antiguo de Chile. Saltos de Petrohué.', tag:'Naturaleza' },
+  frutillar:  { scene:'house',   p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',  cat:'cultura',  loc:'Frutillar', photo:'img/frutillar.webp', title:'Museo Colonial', desc:'Historia y herencia de la colonización alemana.', tag:'Cultura' },
+  iglesia:    { scene:'church',  p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',  cat:'cultura',  loc:'Puerto Varas', photo:'img/iglesia.webp', title:'Iglesia Sagrado Corazón', desc:'Arquitectura patrimonial de los colonos alemanes.', tag:'Patrimonio' },
+  teatro:     { scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',  cat:'cultura',  loc:'Frutillar', photo:'img/teatro.webp', title:'Teatro del Lago', desc:'Centro cultural de clase mundial a orillas del lago.', tag:'Cultura' },
+  pewenche:   { scene:'ruka',    p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',  cat:'cultura',  loc:'Araucanía', photo:'img/pewe.webp', title:'Rutas Pewenche', desc:'Conocimiento y tradiciones de los pueblos originarios.', tag:'Cultura' },
+  termas:     { scene:'steam',   p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',  cat:'bienestar',loc:'Zona volcánica', photo:'img/termas.webp', title:'Termas y Spa', desc:'Aguas termales naturales con propiedades relajantes.', tag:'Bienestar' },
+  templo:     { scene:'church',  p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1', cat:'cultura',  loc:'Puerto Varas', photo:'img/templo.webp', title:'Templo Luterano', desc:'Ícono arquitectónico de madera de la década de 1920.', tag:'Patrimonio' },
+  ferias:     { scene:'house',   p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1', cat:'cultura',  loc:'Frutillar', photo:'img/feri.webp', title:'Ferias Artesanales', desc:'Productos hechos a mano y gastronomía local directa.', tag:'Comercio' }
 };
+
+const PERFILES = {
+  naturaleza: ['lago','osorno','conguillio','vpr','lago'],
+  aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
+  cultura:    ['frutillar','iglesia','teatro','pewenche','lago'],
+  bienestar:  ['lago','termas','teatro','iglesia','osorno']
+};
+const HORAS = ['09:00', '11:30', '15:00', '17:30'];
+const TIEMPOS = ['15 min', '45 min', '1 h 20 min', '10 min'];
 
 const SERVICES = {
   dormir: [
-    { name: 'Casa Molino', rating: 9.1, desc: 'Hotel boutique a orillas del lago.', link: '#' },
-    { name: 'Solace Hotel', rating: 9.0, desc: 'Moderno, céntrico y con desayuno.', link: '#' },
-    { name: 'Hostal La Tetera', rating: 9.2, desc: 'Acogedor, ideal para mochileros.', link: '#' }
+    { k:'Hotel Boutique', n:'Casa Molino', r:9.1, c:366, nota:'A orillas del lago, con jardines y restaurante.', link:'https://www.booking.com' },
+    { k:'Hotel', n:'Solace Puerto Varas', r:9.0, c:1432, nota:'Moderno, céntrico y con desayuno espectacular.', link:'https://www.booking.com' },
+    { k:'Hostal', n:'Hostal La Tetera', r:9.2, c:77, nota:'Acogedor, ideal para mochileros y viajeros solos.', link:'https://www.booking.com' }
   ],
   comer: [
-    { name: 'Se Cocina', rating: 4.9, desc: 'Cocina de autor con productos locales.', link: '#' },
-    { name: 'Casa Valdés', rating: 4.6, desc: 'Mariscos frescos y alta cocina.', link: '#' },
-    { name: 'La Marca', rating: 4.5, desc: 'Cortes de carne a la parrilla.', link: '#' }
+    { k:'Autor', n:'Se Cocina', r:4.9, c:56, nota:'Productos locales, excelente relación calidad-precio.', link:'https://www.yelp.com' },
+    { k:'Mariscos', n:'Casa Valdés', r:4.6, c:15, nota:'Especialidad en pescados frescos y alta cocina.', link:'https://www.yelp.com' },
+    { k:'Parrilla', n:'La Marca', r:4.5, c:13, nota:'Cortes de carne premium y una gran cava de vinos.', link:'https://www.yelp.com' }
   ],
   arriendo: [
-    { name: 'Mitta Rent a Car', rating: 4.2, desc: 'Amplia red de sucursales.', link: '#' },
-    { name: 'Surentacar', rating: 4.0, desc: 'Traslados al aeropuerto.', link: '#' },
-    { name: 'Mérida Rent a Car', rating: 4.5, desc: 'Atención cercana por WhatsApp.', link: '#' }
+    { k:'Auto', n:'Mitta Rent a Car', r:4.2, c:150, nota:'Amplia red de sucursales y servicio al aeropuerto.', link:'#' },
+    { k:'Auto', n:'Surentacar', r:4.0, c:80, nota:'Traslados gratuitos y descuentos en cabañas.', link:'#' },
+    { k:'Auto', bici:'Bicicleta', n:'Mérida Rent', r:4.5, c:45, nota:'Atención personalizada y rápida vía WhatsApp.', link:'#' }
   ]
 };
 
-// --- ESTADO PLANIFICADOR ---
+// --- ESTADO ---
 let currentStep = 1;
 let selectedProfile = 'naturaleza';
 let selectedDays = 2;
+let currentFilter = 'all';
+
+const $ = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+// --- GENERADOR DE SVG (FALLBACK) ---
+function tree(x, y, s, c) { return `<path d="M${x} ${y} L${x-10*s} ${y-40*s} L${x+10*s} ${y-40*s}Z M${x-9*s} ${y-28*s} L${x-20*s} ${y-62*s} L${x+20*s} ${y-62*s} L${x+9*s} ${y-28*s}Z M${x-13*s} ${y-50*s} L${x-26*s} ${y-84*s} L${x+26*s} ${y-84*s} L${x+13*s} ${y-50*s}Z" fill="${c}"/>`; }
+function scene(key, p, id) {
+  const [s1, s2, far, mid, near] = p;
+  const g = 'g' + id;
+  const base = `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s1}"/><stop offset="1" stop-color="${s2}"/></linearGradient></defs><rect width="400" height="260" fill="url(#${g})"/>`;
+  let body = '';
+  if (key === 'lake') body = `<path d="M0 150 L80 96 L150 140 L240 70 L330 140 L400 110 L400 260 L0 260Z" fill="${far}"/><path d="M0 180 L110 130 L220 170 L330 128 L400 160 L400 260 L0 260Z" fill="${mid}"/><path d="M0 200 H400 V260 H0Z" fill="${near}"/>`;
+  else if (key === 'volcano') body = `<path d="M0 170 L90 110 L170 160 L260 100 L400 170 L400 260 L0 260Z" fill="${far}"/><path d="M120 260 L220 60 L320 260Z" fill="${mid}"/><path d="M220 60 L250 118 L236 112 L224 124 L212 110 L198 118Z" fill="#fff"/>`;
+  else if (key === 'forest') body = `<path d="M0 170 L120 110 L220 160 L330 105 L400 150 L400 260 L0 260Z" fill="${far}"/><path d="M0 230 Q200 210 400 230 L400 260 L0 260Z" fill="${mid}"/>${tree(50,230,1.2,near)}${tree(150,230,1.4,near)}${tree(280,230,1.1,near)}${tree(360,230,1.3,near)}`;
+  else if (key === 'falls') body = `<path d="M0 150 L120 60 L200 120 L300 50 L400 130 L400 260 L0 260Z" fill="${far}"/><path d="M220 90 L260 90 L262 210 L224 210Z" fill="#fff" opacity=".9"/><path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/>`;
+  else if (key === 'house') body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><rect x="130" y="130" width="140" height="95" fill="#fbf4ea"/><path d="M120 132 L200 74 L280 132Z" fill="${mid}"/>`;
+  else if (key === 'church') body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><rect x="150" y="120" width="100" height="105" fill="#fffdf8"/><path d="M142 122 L200 66 L258 122Z" fill="${mid}"/>`;
+  else if (key === 'theater') body = `<path d="M0 170 L100 120 L200 165 L320 118 L400 160 L400 260 L0 260Z" fill="${far}"/><path d="M0 222 Q200 212 400 222 L400 260 L0 260Z" fill="${mid}"/><path d="M90 190 Q200 90 310 190 L310 225 L90 225Z" fill="#fbf7fb"/>`;
+  else if (key === 'steam') body = `<path d="M0 150 L140 96 L260 150 L400 110 L400 260 L0 260Z" fill="${far}"/><path d="M0 200 Q200 180 400 200 L400 260 L0 260Z" fill="${mid}"/><ellipse cx="200" cy="216" rx="150" ry="22" fill="${near}"/>`;
+  else if (key === 'ruka') body = `<path d="M0 150 L110 70 L210 140 L300 60 L400 140 L400 260 L0 260Z" fill="${far}"/><path d="M0 210 Q200 196 400 210 L400 260 L0 260Z" fill="${mid}"/><path d="M150 214 Q200 110 250 214Z" fill="#fff6dd"/>`;
+  return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">${base}${body}</svg>`;
+}
 
 // --- RENDERIZADO ---
+function renderFilters() {
+  const box = document.getElementById('spot-filters');
+  const lbls = { all:'Todos', natural:'Naturaleza', aventura:'Aventura', cultura:'Cultura', bienestar:'Bienestar' };
+  box.innerHTML = Object.keys(lbls).map(k => `
+    <button class="${currentFilter === k ? 'active' : ''}" data-filter="${k}">${lbls[k]}</button>
+  `).join('');
+  
+  box.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      currentFilter = b.dataset.filter;
+      renderAttractions();
+    });
+  });
+}
+
 function renderAttractions() {
+  renderFilters();
   const grid = document.getElementById('attractions-grid');
-  grid.innerHTML = ATTRACTIONS.map((a, i) => `
-    <div class="bento-item reveal active" style="transition-delay: ${i * 0.1}s">
-      <img src="${a.img}" alt="${a.title}" loading="lazy">
+  const ids = Object.keys(LUGARES).filter(id => currentFilter === 'all' || LUGARES[id].cat === currentFilter);
+  
+  grid.innerHTML = ids.map((id, i) => {
+    const L = LUGARES[id];
+    const imgHTML = L.photo ? `<img src="${L.photo}" alt="${L.title}" loading="lazy" onerror="this.outerHTML='${scene(L.scene, L.p, L.id).replace(/'/g, "\\'")}'">` : scene(L.scene, L.p, L.id);
+    
+    return `
+    <div class="bento-item reveal active" style="transition-delay: ${i * 0.05}s" data-cat="${L.cat}">
+      ${imgHTML}
+      <div class="bento-badge">★ En tu ruta</div>
       <div class="bento-content">
-        <span class="tag">${a.tag}</span>
-        <h3>${a.title}</h3>
-        <p>${a.desc}</p>
+        <span class="tag">${L.tag}</span>
+        <h3>${L.title}</h3>
+        <p>${L.desc}</p>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 function renderServices(type) {
   const grid = document.getElementById('services-grid');
   grid.innerHTML = SERVICES[type].map(s => `
     <div class="service-card">
-      <h4>${s.name}</h4>
-      <div class="rating">★ ${s.rating} / 5</div>
-      <p>${s.desc}</p>
+      <div class="type">${s.k}</div>
+      <h4>${s.n}</h4>
+      <div class="rating">★ ${s.r} <span style="color:var(--mute);font-weight:normal;font-size:0.8rem;">(${s.c} reseñas)</span></div>
+      <p>${s.nota}</p>
       <div class="actions">
-        <button>Ver en mapa →</button>
-        <a href="${s.link}" target="_blank">Sitio web ↗</a>
+        <button onclick="document.getElementById('mapa').scrollIntoView({behavior:'smooth'})">Ver en mapa →</button>
+        <a href="${s.link}" target="_blank" rel="noopener">Ficha ↗</a>
       </div>
     </div>
   `).join('');
@@ -626,12 +737,10 @@ function renderServices(type) {
 
 // --- LÓGICA PLANIFICADOR ---
 function updatePlanner() {
-  // UI Steps
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById(`step-${currentStep}`).classList.add('active');
   document.getElementById('progress').style.width = (currentStep / 3 * 100) + '%';
   
-  // Buttons
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
   btnPrev.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
@@ -646,22 +755,32 @@ function updatePlanner() {
 
 function renderItinerary() {
   const container = document.getElementById('itinerary');
-  let itinerary = ITINERARIES[selectedProfile];
+  let list = PERFILES[selectedProfile];
+  let total = selectedDays === 1 ? 3 : selectedDays === 2 ? 4 : 5;
   
-  // Ajustar cantidad de paradas según los días
-  if (selectedDays === 1) itinerary = itinerary.slice(0, 2);
-  if (selectedDays === 2) itinerary = itinerary.slice(0, 3);
-  
-  container.innerHTML = itinerary.map((stop, i) => `
-    ${i > 0 ? `<div class="travel-time">🚗 Viaje de 20 min</div>` : ''}
-    <div class="stop">
-      <div class="stop-img"><img src="${stop.img}" alt=""></div>
-      <div class="stop-info">
-        <h4>${stop.place}</h4>
-        <p>${stop.time} · ${stop.desc}</p>
+  container.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const id = list[i % list.length];
+    const L = LUGARES[id];
+    const dia = Math.floor(i * selectedDays / total) + 1;
+    const hora = HORAS[i % HORAS.length];
+    
+    if (i > 0) {
+      container.innerHTML += `<div class="travel-time">🚗 Viaje de ${TIEMPOS[i % TIEMPOS.length]}</div>`;
+    }
+    
+    const imgHTML = L.photo ? `<img src="${L.photo}" alt="" onerror="this.outerHTML='${scene(L.scene, L.p, L.id).replace(/'/g, "\\'")}'">` : scene(L.scene, L.p, L.id);
+    
+    container.innerHTML += `
+      <div class="stop">
+        <div class="stop-img">${imgHTML}</div>
+        <div class="stop-info">
+          <h4>${selectedDays > 1 ? 'Día ' + dia + ' · ' : ''}${hora} - ${L.title}</h4>
+          <p>📍 ${L.loc}</p>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }
 }
 
 // --- EVENT LISTENERS ---
@@ -680,7 +799,6 @@ window.addEventListener('scroll', () => {
     if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
   });
   
-  // Header hide/show
   const topbar = document.getElementById('topbar');
   if (scrollY > 200) topbar.classList.add('hide');
   else topbar.classList.remove('hide');
@@ -705,11 +823,8 @@ document.querySelectorAll('#step-2 .opt-card').forEach(card => {
 
 // Planificador - Botones
 document.getElementById('btn-next').addEventListener('click', () => {
-  if (currentStep < 3) {
-    currentStep++;
-  } else {
-    currentStep = 1; // Reiniciar
-  }
+  if (currentStep < 3) currentStep++;
+  else currentStep = 1;
   updatePlanner();
 });
 
@@ -742,8 +857,7 @@ document.querySelectorAll('#map-filters button').forEach(btn => {
 // FAQ
 document.querySelectorAll('.faq-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    item.classList.toggle('open');
+    btn.parentElement.classList.toggle('open');
   });
 });
 
@@ -751,7 +865,6 @@ document.querySelectorAll('.faq-btn').forEach(btn => {
 document.getElementById('btn-download').addEventListener('click', async (e) => {
   const btn = e.currentTarget;
   const text = document.getElementById('dl-text');
-  
   if (btn.classList.contains('done')) return;
   
   text.textContent = 'Descargando...';
@@ -765,8 +878,6 @@ document.getElementById('btn-download').addEventListener('click', async (e) => {
         btn.classList.add('done');
         text.textContent = '¡Listo para Offline! ✓';
       }, 1500);
-    } else {
-      text.textContent = 'No soportado';
     }
   } catch (err) {
     text.textContent = 'Error al descargar';
