@@ -3,7 +3,7 @@
    ========================================================= */
 
 // 1. Sube la versión cada vez que hagas cambios importantes en el HTML
-const CACHE = 'guia-lagos-v20';
+const CACHE = 'guia-lagos-v22';
 
 // 2. Archivos esenciales para que la app abra
 const CORE = [
