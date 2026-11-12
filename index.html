@@ -13,9 +13,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 <title>Guía Ruta Lagos y Volcanes</title>
 <style>
-  /* =========================================
-     VARIABLES Y RESET
-     ========================================= */
   :root {
     --bg: #f4f8f7;
     --surface: #ffffff;
@@ -63,7 +60,7 @@
   .reveal.active { opacity: 1; transform: none; }
 
   /* =========================================
-     COMPONENTES GLOBALES (Glassmorphism)
+     COMPONENTES GLOBALES
      ========================================= */
   .glass {
     background: rgba(255, 255, 255, 0.85);
@@ -105,7 +102,7 @@
   }
   .hero-overlay {
     position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(to bottom, rgba(13,42,54,0.5) 0%, rgba(13,42,54,0.9) 100%);
+    background: linear-gradient(to bottom, rgba(13,42,54,0.5) 0%, rgba(13,42,54,0.95) 100%);
   }
   .hero-content { max-width: 800px; animation: fadeUp 1s var(--ease-smooth) both; }
   .badge {
@@ -144,7 +141,7 @@
   .nav-pill a.active { background: var(--primary-dark); color: white; box-shadow: var(--shadow-sm); }
 
   /* =========================================
-     SECCIONES BASE
+     MAIN LAYOUT
      ========================================= */
   main { max-width: 1120px; margin: 0 auto; padding: 0 20px; content-visibility: auto; }
   section { padding: 80px 0; scroll-margin-top: 100px; }
@@ -196,14 +193,13 @@
   .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); background: var(--primary); }
 
   /* =========================================
-     ATRACTIVOS (GRILLA ORDENADA)
+     ATRACTIVOS (12 TARJETAS)
      ========================================= */
   .filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
   .filters button { padding: 10px 20px; border-radius: 50px; background: var(--surface); border: 1px solid var(--line); color: var(--mute); font-weight: 600; transition: all 0.3s; }
   .filters button:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
   .filters button.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); box-shadow: var(--shadow-sm); }
 
-  /* Grilla de 3 columnas perfectas para 12 items */
   .grid-attractions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   @media (max-width: 900px) { .grid-attractions { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) { .grid-attractions { grid-template-columns: 1fr; } }
@@ -259,16 +255,8 @@
   .map-filters button.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); }
 
   /* =========================================
-     CUIDADO Y CALIDAD
+     CALIDAD Y ENLACES OFICIALES
      ========================================= */
-  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-  .card-info { background: var(--surface); border: 1px solid var(--line); padding: 28px; border-radius: 24px; display: flex; gap: 20px; transition: transform 0.3s; }
-  .card-info:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
-  .card-info .icon { width: 56px; height: 56px; border-radius: 16px; background: #f2fbf9; display: grid; place-items: center; font-size: 1.8rem; flex-shrink: 0; }
-  .card-info h4 { font-size: 1.2rem; margin-bottom: 8px; color: var(--primary-dark); }
-  .card-info p { color: var(--mute); font-size: 0.95rem; margin: 0; line-height: 1.6; }
-
-  /* Sección de Seguridad/Calidad con Enlaces Oficiales */
   .quality-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
   @media (max-width: 800px) { .quality-layout { grid-template-columns: 1fr; } }
   
@@ -451,7 +439,7 @@
     </div>
   </section>
 
-  <!-- ATRACTIVOS (12 TARJETAS ORDENADAS) -->
+  <!-- ATRACTIVOS (12 TARJETAS) -->
   <section id="atractivos">
     <div class="section-head reveal">
       <span>Explora</span>
@@ -648,7 +636,7 @@ const SERVICES = {
   arriendo: [
     { k:'Auto', n:'Mitta Rent a Car', r:4.2, c:150, nota:'Amplia red de sucursales y servicio al aeropuerto.', link:'#' },
     { k:'Auto', n:'Surentacar', r:4.0, c:80, nota:'Traslados gratuitos y descuentos en cabañas.', link:'#' },
-    { k:'Auto', bici:'Bicicleta', n:'Mérida Rent', r:4.5, c:45, nota:'Atención personalizada y rápida vía WhatsApp.', link:'#' }
+    { k:'Auto', n:'Mérida Rent', r:4.5, c:45, nota:'Atención personalizada y rápida vía WhatsApp.', link:'#' }
   ]
 };
 
