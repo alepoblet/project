@@ -7,11 +7,15 @@
 <meta name="description" content="Guía digital de la Ruta Lagos y Volcanes: arma tu recorrido y úsalo sin conexión.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
+<!-- Fuentes Premium -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 <title>Guía Ruta Lagos y Volcanes</title>
 <style>
+  /* =========================================
+     VARIABLES Y RESET
+     ========================================= */
   :root {
     --bg: #f4f8f7;
     --surface: #ffffff;
@@ -47,16 +51,20 @@
   button { font-family: inherit; border: none; background: none; cursor: pointer; }
   :focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(31, 111, 139, 0.4); border-radius: 8px; }
 
-  /* ---------- ANIMACIONES ---------- */
+  /* =========================================
+     ANIMACIONES
+     ========================================= */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
   @keyframes zoomBg { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
   @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(232,128,74,.45); } 70%,100% { box-shadow: 0 0 0 10px rgba(232,128,74,0); } }
-  @keyframes shine { to { background-position: 200% center; } }
+  @keyframes drawLine { from { transform: scaleY(0); } to { transform: scaleY(1); } }
   
   .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--ease-smooth); }
   .reveal.active { opacity: 1; transform: none; }
 
-  /* ---------- VIDRIO (GLASSMORPHISM) ---------- */
+  /* =========================================
+     COMPONENTES GLOBALES (Glassmorphism)
+     ========================================= */
   .glass {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(16px) saturate(180%);
@@ -65,7 +73,9 @@
     box-shadow: var(--shadow-sm);
   }
 
-  /* ---------- HEADER ---------- */
+  /* =========================================
+     HEADER
+     ========================================= */
   .topbar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 0;
@@ -78,9 +88,12 @@
   }
   .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--primary-dark); }
   .brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--teal)); color: white; border-radius: 50%; display: grid; place-items: center; font-size: 1rem; box-shadow: 0 4px 10px rgba(31,111,139,.3); }
-  .lang-btn { padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark); background: rgba(255,255,255,0.5); }
+  .lang-btn { padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark); background: rgba(255,255,255,0.5); transition: background 0.3s; }
+  .lang-btn:hover { background: white; }
 
-  /* ---------- HERO ---------- */
+  /* =========================================
+     HERO
+     ========================================= */
   .hero {
     position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center;
     text-align: center; padding: 120px 20px 80px; color: white; overflow: hidden;
@@ -114,7 +127,9 @@
   .hero-btn svg { transition: transform 0.3s; }
   .hero-btn:hover svg { transform: translateX(4px); }
 
-  /* ---------- NAV STICKY ---------- */
+  /* =========================================
+     NAV STICKY
+     ========================================= */
   .nav-sticky { position: sticky; top: 20px; z-index: 90; display: flex; justify-content: center; padding: 0 16px; margin-top: -30px; margin-bottom: 50px; pointer-events: none; }
   .nav-pill {
     pointer-events: auto; display: flex; gap: 4px; padding: 6px; border-radius: 50px;
@@ -128,7 +143,9 @@
   .nav-pill a:hover { background: rgba(31,111,139,.1); }
   .nav-pill a.active { background: var(--primary-dark); color: white; box-shadow: var(--shadow-sm); }
 
-  /* ---------- MAIN & SECTIONS ---------- */
+  /* =========================================
+     SECCIONES BASE
+     ========================================= */
   main { max-width: 1120px; margin: 0 auto; padding: 0 20px; content-visibility: auto; }
   section { padding: 80px 0; scroll-margin-top: 100px; }
   .section-head { margin-bottom: 40px; text-align: center; }
@@ -136,7 +153,9 @@
   .section-head h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); margin-top: 12px; color: var(--primary-dark); }
   .section-head p { color: var(--mute); max-width: 600px; margin: 16px auto 0; font-size: 1.05rem; }
 
-  /* ---------- PLANIFICADOR ---------- */
+  /* =========================================
+     PLANIFICADOR
+     ========================================= */
   .planner { background: var(--surface); border-radius: 32px; box-shadow: var(--shadow-md); overflow: hidden; max-width: 850px; margin: 0 auto; border: 1px solid var(--line); }
   .planner-header { padding: 30px 30px 20px; text-align: center; }
   .progress-bar { height: 8px; background: #e3edf0; border-radius: 10px; margin-top: 20px; overflow: hidden; }
@@ -160,8 +179,8 @@
   .opt-card small { color: var(--mute); font-size: 0.85rem; display: block; margin-top: 4px; }
 
   .timeline { position: relative; padding-left: 24px; margin-top: 20px; }
-  .timeline::before { content: ""; position: absolute; left: 8px; top: 10px; bottom: 10px; width: 3px; background: linear-gradient(to bottom, var(--primary), var(--teal)); border-radius: 3px; }
-  .stop { position: relative; background: #fbfdfd; border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 16px; display: flex; gap: 16px; align-items: center; box-shadow: 0 4px 10px -5px rgba(0,0,0,0.05); }
+  .timeline::before { content: ""; position: absolute; left: 8px; top: 10px; bottom: 10px; width: 3px; background: linear-gradient(to bottom, var(--primary), var(--teal)); border-radius: 3px; animation: drawLine 1s var(--ease-smooth) both; transform-origin: top; }
+  .stop { position: relative; background: #fbfdfd; border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 16px; display: flex; gap: 16px; align-items: center; box-shadow: 0 4px 10px -5px rgba(0,0,0,0.05); animation: fadeUp 0.5s var(--ease-smooth) both; }
   .stop::before { content: ""; position: absolute; left: -24px; width: 16px; height: 16px; background: white; border: 4px solid var(--accent); border-radius: 50%; z-index: 2; animation: ping 2.5s infinite; }
   .stop-img { width: 60px; height: 60px; border-radius: 12px; background: #e3edf0; flex-shrink: 0; overflow: hidden; }
   .stop-img img, .stop-img svg { width: 100%; height: 100%; object-fit: cover; }
@@ -176,55 +195,48 @@
   .btn-primary { background: var(--primary-dark); color: white; }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); background: var(--primary); }
 
-  /* ---------- ATRACTIVOS ---------- */
+  /* =========================================
+     ATRACTIVOS (GRILLA ORDENADA)
+     ========================================= */
   .filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
   .filters button { padding: 10px 20px; border-radius: 50px; background: var(--surface); border: 1px solid var(--line); color: var(--mute); font-weight: 600; transition: all 0.3s; }
   .filters button:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
   .filters button.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); box-shadow: var(--shadow-sm); }
 
-  .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .bento-item {
-    position: relative; border-radius: 28px; overflow: hidden; min-height: 280px;
+  /* Grilla de 3 columnas perfectas para 12 items */
+  .grid-attractions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .grid-attractions { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .grid-attractions { grid-template-columns: 1fr; } }
+
+  .card-attraction {
+    position: relative; border-radius: 24px; overflow: hidden; height: 320px;
     display: flex; align-items: flex-end; padding: 24px; color: white; cursor: pointer;
-    box-shadow: var(--shadow-md); transition: transform 0.5s var(--ease-spring), box-shadow 0.5s var(--ease-smooth);
-    isolation: isolate;
+    box-shadow: var(--shadow-sm); transition: transform 0.5s var(--ease-spring), box-shadow 0.5s var(--ease-smooth);
+    isolation: isolate; animation: fadeUp 0.6s var(--ease-smooth) both;
   }
-  .bento-item:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-  .bento-item img, .bento-item svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1s var(--ease-smooth); }
-  .bento-item:hover img, .bento-item:hover svg { transform: scale(1.1); }
-  .bento-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,24,32,.95) 0%, rgba(6,24,32,.4) 50%, transparent 100%); z-index: -1; }
+  .card-attraction:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .card-attraction img, .card-attraction svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1s var(--ease-smooth); }
+  .card-attraction:hover img, .card-attraction:hover svg { transform: scale(1.1); }
+  .card-attraction::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,24,32,.95) 0%, rgba(6,24,32,.4) 60%, transparent 100%); z-index: -1; }
   
-  .bento-item:nth-child(1), .bento-item:nth-child(6) { grid-column: span 2; grid-row: span 2; }
-  .bento-item:nth-child(4) { grid-column: span 2; }
-  
-  @media (max-width: 900px) {
-    .bento-grid { grid-template-columns: repeat(2, 1fr); }
-    .bento-item:nth-child(1), .bento-item:nth-child(6), .bento-item:nth-child(4) { grid-column: span 2; grid-row: span 1; min-height: 220px; }
-  }
-  @media (max-width: 600px) {
-    .bento-grid { grid-template-columns: 1fr; }
-    .bento-item:nth-child(n) { grid-column: span 1; grid-row: span 1; min-height: 200px; }
-  }
+  .card-content { position: relative; z-index: 1; transform: translateY(10px); transition: transform 0.4s; width: 100%; }
+  .card-attraction:hover .card-content { transform: translateY(0); }
+  .card-content .tag { display: inline-block; padding: 6px 12px; background: rgba(46,156,147,.95); backdrop-filter: blur(4px); border-radius: 50px; font-size: 0.7rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .card-content h3 { font-size: 1.4rem; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+  .card-content p { font-size: 0.9rem; color: #cbd5e1; margin: 0; opacity: 0; transition: opacity 0.4s; }
+  .card-attraction:hover .card-content p { opacity: 1; }
+  .badge-route { position: absolute; top: 20px; right: 20px; background: var(--accent); padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; z-index: 2; box-shadow: 0 4px 10px rgba(232,128,74,.5); }
 
-  .bento-content { position: relative; z-index: 1; transform: translateY(10px); transition: transform 0.4s; width: 100%; }
-  .bento-item:hover .bento-content { transform: translateY(0); }
-  .bento-content .tag { display: inline-block; padding: 6px 12px; background: rgba(46,156,147,.95); backdrop-filter: blur(4px); border-radius: 50px; font-size: 0.7rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
-  .bento-content h3 { font-size: 1.5rem; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-  .bento-content p { font-size: 0.9rem; color: #cbd5e1; margin: 0; opacity: 0; transition: opacity 0.4s; max-width: 90%; }
-  .bento-item:hover .bento-content p { opacity: 1; }
-  .bento-badge { position: absolute; top: 20px; right: 20px; background: var(--accent); padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; z-index: 2; box-shadow: 0 4px 10px rgba(232,128,74,.5); }
-
-  /* ---------- SERVICIOS ---------- */
+  /* =========================================
+     SERVICIOS
+     ========================================= */
   .tabs-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
   .tab-btn { padding: 12px 24px; border-radius: 50px; font-weight: 800; color: var(--mute); transition: all 0.3s; border: 1px solid var(--line); background: var(--surface); }
   .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
   .tab-btn.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); box-shadow: var(--shadow-sm); }
   
   .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-  .service-card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 28px;
-    display: flex; flex-direction: column; transition: all 0.4s var(--ease-smooth);
-  }
+  .service-card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 28px; display: flex; flex-direction: column; transition: all 0.4s var(--ease-smooth); animation: fadeUp 0.5s var(--ease-smooth) both; }
   .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--primary); }
   .service-card .type { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--teal); letter-spacing: 0.1em; }
   .service-card h4 { font-size: 1.3rem; margin: 8px 0; color: var(--primary-dark); }
@@ -236,7 +248,9 @@
   .service-card .actions a { color: var(--mute); font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: color 0.3s; }
   .service-card .actions a:hover { color: var(--primary); }
 
-  /* ---------- MAPA ---------- */
+  /* =========================================
+     MAPA
+     ========================================= */
   .map-wrapper { border-radius: 32px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--line); height: 500px; position: relative; }
   .map-wrapper iframe { width: 100%; height: 100%; border: none; }
   .map-filters { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 24px; }
@@ -244,7 +258,9 @@
   .map-filters button:hover { border-color: var(--primary); color: var(--primary); }
   .map-filters button.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); }
 
-  /* ---------- CUIDADO Y CALIDAD ---------- */
+  /* =========================================
+     CUIDADO Y CALIDAD
+     ========================================= */
   .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
   .card-info { background: var(--surface); border: 1px solid var(--line); padding: 28px; border-radius: 24px; display: flex; gap: 20px; transition: transform 0.3s; }
   .card-info:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
@@ -252,18 +268,38 @@
   .card-info h4 { font-size: 1.2rem; margin-bottom: 8px; color: var(--primary-dark); }
   .card-info p { color: var(--mute); font-size: 0.95rem; margin: 0; line-height: 1.6; }
 
-  .check-list { list-style: none; display: grid; gap: 12px; margin-top: 20px; }
-  .check-list li { display: flex; gap: 16px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px; color: var(--ink); font-weight: 500; }
+  /* Sección de Seguridad/Calidad con Enlaces Oficiales */
+  .quality-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  @media (max-width: 800px) { .quality-layout { grid-template-columns: 1fr; } }
+  
+  .check-list { list-style: none; display: grid; gap: 16px; }
+  .check-list li { display: flex; gap: 16px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px; color: var(--ink); font-weight: 500; transition: transform 0.3s; }
+  .check-list li:hover { transform: translateX(6px); border-color: var(--primary); }
   .check-list li::before { content: "✓"; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--primary), var(--teal)); color: #fff; font-weight: 800; font-size: 0.9rem; }
 
-  /* ---------- EMERGENCIAS ---------- */
+  .official-links { display: grid; gap: 20px; }
+  .link-card { display: flex; align-items: center; justify-content: space-between; padding: 24px; border-radius: 24px; color: white; text-decoration: none; transition: transform 0.3s var(--ease-spring), box-shadow 0.3s; position: relative; overflow: hidden; }
+  .link-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: var(--shadow-lg); }
+  .link-card.chile-travel { background: linear-gradient(135deg, #e11d48, #be123c); }
+  .link-card.sernatur { background: linear-gradient(135deg, #0284c7, #0369a1); }
+  .link-card .lc-content h4 { font-size: 1.3rem; margin-bottom: 4px; font-family: var(--font-head); }
+  .link-card .lc-content p { font-size: 0.9rem; opacity: 0.9; margin: 0; }
+  .link-card .lc-icon { font-size: 2rem; opacity: 0.5; transition: transform 0.3s; }
+  .link-card:hover .lc-icon { transform: scale(1.2) rotate(-10deg); opacity: 1; }
+
+  /* =========================================
+     EMERGENCIAS
+     ========================================= */
   .em-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-  .em-card { background: #fffaf9; border: 1px solid #ffe4d9; padding: 24px; border-radius: 24px; text-align: center; box-shadow: 0 4px 15px -10px rgba(232,128,74,.2); }
+  .em-card { background: #fffaf9; border: 1px solid #ffe4d9; padding: 24px; border-radius: 24px; text-align: center; box-shadow: 0 4px 15px -10px rgba(232,128,74,.2); transition: transform 0.3s; }
+  .em-card:hover { transform: translateY(-4px); }
   .em-num { font-family: var(--font-head); font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 8px; pointer-events: none; }
   .em-card h4 { font-size: 1.1rem; color: var(--ink); margin-bottom: 4px; }
   .em-card p { font-size: 0.9rem; color: var(--mute); margin: 0; }
 
-  /* ---------- FAQ ---------- */
+  /* =========================================
+     FAQ Y DESCARGA
+     ========================================= */
   .faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; margin-bottom: 12px; overflow: hidden; }
   .faq-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 24px; font-weight: 800; font-family: var(--font-head); font-size: 1.1rem; text-align: left; color: var(--primary-dark); }
   .faq-btn span { font-size: 1.5rem; color: var(--primary); transition: transform 0.3s; }
@@ -271,24 +307,15 @@
   .faq-item.open .faq-content { padding-bottom: 24px; max-height: 300px; }
   .faq-item.open .faq-btn span { transform: rotate(45deg); }
 
-  /* ---------- DESCARGAS ---------- */
-  .offline-banner {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #1e293b 100%); border-radius: 32px;
-    padding: 80px 24px; text-align: center; color: white; margin: 60px 0;
-    position: relative; overflow: hidden; box-shadow: var(--shadow-lg);
-  }
+  .offline-banner { background: linear-gradient(135deg, var(--primary-dark) 0%, #1e293b 100%); border-radius: 32px; padding: 80px 24px; text-align: center; color: white; margin: 60px 0; position: relative; overflow: hidden; box-shadow: var(--shadow-lg); }
   .offline-banner::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(46,156,147,0.3) 0%, transparent 60%); z-index: 0; }
   .offline-banner > * { position: relative; z-index: 1; }
   .offline-banner h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
   .offline-banner p { color: #cde6ec; margin-bottom: 32px; font-size: 1.1rem; max-width: 500px; margin-inline: auto; }
-  .btn-download {
-    background: white; color: var(--primary-dark); padding: 16px 40px; border-radius: 50px; font-weight: 800; font-family: var(--font-head);
-    display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
+  .btn-download { background: white; color: var(--primary-dark); padding: 16px 40px; border-radius: 50px; font-weight: 800; font-family: var(--font-head); display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
   .btn-download:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 20px 30px rgba(0,0,0,0.3); }
   .btn-download.done { background: var(--teal); color: white; }
 
-  /* ---------- FOOTER ---------- */
   footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--line); color: var(--mute); font-size: 0.95rem; }
   footer strong { display: block; color: var(--primary-dark); font-family: var(--font-head); font-size: 1.4rem; margin-bottom: 8px; }
 
@@ -338,7 +365,7 @@
     <a href="#atractivos">Atractivos</a>
     <a href="#servicios">Servicios</a>
     <a href="#mapa">Mapa</a>
-    <a href="#cuidado">Cuidado</a>
+    <a href="#calidad">Calidad</a>
     <a href="#emergencias">Emergencias</a>
   </nav>
 </div>
@@ -424,7 +451,7 @@
     </div>
   </section>
 
-  <!-- ATRACTIVOS -->
+  <!-- ATRACTIVOS (12 TARJETAS ORDENADAS) -->
   <section id="atractivos">
     <div class="section-head reveal">
       <span>Explora</span>
@@ -432,13 +459,8 @@
       <p>Desde las faldas del Volcán Osorno hasta la magia de Frutillar.</p>
     </div>
     
-    <div class="filters reveal" id="spot-filters">
-      <!-- JS llena esto -->
-    </div>
-
-    <div class="bento-grid" id="attractions-grid">
-      <!-- JS llena esto -->
-    </div>
+    <div class="filters reveal" id="spot-filters"></div>
+    <div class="grid-attractions" id="attractions-grid"></div>
   </section>
 
   <!-- SERVICIOS -->
@@ -455,9 +477,7 @@
       <button class="tab-btn" data-target="arriendo">Arriendo</button>
     </div>
 
-    <div class="service-grid reveal" id="services-grid">
-      <!-- JS llena esto -->
-    </div>
+    <div class="service-grid reveal" id="services-grid"></div>
   </section>
 
   <!-- MAPA -->
@@ -478,58 +498,39 @@
     </div>
   </section>
 
-  <!-- CUIDADO -->
-  <section id="cuidado">
-    <div class="section-head reveal">
-      <span>Eco-Turismo</span>
-      <h2>Viaja sin dejar huella</h2>
-      <p>Pequeños gestos protegen lagos, volcanes y comunidades.</p>
-    </div>
-    <div class="grid-2 reveal">
-      <div class="card-info">
-        <div class="icon">♻️</div>
-        <div>
-          <h4>Cero Basura</h4>
-          <p>Lleva tu basura de vuelta, especialmente en la orilla de los lagos y senderos.</p>
-        </div>
-      </div>
-      <div class="card-info">
-        <div class="icon">🚶</div>
-        <div>
-          <h4>Senderos Seguros</h4>
-          <p>Mantente siempre en los caminos señalizados para proteger la flora nativa.</p>
-        </div>
-      </div>
-      <div class="card-info">
-        <div class="icon">🦅</div>
-        <div>
-          <h4>Fauna Local</h4>
-          <p>No alimentes ni persigas a los animales. Mantén una distancia respetuosa.</p>
-        </div>
-      </div>
-      <div class="card-info">
-        <div class="icon">🤝</div>
-        <div>
-          <h4>Culturas Vivas</h4>
-          <p>Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CALIDAD -->
+  <!-- CALIDAD Y SEGURIDAD (CON ENLACES OFICIALES) -->
   <section id="calidad">
     <div class="section-head reveal">
-      <span>Seguridad</span>
-      <h2>Qué revisar antes de partir</h2>
+      <span>Información Oficial</span>
+      <h2>Calidad y Seguridad</h2>
+      <p>Revisa estos consejos y visita los portales oficiales de turismo.</p>
     </div>
-    <ul class="check-list reveal">
-      <li>Información previa sobre dificultad, clima, equipamiento y horarios de cada atractivo.</li>
-      <li>Advertencias de seguridad para actividades de montaña y volcanes.</li>
-      <li>Contrata servicios de aventura solo con prestadores inscritos en el Registro Nacional (SERNATUR).</li>
-      <li>Busca el Sello de Calidad Turística, que reconoce a los prestadores que cumplen la normativa.</li>
-      <li>Guías con certificado de primeros auxilios y experiencia comprobable.</li>
-    </ul>
+    
+    <div class="quality-layout reveal">
+      <ul class="check-list">
+        <li>Información previa sobre dificultad, clima, equipamiento y horarios de cada atractivo.</li>
+        <li>Advertencias de seguridad para actividades de montaña y volcanes.</li>
+        <li>Contrata servicios de aventura solo con prestadores inscritos en el Registro Nacional (SERNATUR).</li>
+        <li>Guías con certificado de primeros auxilios y experiencia comprobable.</li>
+      </ul>
+      
+      <div class="official-links">
+        <a href="https://www.chile.travel/" target="_blank" rel="noopener" class="link-card chile-travel">
+          <div class="lc-content">
+            <h4>Chile Travel</h4>
+            <p>Información turística oficial de Chile.</p>
+          </div>
+          <div class="lc-icon">🇨🇱</div>
+        </a>
+        <a href="https://www.sernatur.cl/" target="_blank" rel="noopener" class="link-card sernatur">
+          <div class="lc-content">
+            <h4>SERNATUR</h4>
+            <p>Servicio Nacional de Turismo.</p>
+          </div>
+          <div class="lc-icon">🛡️</div>
+        </a>
+      </div>
+    </div>
   </section>
 
   <!-- EMERGENCIAS -->
@@ -583,10 +584,6 @@
         <button class="faq-btn">¿Cómo uso el modo offline? <span>+</span></button>
         <div class="faq-content"><p>Haz clic en el botón "Descargar Guía" al final de la página. Esto guardará todos los datos, textos y las fotos en la memoria de tu celular para que no necesites internet.</p></div>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn">¿Dónde se desarrolla la ruta? <span>+</span></button>
-        <div class="faq-content"><p>En los 6 circuitos de la Ruta Escénica Lagos y Volcanes, abarcando comunas como Frutillar, Puerto Varas, Puerto Octay, Pucón, Villarrica y Panguipulli.</p></div>
-      </div>
     </div>
   </section>
 
@@ -610,7 +607,9 @@
 </footer>
 
 <script>
-// --- DATOS ---
+// =========================================
+// DATOS
+// =========================================
 const LUGARES = {
   lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  cat:'natural',  loc:'Puerto Varas', photo:'img/lago.webp', title:'Lago Llanquihue', desc:'Paisaje lacustre con vista a los volcanes Osorno y Calbuco.', tag:'Naturaleza' },
   osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  cat:'natural',  loc:'Petrohué', photo:'img/osorno.webp', title:'Volcán Osorno', desc:'Cono casi perfecto y nieves eternas. Ideal para fotografía.', tag:'Naturaleza' },
@@ -653,7 +652,9 @@ const SERVICES = {
   ]
 };
 
-// --- ESTADO ---
+// =========================================
+// ESTADO Y UTILIDADES
+// =========================================
 let currentStep = 1;
 let selectedProfile = 'naturaleza';
 let selectedDays = 2;
@@ -662,7 +663,6 @@ let currentFilter = 'all';
 const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
-// --- GENERADOR DE SVG (FALLBACK) ---
 function tree(x, y, s, c) { return `<path d="M${x} ${y} L${x-10*s} ${y-40*s} L${x+10*s} ${y-40*s}Z M${x-9*s} ${y-28*s} L${x-20*s} ${y-62*s} L${x+20*s} ${y-62*s} L${x+9*s} ${y-28*s}Z M${x-13*s} ${y-50*s} L${x-26*s} ${y-84*s} L${x+26*s} ${y-84*s} L${x+13*s} ${y-50*s}Z" fill="${c}"/>`; }
 function scene(key, p, id) {
   const [s1, s2, far, mid, near] = p;
@@ -681,7 +681,9 @@ function scene(key, p, id) {
   return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">${base}${body}</svg>`;
 }
 
-// --- RENDERIZADO ---
+// =========================================
+// RENDERIZADO
+// =========================================
 function renderFilters() {
   const box = document.getElementById('spot-filters');
   const lbls = { all:'Todos', natural:'Naturaleza', aventura:'Aventura', cultura:'Cultura', bienestar:'Bienestar' };
@@ -706,11 +708,12 @@ function renderAttractions() {
     const L = LUGARES[id];
     const imgHTML = L.photo ? `<img src="${L.photo}" alt="${L.title}" loading="lazy" onerror="this.outerHTML='${scene(L.scene, L.p, L.id).replace(/'/g, "\\'")}'">` : scene(L.scene, L.p, L.id);
     
+    // Animación en cascada (delay incrementa con cada tarjeta)
     return `
-    <div class="bento-item reveal active" style="transition-delay: ${i * 0.05}s" data-cat="${L.cat}">
+    <div class="card-attraction" style="animation-delay: ${i * 0.08}s" data-cat="${L.cat}">
       ${imgHTML}
-      <div class="bento-badge">★ En tu ruta</div>
-      <div class="bento-content">
+      <div class="badge-route">★ En tu ruta</div>
+      <div class="card-content">
         <span class="tag">${L.tag}</span>
         <h3>${L.title}</h3>
         <p>${L.desc}</p>
@@ -721,8 +724,8 @@ function renderAttractions() {
 
 function renderServices(type) {
   const grid = document.getElementById('services-grid');
-  grid.innerHTML = SERVICES[type].map(s => `
-    <div class="service-card">
+  grid.innerHTML = SERVICES[type].map((s, i) => `
+    <div class="service-card" style="animation-delay: ${i * 0.1}s">
       <div class="type">${s.k}</div>
       <h4>${s.n}</h4>
       <div class="rating">★ ${s.r} <span style="color:var(--mute);font-weight:normal;font-size:0.8rem;">(${s.c} reseñas)</span></div>
@@ -735,7 +738,9 @@ function renderServices(type) {
   `).join('');
 }
 
-// --- LÓGICA PLANIFICADOR ---
+// =========================================
+// LÓGICA PLANIFICADOR
+// =========================================
 function updatePlanner() {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById(`step-${currentStep}`).classList.add('active');
@@ -772,7 +777,7 @@ function renderItinerary() {
     const imgHTML = L.photo ? `<img src="${L.photo}" alt="" onerror="this.outerHTML='${scene(L.scene, L.p, L.id).replace(/'/g, "\\'")}'">` : scene(L.scene, L.p, L.id);
     
     container.innerHTML += `
-      <div class="stop">
+      <div class="stop" style="animation-delay: ${i * 0.15}s">
         <div class="stop-img">${imgHTML}</div>
         <div class="stop-info">
           <h4>${selectedDays > 1 ? 'Día ' + dia + ' · ' : ''}${hora} - ${L.title}</h4>
@@ -783,7 +788,9 @@ function renderItinerary() {
   }
 }
 
-// --- EVENT LISTENERS ---
+// =========================================
+// EVENT LISTENERS
+// =========================================
 
 // Nav Sticky Active
 const sections = document.querySelectorAll('section');
@@ -804,7 +811,7 @@ window.addEventListener('scroll', () => {
   else topbar.classList.remove('hide');
 });
 
-// Planificador - Opciones
+// Planificador
 document.querySelectorAll('#profile-options .opt-card').forEach(card => {
   card.addEventListener('click', () => {
     document.querySelectorAll('#profile-options .opt-card').forEach(c => c.classList.remove('selected'));
@@ -821,7 +828,6 @@ document.querySelectorAll('#step-2 .opt-card').forEach(card => {
   });
 });
 
-// Planificador - Botones
 document.getElementById('btn-next').addEventListener('click', () => {
   if (currentStep < 3) currentStep++;
   else currentStep = 1;
