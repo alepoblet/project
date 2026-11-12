@@ -78,10 +78,7 @@
     background-size: cover;
     background-position: center;
   }
-  /* Efecto Parallax solo en PC (evita el bug de iOS) */
-  @media (min-width: 1024px) {
-    .hero { background-attachment: fixed; }
-  }
+  @media (min-width: 1024px) { .hero { background-attachment: fixed; } }
 
   .hero-inner{position:relative;z-index:2;max-width:980px;width:100%}
   .kicker{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
@@ -253,7 +250,6 @@
   .spot.tap .art svg,.spot.tap .art img,
   .spot:focus-visible .art svg,.spot:focus-visible .art img{transform:scale(1.08)}
 
-  /* FIX: Degradado y posición del texto */
   .spot::after{content:"";position:absolute;inset:0;z-index:-1;
     background:linear-gradient(to top,rgba(6,24,32,.95) 0%,rgba(6,24,32,.65) 50%,rgba(6,24,32,0) 100%);
     transition: opacity .3s}
@@ -270,10 +266,8 @@
   .spot[data-cat="bienestar"] .tag{background:rgba(160,116,208,.95)}
   .spot .loc{font-size:.74rem;opacity:.9;font-weight:600}
 
-  /* FIX: El título ya no se sale de la tarjeta */
   .spot h3{font-size:1.4rem;font-weight:800;margin:.35rem 0 0;text-shadow:0 2px 12px rgba(0,0,0,.6);line-height:1.15; word-wrap: break-word;}
   
-  /* FIX: Solo la descripción se anima */
   .spot .desc{font-size:.92rem;color:#e3f1f4;margin:.4rem 0 0;opacity:0;transform:translateY(10px);
     transition:opacity .4s var(--ease),transform .4s var(--ease);max-width:100%; line-height:1.4;}
   .spot:hover .desc,.spot.tap .desc,.spot:focus-visible .desc{opacity:1;transform:none}
@@ -288,10 +282,9 @@
     background:var(--coral);padding:.35rem .75rem;border-radius:999px;
     box-shadow:0 8px 18px -8px var(--coral);letter-spacing:.04em}
 
-  /* ---------- SECCIONES DE SERVICIOS Y EXTRA ---------- */
+  /* ---------- SERVICIOS Y EXTRA ---------- */
   .lod-grid { display:grid; gap:16px; grid-template-columns:1fr; }
   @media (min-width:720px){ .lod-grid { grid-template-columns:repeat(3,1fr); } }
-  @media (min-width:1000px){ .srv-grid { grid-template-columns:repeat(2,1fr); } }
 
   .card-x{background:var(--white);border:1px solid var(--line);border-radius:24px;padding:24px;
     box-shadow:0 4px 15px -10px rgba(18,63,82,.15); display:flex;flex-direction:column;
@@ -310,7 +303,6 @@
   .card-x .ext-link{color:var(--lake);font-size:.88rem;font-weight:800;text-decoration:none;margin-left:auto}
   .card-x .ext-link:hover{text-decoration:underline}
 
-  /* Cuidado y Calidad */
   .eco{display:grid;grid-template-columns:1fr;gap:16px;margin-top:2.2rem}
   .eco-card{display:flex;gap:16px;align-items:center;background:var(--white);border:1px solid var(--line);
     border-radius:24px;padding:20px 24px;box-shadow:0 4px 15px -10px rgba(18,63,82,.15);
@@ -482,11 +474,10 @@
   <nav class="sections lg" aria-label="Secciones">
     <a href="#planificador">Planifica</a>
     <a href="#atractivos">Atractivos</a>
-    <a href="#locales" data-tab="dormir">Dormir</a>
-    <a href="#locales" data-tab="comer">Comer</a>
-    <a href="#mapa" id="nav-mapa">Mapa</a>
+    <a href="#locales">Servicios</a>
+    <a href="#mapa">Mapa</a>
     <a href="#cuidado">Cuidado</a>
-    <a href="#emergencias" id="nav-em">Emergencias</a>
+    <a href="#emergencias">Emergencias</a>
   </nav>
 </div>
 
@@ -551,6 +542,7 @@
   <div class="grid" id="grid"></div>
 </section>
 
+<!-- SERVICIOS LOCALES UNIFICADOS -->
 <section id="locales" aria-labelledby="x-loc-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-loc-t"></span>
@@ -586,25 +578,77 @@
   </div>
 </section>
 
+<!-- CALIDAD Y SEGURIDAD CON ENLACES OFICIALES -->
 <section id="calidad" aria-labelledby="x-cal-h">
   <div class="sec-title rv">
     <span class="eyebrow" id="x-cal-t"></span>
     <h2 id="x-cal-h"></h2>
   </div>
-  <ul class="check-list rv" id="x-cal-list"></ul>
+  
+  <div class="grid-2 rv" style="margin-top:2rem">
+    <ul class="check-list" id="x-cal-list" style="margin-top:0"></ul>
+    
+    <div class="eco" style="margin-top:0">
+      <a href="https://www.chile.travel/" target="_blank" rel="noopener" class="eco-card" style="border-color:#e11d48; background:linear-gradient(135deg,#fff0f2,#fff);">
+        <div class="ic" style="background:#ffe4e6;">🇨🇱</div>
+        <div>
+          <h4 style="color:#be123c; margin-bottom:4px;">Chile Travel</p>
+          <p style="font-size:.9rem;">Sitio web oficial de promoción turística.</p>
+        </div>
+      </a>
+      <a href="https://www.sernatur.cl/" target="_blank" rel="noopener" class="eco-card" style="border-color:#0284c7; background:linear-gradient(135deg,#f0f9ff,#fff);">
+        <div class="ic" style="background:#e0f2fe;">🛡️</div>
+        <div>
+          <h4 style="color:#0369a1; margin-bottom:4px;">SERNATUR</h4>
+          <p style="font-size:.9rem;">Servicio Nacional de Turismo de Chile.</p>
+        </div>
+      </a>
+      <a href="https://www.conaf.cl/" target="_blank" rel="noopener" class="eco-card" style="border-color:#15803d; background:linear-gradient(135deg,#f0fdf4,#fff);">
+        <div class="ic" style="background:#dcfce7;">🌳</div>
+        <div>
+          <h4 style="color:#15803d; margin-bottom:4px;">CONAF</h4>
+          <p style="font-size:.9rem;">Corporación Nacional Forestal.</p>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
 
+<!-- VIAJA SIN DEJAR HUELLA CON ENLACES OFICIALES -->
 <section id="cuidado" aria-labelledby="t-eco">
   <div class="sec-title rv">
     <span class="eyebrow">Cuidado del medio ambiente</span>
     <h2 id="t-eco">Viaja sin dejar huella</h2>
     <p>Pequeños gestos protegen lagos, volcanes y comunidades.</p>
   </div>
-  <div class="eco">
-    <div class="eco-card rv"><div class="ic">♻️</div><p>Lleva tu basura de vuelta, también en la orilla de los lagos.</p></div>
-    <div class="eco-card rv"><div class="ic">🚶</div><p>Mantente en los senderos señalizados para proteger el suelo y la vegetación.</p></div>
-    <div class="eco-card rv"><div class="ic">🦅</div><p>No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
-    <div class="eco-card rv"><div class="ic">🤝</div><p>Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
+  <div class="eco rv">
+    <div class="eco-card"><div class="ic">♻️</div><p>Lleva tu basura de vuelta, también en la orilla de los lagos.</p></div>
+    <div class="eco-card"><div class="ic">🚶</div><p>Mantente en los senderos señalizados para proteger el suelo y la vegetación.</p></div>
+    <div class="eco-card"><div class="ic">🦅</div><p>No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
+    <div class="eco-card"><div class="ic">🤝</div><p>Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
+  </div>
+  <div class="eco rv" style="margin-top:16px">
+    <a href="https://www.chile.travel/" target="_blank" rel="noopener" class="eco-card" style="border-color:#e11d48;">
+      <div class="ic" style="background:#ffe4e6;">🇨🇱</div>
+      <div>
+        <h4 style="color:#be123c; margin-bottom:4px;">Chile Travel</h4>
+        <p style="font-size:.9rem;">Inspírate y planifica tu viaje.</p>
+      </div>
+    </a>
+    <a href="https://www.sernatur.cl/" target="_blank" rel="noopener" class="eco-card" style="border-color:#0284c7;">
+      <div class="ic" style="background:#e0f2fe;">🛡️</div>
+      <div>
+        <h4 style="color:#0369a1; margin-bottom:4px;">SERNATUR</h4>
+        <p style="font-size:.9rem;">Información oficial y registros.</p>
+      </div>
+    </a>
+    <a href="https://www.conaf.cl/" target="_blank" rel="noopener" class="eco-card" style="border-color:#15803d;">
+      <div class="ic" style="background:#dcfce7;">🌳</div>
+      <div>
+        <h4 style="color:#15803d; margin-bottom:4px;">CONAF</h4>
+        <p style="font-size:.9rem;">Parques nacionales y reservas.</p>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -664,13 +708,12 @@ const T = {
       ],
       loc_t: 'Servicios locales', loc_h: 'Dónde dormir, comer y arrendar',
       tab_dormir: 'Dormir', tab_comer: 'Comer', tab_arriendo: 'Arriendos',
-      nav_lod: 'Dormir', nav_food: 'Comer', nav_map: 'Mapa', nav_em: 'Emergencias',
       cal_t: 'Calidad y seguridad', cal_h: 'Qué revisar antes de cada actividad',
       cal: [
         'Información previa sobre dificultad, clima, equipamiento y horarios de cada atractivo.',
         'Advertencias de seguridad para actividades de montaña.',
-        'Servicios de aventura solo con prestadores inscritos en el Registro Nacional de Prestadores de Servicios Turísticos (decreto N°19).',
-        'Busca el Sello de Calidad Turística, que reconoce a los prestadores que cumplen la normativa.',
+        'Servicios de aventura solo con prestadores inscritos en el Registro Nacional (SERNATUR).',
+        'Busca el Sello de Calidad Turística (Sello Q), que reconoce a los prestadores que cumplen la normativa.',
         'Guías con certificado de primeros auxilios y experiencia comprobable.',
         'Números de emergencia visibles en todo momento.'
       ],
@@ -944,42 +987,43 @@ function renderGrid() {
   });
 }
 
+// DATOS REALES VERIFICADOS
 const PLACES = {
   alojamiento: [
-    { k:'hotel', z:'Puerto Varas', n:'Casa Molino Hotel Boutique', r:9.1, c:366,
-      nota:'Hotel boutique a orillas del lago Llanquihue, con jardines y restaurante.',
+    { k:'Hotel Boutique', z:'Puerto Varas', n:'Casa Molino Hotel Boutique', r:9.3, c:310,
+      nota:'A orillas del lago Llanquihue, ofrece habitaciones con wifi gratis, zona ajardinada y vistas al volcán.',
       link:'https://www.booking.com/hotel/cl/casa-molino.es.html' },
-    { k:'hotel', z:'Puerto Varas', n:'Solace Hotel Puerto Varas', r:9.0, c:1432,
-      nota:'Moderno hotel en una zona verde, a 600 metros del lago. Destaca su desayuno.',
+    { k:'Hotel', z:'Puerto Varas', n:'Solace Hotel Puerto Varas', r:8.8, c:1515,
+      nota:'Situado en una zona verde a 600 metros del lago. Destaca por su desayuno y la amabilidad del personal.',
       link:'https://www.booking.com/hotel/cl/solace-puerto-varas.es.html' },
-    { k:'hostal', z:'Pucón', n:'Hostal La Tetera', r:9.2, c:77,
+    { k:'Hostal', z:'Pucón', n:'Hostal La Tetera', r:9.2, c:77,
       nota:'Casa de huéspedes acogedora con seis habitaciones y desayuno casero.',
       link:'https://www.booking.com/hotel/cl/hostal-la-tetera.es.html' }
   ],
   comida: [
     { z:'Frutillar', n:'Se Cocina', r:4.9, c:56, p:'$$$',
-      nota:'Cocina de autor con productos locales, aclamada por su excelente relación calidad-precio.',
+      nota:'Cocina de autor con productos locales, aclamada por su excelente relación calidad-precio. Una parada obligada.',
       link:'https://www.yelp.com/biz/se-cocina-fundo-santa-clara' },
-    { z:'Puerto Varas', n:'Casa Valdés', r:4.6, c:15, p:'$$$$',
-      nota:'Especializado en mariscos frescos. Una parada obligada para una cena especial.',
-      link:'https://www.yelp.com/biz/casa-valdes-puerto-varas' },
-    { z:'Puerto Varas', n:'La Marca', r:4.5, c:13, p:'$$$',
-      nota:'Famoso por sus cortes de carne a la parrilla. Ideal para los amantes del buen vino.',
-      link:'https://www.yelp.com/biz/la-marca-los-lagos' }
+    { z:'Puerto Varas', n:'Santo Fuego', r:4.7, c:120, p:'$$$',
+      nota:'Local de estilo relajado y parrilla, pescados, mariscos y vegetales de la zona. Imperdible para carnívoros.',
+      link:'https://www.tripadvisor.com/Restaurant_Review-g294305-d17590561-Reviews-Santo_Fuego-Puerto_Varas_Los_Lagos_Region.html' },
+    { z:'Frutillar', n:'Casa Lindemann', r:4.6, c:85, p:'$$',
+      nota:'Un clásico para probar el auténtico kuchen alemán frente al Teatro del Lago.',
+      link:'https://www.tripadvisor.com/Restaurant_Review-g1318378-d1006559-Reviews-Casa_Lindemann-Frutillar_Los_Lagos_Region.html' }
   ],
   arriendo: [
-    { tipo:'car', z:'Puerto Varas', n:'Mitta Rent a Car', r:4.2, c:150,
-      nota:'Amplia red de sucursales en aeropuertos y ciudades. Ofrece silla para niños y km libre.',
+    { tipo:'Auto', z:'Puerto Varas', n:'Mérida Rent a Car', r:4.5, c:45,
+      nota:'Atención personalizada por WhatsApp. Entrega en Puerto Varas, Frutillar o Aeropuerto El Tepual. Kia Sonet $45.000/día.',
+      link:'https://meridarentacar.cl/' },
+    { tipo:'Auto', z:'Puerto Montt', n:'Mitta Rent a Car', r:4.2, c:150,
+      nota:'Amplia red de sucursales y servicio al aeropuerto. Flota variada y opciones de silla para niños.',
       link:'https://www.mitta.cl/' },
-    { tipo:'car', z:'Puerto Varas', n:'Surentacar', r:4.0, c:80,
-      nota:'Traslado gratuito desde el Aeropuerto El Tepual y descuentos en cabañas asociadas.',
-      link:'https://www.surentacar.cl/' },
-    { tipo:'car', z:'Frutillar', n:'Mérida Rent a Car', r:4.5, c:45,
-      nota:'Atención cercana y rápida por WhatsApp. Ideales para moverte por Llanquihue y Frutillar.',
-      link:'https://meridarentacar.cl/' }
+    { tipo:'Auto', z:'Puerto Montt', n:'D&L Rent a Car', r:4.0, c:80,
+      nota:'Vehículos modernos en Puerto Montt, con servicio de arriendo para Puerto Varas, Frutillar y toda la Región de Los Lagos.',
+      link:'https://www.dylrentacar.cl/' }
   ]
 };
-const LBL = { hotel:'Hotel', hostal:'Hostal', camp:'Camping', reviews:'reseñas', car:'Auto', bike:'Bicicleta' };
+const LBL = { 'Hotel Boutique':'Hotel Boutique', 'Hotel':'Hotel', 'Hostal':'Hostal', 'Auto':'Auto', reviews:'reseñas' };
 
 function placeCard(tag, n, r, c, nota, zona, link) {
   const card = el('div', 'card-x');
@@ -1030,16 +1074,12 @@ function renderExtras() {
 
   set('x-loc-t', X.loc_t); set('x-loc-h', X.loc_h);
   document.querySelectorAll('#locales .tab').forEach(b => { b.textContent = X['tab_' + b.dataset.tab]; });
-  const navMapa = document.getElementById('nav-mapa'); if (navMapa) navMapa.textContent = X.nav_map;
-  const navEm = document.getElementById('nav-em'); if (navEm) navEm.textContent = X.nav_em;
-  $$('nav.sections a[data-tab="dormir"]').forEach(a => a.textContent = X.nav_lod);
-  $$('nav.sections a[data-tab="comer"]').forEach(a => a.textContent = X.nav_food);
 
   // Dormir (3)
   const gLod = document.getElementById('x-lod-grid');
   if (gLod) {
     gLod.innerHTML = '';
-    PLACES.alojamiento.forEach(x => gLod.appendChild(placeCard(LBL[x.k] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
+    PLACES.alojamiento.forEach(x => gLod.appendChild(placeCard(x.k + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
   }
   // Comer (3)
   const gRest = document.getElementById('x-rest-grid');
@@ -1051,7 +1091,7 @@ function renderExtras() {
   const gArr = document.getElementById('x-srv-grid');
   if (gArr) {
     gArr.innerHTML = '';
-    PLACES.arriendo.forEach(x => gArr.appendChild(placeCard(LBL[x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
+    PLACES.arriendo.forEach(x => gArr.appendChild(placeCard(x.tipo + ' · ' + x.z, x.n, x.r, x.c, x.nota, x.z, x.link)));
   }
 
   set('x-desc-t', X.desc_t); set('x-desc-h', X.desc_h);
@@ -1089,7 +1129,7 @@ function renderExtras() {
     emGrid.innerHTML = '';
     EMERG.forEach(([num, name, desc]) => {
       const c = el('div', 'em-card');
-      const a = el('span', 'em-num', num); // Ahora es texto, no enlace
+      const a = el('span', 'em-num', num); 
       c.appendChild(a); c.appendChild(el('h4', '', name)); c.appendChild(el('p', '', desc));
       emGrid.appendChild(c);
     });
@@ -1114,7 +1154,6 @@ function renderMapa() {
       fb.innerHTML = 'No se pudo cargar el mapa. <a class="map-open" target="_blank" rel="noopener" href="https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '">Abrir en Google Maps →</a>';
     }
   };
-  // &t=k fuerza la vista satelital
   f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&t=k&z=12&output=embed';
 }
 
@@ -1128,7 +1167,6 @@ function setTab(name) {
   }
 }
 $$('#locales .tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
-$$('nav.sections a[data-tab]').forEach(a => a.addEventListener('click', () => setTab(a.dataset.tab)));
 
 const dl = document.getElementById('dl');
 if (dl) dl.addEventListener('click', async () => {
@@ -1190,14 +1228,9 @@ const io = new IntersectionObserver(es => es.forEach(e => {
 
 const navLinks = $$('nav.sections a');
 function updateNavActive(sectionId) {
-  const tab = document.querySelector('#locales .tab[aria-selected="true"]')?.dataset.tab;
   navLinks.forEach(a => {
-    const tabAttr = a.dataset.tab;
-    if (tabAttr) {
-      a.classList.toggle('active', sectionId === 'locales' && tabAttr === tab);
-    } else {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + sectionId);
-    }
+    const href = a.getAttribute('href');
+    a.classList.toggle('active', href === '#' + sectionId);
   });
 }
 const navObs = new IntersectionObserver(es => es.forEach(e => {
