@@ -253,13 +253,13 @@
   .spot.tap .art svg,.spot.tap .art img,
   .spot:focus-visible .art svg,.spot:focus-visible .art img{transform:scale(1.08)}
 
+  /* FIX: Degradado y posición del texto */
   .spot::after{content:"";position:absolute;inset:0;z-index:-1;
-    background:linear-gradient(to top,rgba(6,24,32,.92) 0%,rgba(6,24,32,.45) 45%,rgba(6,24,32,0) 78%)}
+    background:linear-gradient(to top,rgba(6,24,32,.95) 0%,rgba(6,24,32,.65) 50%,rgba(6,24,32,0) 100%);
+    transition: opacity .3s}
 
-  .spot .info{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 24px;
-    display:flex;flex-direction:column;gap:6px;transform:translateY(calc(100% - 108px));
-    transition:transform .8s var(--ease)}
-  .spot:hover .info,.spot.tap .info,.spot:focus-visible .info{transform:translateY(0)}
+  .spot .info{position:absolute;left:0;right:0;bottom:0;padding:20px 60px 22px 20px;
+    display:flex;flex-direction:column;gap:4px;}
 
   .spot-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .spot .tag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
@@ -270,12 +270,15 @@
   .spot[data-cat="bienestar"] .tag{background:rgba(160,116,208,.95)}
   .spot .loc{font-size:.74rem;opacity:.9;font-weight:600}
 
-  .spot h3{font-size:1.4rem;font-weight:800;margin:.35rem 0 0;text-shadow:0 2px 12px rgba(0,0,0,.4);line-height:1.15}
-  .spot .desc{font-size:.92rem;color:#e3f1f4;margin:.15rem 0 0;opacity:0;transform:translateY(12px);
-    transition:opacity .5s .1s var(--ease),transform .5s .1s var(--ease);max-width:42ch}
+  /* FIX: El título ya no se sale de la tarjeta */
+  .spot h3{font-size:1.4rem;font-weight:800;margin:.35rem 0 0;text-shadow:0 2px 12px rgba(0,0,0,.6);line-height:1.15; word-wrap: break-word;}
+  
+  /* FIX: Solo la descripción se anima */
+  .spot .desc{font-size:.92rem;color:#e3f1f4;margin:.4rem 0 0;opacity:0;transform:translateY(10px);
+    transition:opacity .4s var(--ease),transform .4s var(--ease);max-width:100%; line-height:1.4;}
   .spot:hover .desc,.spot.tap .desc,.spot:focus-visible .desc{opacity:1;transform:none}
 
-  .spot .arrow{position:absolute;right:22px;bottom:24px;width:40px;height:40px;border-radius:50%;
+  .spot .arrow{position:absolute;right:20px;bottom:20px;width:40px;height:40px;border-radius:50%;
     display:grid;place-items:center;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);
     border:1px solid rgba(255,255,255,.3);font-size:1.1rem;font-weight:800;opacity:0;transform:translateX(-8px);
     transition:opacity .4s var(--ease),transform .5s var(--spring); pointer-events:none;}
@@ -411,25 +414,21 @@
     transition:opacity .4s,transform .6s var(--spring);z-index:40}
   #top.show{opacity:1;transform:none;pointer-events:auto}
 
-  /* --- OPTIMIZACIÓN MÓVIL (Arreglo del Planificador y HUD) --- */
+  /* --- OPTIMIZACIÓN MÓVIL --- */
   @media (max-width:640px){
     .hero{padding-top:6.4rem}
     .planner{border-radius:26px}
-    
-    /* Arreglo del planificador para que no se corte */
     .viewport{ min-height: 560px; } 
     .slide{padding:22px 18px 110px}
-    .styles{ grid-template-columns: 1fr 1fr; gap:10px; } /* 2 columnas en celular para que quepan bien */
+    .styles{ grid-template-columns: 1fr 1fr; gap:10px; }
     .style-card{padding:16px 14px}
     .style-card .emo{font-size:2rem}
     .style-card h4 { font-size: 1rem; }
     .dur{padding:20px 10px}
     .dur strong{font-size:2.3rem}
-    
     .stop{grid-template-columns:56px 1fr; padding:10px 12px 10px 10px;}
     .thumb{width:56px;height:56px}
     .travel-time { font-size: 0.7rem; padding: 4px 10px; }
-    
     .skel{grid-template-columns:56px 1fr}
     .skel .box{width:56px;height:56px}
   }
