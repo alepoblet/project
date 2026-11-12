@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#123f52">
 <meta name="description" content="Guía digital de la Ruta Lagos y Volcanes: arma tu recorrido y úsalo sin conexión.">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌋</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌋%3C/text%3E%3C/svg%3E">
 <title>Guía Ruta Lagos y Volcanes</title>
 <style>
   :root {
@@ -32,7 +32,6 @@
   button { font: inherit; }
   :focus-visible { outline: 3px solid var(--lake); outline-offset: 3px; border-radius: 12px; }
 
-  /* ---------- VIDRIO LÍQUIDO (reutilizable) ---------- */
   .lg {
     position: relative;
     background: linear-gradient(135deg, rgba(255,255,255,.66) 0%, rgba(255,255,255,.3) 55%, rgba(255,255,255,.5) 100%);
@@ -55,7 +54,6 @@
   }
   @keyframes glassSheen { 0%,35% { left: -60%; } 75%,100% { left: 130%; } }
 
-  /* ---------- ENCABEZADO FIJO ---------- */
   .topbar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 70;
     padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 0; transition: transform .6s var(--ease);
@@ -92,7 +90,6 @@
   .lang-menu button:hover { background: var(--soft); }
   .lang-menu button[aria-selected="true"] { color: var(--lake); font-weight: 800; }
 
-  /* ---------- HERO ---------- */
   .hero {
     position: relative; min-height: 100svh; overflow: hidden; color: #fff;
     display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
@@ -158,7 +155,6 @@
   .stats strong { display: block; font-size: 1.6rem; font-weight: 800; }
   .stats span { font-size: .78rem; opacity: .92; }
 
-  /* ---------- BARRA DE SECCIONES (vidrio líquido) ---------- */
   .sections-wrap { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 74px); z-index: 60; display: flex; justify-content: center; padding: 0 12px; margin-top: 14px; pointer-events: none; }
   nav.sections {
     pointer-events: auto; display: flex; gap: .25rem; max-width: 100%; overflow-x: auto; scrollbar-width: none;
@@ -173,7 +169,6 @@
   nav.sections a.active { background: linear-gradient(135deg, #1f6f8b, #2e9c93); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 18px -8px rgba(18,63,82,.55); }
   @media (prefers-reduced-motion: reduce) { nav.sections a:hover { transform: none; } }
 
-  /* ---------- SECCIONES ---------- */
   .page { max-width: 1120px; margin: 0 auto; padding: 0 18px; }
   section { position: relative; padding: 70px 0 30px; scroll-margin-top: 150px; }
   .eyebrow { font-size: .74rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--lake); display: inline-flex; align-items: center; gap: .5rem; }
@@ -183,7 +178,6 @@
   .rv { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
   .rv.in { opacity: 1; transform: none; }
 
-  /* ---------- PLANIFICADOR ---------- */
   .planner { margin-top: 2.2rem; background: var(--white); border-radius: 32px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--line); }
   .progress { height: 6px; background: #e3edf0; position: relative; }
   .progress i { position: absolute; left: 0; top: 0; bottom: 0; width: 33.3%; background: var(--grad); transition: width .8s var(--ease); border-radius: 0 6px 6px 0; }
@@ -204,17 +198,12 @@
   .style-card {
     position: relative; border: 1px solid var(--line); background: #fbfdfd; border-radius: 24px; padding: 20px 18px; cursor: pointer; text-align: left;
     transform-style: preserve-3d; will-change: transform; transition: transform .3s var(--ease), box-shadow .5s var(--ease), background .4s, color .4s;
-    animation: floaty 6s ease-in-out infinite;
   }
-  .style-card:nth-child(2) { animation-delay: -1.5s; }
-  .style-card:nth-child(3) { animation-delay: -3s; }
-  .style-card:nth-child(4) { animation-delay: -4.5s; }
-  @keyframes floaty { 0%,100% { translate: 0 0; } 50% { translate: 0 -7px; } }
   .style-card:hover { box-shadow: 0 22px 40px -22px rgba(18,63,82,.45); }
   .style-card .emo { font-size: 2.3rem; display: inline-block; transform: translateZ(30px); transition: transform .5s var(--spring); }
   .style-card h4 { font-size: 1.15rem; margin: .8rem 0 .2rem; font-weight: 800; transform: translateZ(20px); }
   .style-card small { color: var(--mute); transform: translateZ(10px); display: block; font-size: .85rem; }
-  .style-card[aria-pressed="true"] { background: var(--lake-dark); color: #fff; box-shadow: 0 24px 44px -20px rgba(18,63,82,.8); animation: none; }
+  .style-card[aria-pressed="true"] { background: var(--lake-dark); color: #fff; box-shadow: 0 24px 44px -20px rgba(18,63,82,.8); }
   .style-card[aria-pressed="true"] small { color: #b7d6de; }
   .style-card[aria-pressed="true"] .emo { transform: translateZ(30px) scale(1.12); }
 
@@ -251,7 +240,7 @@
   .stop.in::before { animation: ping 2.6s var(--ease) infinite; }
   @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(232,128,74,.45); } 70%,100% { box-shadow: 0 0 0 10px rgba(232,128,74,0); } }
   .thumb { width: 64px; height: 64px; border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--line); }
-  .thumb svg { width: 100%; height: 100%; }
+  .thumb svg, .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .stop .time { font-size: .76rem; font-weight: 800; color: var(--ember); letter-spacing: .05em; text-transform: uppercase; }
   .stop h4 { font-size: 1.04rem; font-weight: 800; margin: .1rem 0 .15rem; }
   .stop .place { font-size: .88rem; color: var(--mute); }
@@ -276,7 +265,6 @@
   .btn:disabled { opacity: .35; cursor: default; }
   .btn.primary { background: var(--lake-dark); color: #fff; border-color: var(--lake-dark); margin-left: auto; }
 
-  /* ---------- ATRACTIVOS ---------- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; margin-top: 2.2rem; }
   .spot {
     position: relative; height: 330px; border-radius: 30px; overflow: hidden; cursor: pointer; color: #fff; isolation: isolate;
@@ -285,8 +273,8 @@
   }
   .spot.wide { grid-column: span 2; height: 380px; }
   .spot:hover { transform: translateY(-4px); box-shadow: 0 30px 56px -26px rgba(18,63,82,.6); }
-  .spot .art { position: absolute; inset: 0; z-index: -2; transition: transform 1.2s var(--ease); }
-  .spot .art svg { width: 100%; height: 100%; }
+  .spot .art { position: absolute; inset: 0; z-index: -2; transition: transform 1.2s var(--ease); overflow: hidden; }
+  .spot .art svg, .spot .art img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s var(--ease); }
   .spot::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(6,24,32,.9) 0%, rgba(6,24,32,.05) 62%); }
   .spot .info { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px; transform: translateY(calc(100% - 92px)); transition: transform .8s var(--ease); }
   .spot .tag {
@@ -300,6 +288,7 @@
     box-shadow: 0 8px 18px -8px var(--coral);
   }
   .spot:hover .art, .spot.tap .art { transform: scale(1.1); }
+  .spot:hover .art img, .spot.tap .art img { transform: scale(1.06); }
   .spot:hover .info, .spot.tap .info { transform: translateY(0); }
   .spot:hover .desc, .spot.tap .desc { opacity: 1; transform: none; }
   .spot .cloudy { animation: driftSvg 40s linear infinite; }
@@ -307,7 +296,6 @@
   @keyframes driftSvg { from { transform: translateX(-60px); } to { transform: translateX(460px); } }
   @media (max-width: 640px) { .spot.wide { grid-column: span 1; } }
 
-  /* ---------- CUIDADO ---------- */
   .eco { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 2.2rem; }
   .eco-card {
     display: flex; gap: 16px; align-items: center; background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 18px 20px;
@@ -321,13 +309,7 @@
   .eco-card:hover .ic { transform: rotate(-12deg) scale(1.12); }
   .eco-card p { margin: 0; color: var(--ink-2); font-size: .97rem; }
   @media (min-width: 760px) { .eco { grid-template-columns: repeat(2, 1fr); } }
-  .emergency { display: grid; gap: 12px; margin-top: 18px; grid-template-columns: 1fr; }
-  @media (min-width: 760px) { .emergency { grid-template-columns: repeat(3, 1fr); } }
-  .em { display: flex; justify-content: space-between; align-items: center; background: #fff5f2; border: 1px solid #ffe0d6; border-radius: 20px; padding: 16px 20px; }
-  .em strong { font-size: .95rem; }
-  .em a { font-size: 1.4rem; font-weight: 800; color: var(--coral); text-decoration: none; }
 
-  /* ---------- SECCIONES NUEVAS ---------- */
   .lead-p { color: var(--mute); max-width: 40rem; margin-top: .4rem; }
   .qa { background: var(--white); border: 1px solid var(--line); border-radius: 20px; padding: 0 20px; margin-bottom: 12px; transition: box-shadow .4s, border-color .4s; }
   .qa[open] { box-shadow: 0 16px 30px -22px rgba(18,63,82,.45); border-color: #cfe2e8; }
@@ -386,7 +368,7 @@
   }
   .poster:hover { transform: rotate(0deg) scale(1.02); }
   .poster .p-art { position: absolute; inset: 0; z-index: -1; opacity: .55; }
-  .poster .p-art svg { width: 100%; height: 100%; }
+  .poster .p-art svg, .poster .p-art img { width: 100%; height: 100%; object-fit: cover; }
   .poster .p-top { font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; opacity: .9; }
   .poster h3 { font-size: 2rem; font-weight: 800; margin-top: auto; text-shadow: 0 4px 18px rgba(0,0,0,.3); }
   .poster p { font-size: .98rem; opacity: .95; margin: .6rem 0 0; }
@@ -401,7 +383,6 @@
   .src-list li { padding: 8px 0; border-bottom: 1px dashed var(--line); }
   .sub-h { font-size: 1.1rem; font-weight: 800; color: var(--lake-dark); margin: 1.6rem 0 .6rem; }
 
-  /* ---------- DESCARGA ---------- */
   .offline {
     margin-top: 44px; border-radius: 34px; padding: 46px 26px; text-align: center; color: #fff; position: relative; overflow: hidden;
     background: linear-gradient(120deg, #0d3346, #1f6f8b 50%, #3e9a8a, #0d3346); background-size: 250% 250%; animation: gradientShift 14s ease infinite;
@@ -461,31 +442,31 @@
     html { scroll-behavior: auto; }
     .rv, .hero h1, .hero .sub, .cta, .kicker, .stats div { opacity: 1 !important; transform: none !important; }
   }
-  /* ---------- AJUSTES MINIMALISTAS ---------- */
+
   .stats div { background: none; border: none; backdrop-filter: none; min-width: 0; padding: .4rem .9rem; }
   .stats strong { font-size: 1.8rem; }
   .hero .cloud.c3 { display: none; }
-  .style-card { animation: none; }
   .planner, .card-x, .spot { box-shadow: 0 8px 30px -22px rgba(18,63,82,.35); }
-  /* ---------- HORIZONTE ANIMADO ---------- */
+
   .horizon { position: absolute; left: 0; bottom: -1px; width: 100%; height: 120px; z-index: 1; overflow: visible; }
   .horizon .ridge { transform-box: fill-box; transform-origin: 50% 100%; animation: ridgeGrow 1.6s var(--ease) .2s both; }
   .horizon .front { animation: frontSway 9s ease-in-out 1.8s infinite; }
   @keyframes ridgeGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
   @keyframes frontSway { 0%,100% { transform: translateX(-14px); } 50% { transform: translateX(14px); } }
-  /* ---------- MAPA ---------- */
+
   .map-frame-wrap { position: relative; width: 100%; height: 440px; border-radius: 26px; overflow: hidden; background: var(--soft); box-shadow: 0 20px 40px -26px rgba(18,63,82,.5); }
   .map-frame-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--ink-2); font-weight: 600; z-index: 0; }
+  .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--ink-2); font-weight: 600; z-index: 0; gap: 12px; }
   .map-open { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: var(--lake-dark); color: #fff !important; padding: .8rem 1.3rem; border-radius: 999px; font-weight: 800; transition: transform .4s var(--spring), box-shadow .4s; }
   .map-open:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -12px rgba(18,63,82,.6); }
   .links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   .links a { font-size: .8rem; font-weight: 700; color: var(--lake); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: .35rem .8rem; transition: background .3s, transform .3s var(--spring); }
   .links a:hover { background: var(--soft); transform: translateY(-1px); }
-.place .rating { font-weight: 700; color: var(--ember); font-size: .85rem; margin-bottom: .4rem; }
+
+  .place .rating { font-weight: 700; color: var(--ember); font-size: .85rem; margin-bottom: .4rem; }
   .map-btn { margin-top: 12px; border: none; background: none; color: var(--lake); font-weight: 800; cursor: pointer; padding: 0; font-size: .88rem; }
   .map-btn:hover { text-decoration: underline; }
-.tabs-glass { display: inline-flex; gap: .3rem; padding: .4rem; border-radius: 999px; margin-bottom: 1.8rem; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .tabs-glass { display: inline-flex; gap: .3rem; padding: .4rem; border-radius: 999px; margin-bottom: 1.8rem; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
   .tabs-glass::-webkit-scrollbar { display: none; }
   .tab { position: relative; z-index: 1; border: none; background: none; cursor: pointer; color: var(--lake-dark); font-weight: 700; font-size: .95rem; padding: .6rem 1.2rem; border-radius: 999px; white-space: nowrap; transition: background .4s var(--ease), color .4s, transform .4s var(--spring), box-shadow .4s; }
   .tab:hover { background: rgba(255,255,255,.6); color: var(--lake); }
@@ -493,7 +474,8 @@
   .panel { display: none; }
   .panel.active { display: block; animation: panelIn .7s var(--ease) both; }
   @keyframes panelIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.em-num { display: inline-block; font-size: 2rem; font-weight: 800; color: var(--coral); text-decoration: none; margin-bottom: .3rem; }
+  .em-num { display: inline-block; font-size: 2rem; font-weight: 800; color: var(--coral); text-decoration: none; margin-bottom: .3rem; }
+  .em-num:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -534,8 +516,7 @@
     </div>
   </div>
 
-  
-<svg class="horizon" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+  <svg class="horizon" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
     <path class="ridge" d="M-20 92 L150 42 L300 80 L500 22 L700 76 L900 34 L1090 84 L1270 30 L1460 72 L1460 120 L-20 120Z" fill="#e6f0f3" opacity=".6"/>
     <path class="front" d="M-60 104 Q300 72 720 100 T1500 96 L1500 120 L-60 120Z" fill="var(--bg)"/>
   </svg>
@@ -547,9 +528,9 @@
     <a href="#atractivos" data-i18n="nav_spots">Atractivos</a>
     <a href="#locales" data-tab="dormir">Dormir</a>
     <a href="#locales" data-tab="comer">Comer</a>
-    <a href="#mapa" data-i18n="x.nav_map">Mapa</a>
+    <a href="#mapa" id="nav-mapa">Mapa</a>
     <a href="#cuidado" data-i18n="nav_care">Cuidado</a>
-    <a href="#emergencias" data-i18n="x.nav_em">Emergencias</a>
+    <a href="#emergencias" id="nav-em">Emergencias</a>
   </nav>
 </div>
 
@@ -619,26 +600,25 @@
     <h2 id="x-loc-h"></h2>
   </div>
   <div class="tabs-glass lg lg-sheen rv" role="tablist">
-    <button class="tab" role="tab" data-tab="dormir" aria-selected="true"></button>
-    <button class="tab" role="tab" data-tab="comer" aria-selected="false"></button>
-    <button class="tab" role="tab" data-tab="arriendo" aria-selected="false"></button>
+    <button class="tab" role="tab" id="tab-dormir" data-tab="dormir" aria-selected="true" aria-controls="panel-dormir"></button>
+    <button class="tab" role="tab" id="tab-comer" data-tab="comer" aria-selected="false" aria-controls="panel-comer"></button>
+    <button class="tab" role="tab" id="tab-arriendo" data-tab="arriendo" aria-selected="false" aria-controls="panel-arriendo"></button>
   </div>
-  <div class="panel active" data-panel="dormir">
+  <div class="panel active" data-panel="dormir" role="tabpanel" id="panel-dormir" aria-labelledby="tab-dormir">
     <div class="filters rv" id="x-lod-filters"></div>
-  <div class="lod-grid rv" id="x-lod-grid"></div>
-  <p class="lod-note rv" id="x-lod-note"></p>
+    <div class="lod-grid rv" id="x-lod-grid"></div>
+    <div class="info-grid rv" id="x-lod-zones" style="margin-top:14px"></div>
+    <p class="lod-note rv" id="x-lod-note"></p>
   </div>
-  <div class="panel" data-panel="comer">
+  <div class="panel" data-panel="comer" role="tabpanel" id="panel-comer" aria-labelledby="tab-comer">
+    <div class="food-grid rv" id="x-food-grid" style="margin-top:14px"></div>
+    <div class="food-tip rv" id="x-food-tip"></div>
     <div class="lod-grid rv" id="x-rest-grid" style="margin-top:14px"></div>
   </div>
-  <div class="panel" data-panel="arriendo">
+  <div class="panel" data-panel="arriendo" role="tabpanel" id="panel-arriendo" aria-labelledby="tab-arriendo">
     <div class="srv-grid rv" id="x-srv-grid"></div>
   </div>
 </section>
-
-
-
-
 
 <section id="mapa" aria-labelledby="x-map-h">
   <div class="sec-title rv">
@@ -649,9 +629,8 @@
   <div class="rv map-box" style="margin-top:18px">
     <div class="map-frame-wrap">
       <iframe id="x-map-frame" title="Mapa de la zona" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-      <div class="map-fallback" id="x-map-fallback"></div>
+      <div class="map-fallback" id="x-map-fallback">Cargando mapa…</div>
     </div>
-    
   </div>
 </section>
 
@@ -683,7 +662,7 @@
     <div class="eco-card rv"><div class="ic">🦅</div><p data-i18n="eco3">No alimentes ni persigas la fauna. Mantén distancia con las aves.</p></div>
     <div class="eco-card rv"><div class="ic">🤝</div><p data-i18n="eco4">Respeta a las comunidades pewenche y pide permiso antes de fotografiar.</p></div>
   </div>
-  </section>
+</section>
 
 <section id="emergencias" aria-labelledby="x-em-h">
   <div class="sec-title rv">
@@ -776,27 +755,10 @@ const T = {
         ['¿Qué elementos la diferencian?', 'Recorridos por perfil de viajero, uso sin conexión, fichas breves con recomendaciones de conservación y enlaces a los servicios locales.'],
         ['¿Por qué resulta pertinente?', 'Responde al problema central del diagnóstico y facilita el acceso a una oferta que ya existe, pero que está poco articulada.']
       ],
-      pub_t: 'Público objetivo', pub_h: 'Viajeros de 25 a 65 años que planifican desde el celular',
-      seg: [
-        ['Parejas y adultos jóvenes', '25 a 40 años', 'Viajan con poco tiempo, buscan aventura liviana, fotografía de paisajes y gastronomía local.'],
-        ['Familias y adultos', '35 a 55 años', 'Buscan actividades variadas, alojamientos cómodos y recorridos con información clara sobre distancias y tiempos.'],
-        ['Viajeros internacionales', 'Argentina, Brasil, EE. UU., Alemania, Francia y España', 'Requieren información en español e inglés y dependen más de la navegación digital.']
-      ],
-      pub_info: [
-        ['Procedencia', 'Nacionales desde la Región Metropolitana, Valparaíso y Concepción; internacionales desde los países indicados.'],
-        ['Intereses', 'Naturaleza, fotografía de paisajes, vida al aire libre y gastronomía sureña.'],
-        ['Motivaciones', 'Desconexión de la ciudad, conocer lugares nuevos y estar en un entorno natural y tranquilo.'],
-        ['Tipos de turismo', 'Aventura, bienestar, cultural o histórico y ecoturismo.'],
-        ['Necesidades', 'Buena conectividad vial y señalización, navegación GPS o internet, y alojamiento de todo tipo, desde camping hasta hostales.'],
-        ['Hábitos', 'Planifican desde el celular, consultan mapas y reseñas, y valoran poder revisar la información sin conexión.']
-      ],
-      nav_lod: 'Dormir', nav_food: 'Comer', nav_map: 'Mapa',
-      nav_em: 'Emergencias',
-      loc_t: 'Servicios locales', loc_h: 'Dónde dormir, comer y arrendar', tab_dormir: 'Dormir', tab_comer: 'Comer', tab_arriendo: 'Arriendos',
-      lk_maps: 'Ver en Google Maps', lk_book: 'Ver en Booking', lk_air: 'Ver en Airbnb', lk_food: 'Dónde comer en Google Maps',
-      car_n: 'Arriendo de vehículos', car_d: 'Autos y camionetas para recorrer la ruta a tu ritmo.',
-      bike_n: 'Bicicletas y kayak', bike_d: 'Arriendo para recorrer costas de lagos y senderos, con equipamiento.',
-      cab_t: 'Cabañas y arriendo', cab_d: 'Opciones para estadías en familia o en pareja, con vista a lagos y bosques.', rent_lk: 'Buscar arriendos en Google Maps',
+      nav_lod: 'Dormir', nav_food: 'Comer', nav_map: 'Mapa', nav_em: 'Emergencias',
+      loc_t: 'Servicios locales', loc_h: 'Dónde dormir, comer y arrendar',
+      tab_dormir: 'Dormir', tab_comer: 'Comer', tab_arriendo: 'Arriendos',
+      lk_maps: 'Ver en Google Maps', lk_book: 'Ver en Booking', lk_air: 'Ver en Airbnb',
       lod_t: 'Alojamiento', lod_h: 'Dónde dormir, según tu presupuesto y tu estilo',
       f_all: 'Todos', f_camp: 'Camping', f_hostal: 'Hostal', f_hotel: 'Hotel o cabaña',
       lod: [
@@ -842,7 +804,7 @@ const T = {
         'Guías con certificado de primeros auxilios y experiencia comprobable.',
         'Números de emergencia visibles en todo momento.'
       ],
-      map_t: 'Mapa y zonas', map_h: 'Explora cada zona en el mapa', map_btn: 'Abrir en mapas',
+      map_t: 'Mapa y zonas', map_h: 'Explora cada zona en el mapa',
       promo_t: 'Promoción', promo_h: 'Pieza promocional',
       poster_title: 'Tu ruta, en tu bolsillo', poster_msg: 'Planifica el viaje a los lagos y volcanes sin perderte.',
       promo_sub: 'Compártela en tus redes', promo_ch: 'Canal: Instagram y la página de la guía. Mensaje principal: planificar sin perderse.',
@@ -865,7 +827,7 @@ const T = {
         'Decreto N°19, Ministerio de Economía, Fomento y Turismo.'
       ]
     },
-    nav_plan: 'Planifica', nav_spots: 'Atractivos', nav_care: 'Cuidado', nav_dl: 'Descarga',
+    nav_plan: 'Planifica', nav_spots: 'Atractivos', nav_care: 'Cuidado',
     hero_kicker: 'Guía digital · Sur de Chile', hero_t1: 'Ruta Lagos y Volcanes', hero_t2: 'en Bolsillo',
     hero_sub: 'Tu recorrido organizado según tu viaje y tu tiempo, con información que puedes revisar sin señal.',
     hero_cta: 'Planificar mi viaje', stat_reg: 'regiones', stat_circ: 'circuitos', stat_km: 'km de ruta',
@@ -888,7 +850,6 @@ const T = {
     eco2: 'Mantente en los senderos señalizados para proteger el suelo y la vegetación.',
     eco3: 'No alimentes ni persigas la fauna. Mantén distancia con las aves.',
     eco4: 'Respeta a las comunidades pewenche y pide permiso antes de fotografiar.',
-    em_gen: 'Emergencias generales', em_fire: 'Bomberos', em_police: 'Carabineros',
     off_title: 'Llévala contigo sin señal', off_text: 'Descarga la guía y consúltala en cualquier tramo de la ruta, aunque no tengas conexión.',
     dl_btn: 'Descargar guía para uso sin conexión', dl_prep: 'Preparando guía…', dl_done: 'Guía lista sin conexión ✓',
     t_ready: 'Guía lista. Puedes usarla sin señal.', t_already: 'La guía ya está disponible sin conexión.',
@@ -928,27 +889,10 @@ const T = {
         ['What sets it apart?', 'Routes by traveler profile, offline use, short cards with conservation tips and links to local services.'],
         ['Why is it relevant?', 'It addresses the central problem of the diagnosis and makes an existing but poorly connected offer easier to access.']
       ],
-      pub_t: 'Target audience', pub_h: 'Travelers aged 25 to 65 who plan from their phone',
-      seg: [
-        ['Couples and young adults', '25 to 40 years old', 'They travel with little time, look for light adventure, landscape photography and local food.'],
-        ['Families and adults', '35 to 55 years old', 'They look for varied activities, comfortable accommodation and routes with clear information on distances and times.'],
-        ['International travelers', 'Argentina, Brazil, USA, Germany, France and Spain', 'They need information in Spanish and English and rely more on digital navigation.']
-      ],
-      pub_info: [
-        ['Origin', 'Domestic travelers from the Metropolitan Region, Valparaíso and Concepción; international travelers from the countries listed.'],
-        ['Interests', 'Nature, landscape photography, outdoor life and southern gastronomy.'],
-        ['Motivations', 'Escaping the city, discovering new places and being in a calm natural setting.'],
-        ['Types of tourism', 'Adventure, wellness, cultural or historical tourism and ecotourism.'],
-        ['Needs', 'Good road connectivity and signage, GPS or internet navigation, and accommodation of all kinds, from camping to hostels.'],
-        ['Habits', 'They plan from their phone, check maps and reviews, and value being able to review information offline.']
-      ],
-      nav_lod: 'Stay', nav_food: 'Eat', nav_map: 'Map',
-      nav_em: 'Emergencies',
-      loc_t: 'Local services', loc_h: 'Where to stay, eat and rent', tab_dormir: 'Stay', tab_comer: 'Eat', tab_arriendo: 'Rentals',
-      lk_maps: 'See on Google Maps', lk_book: 'See on Booking', lk_air: 'See on Airbnb', lk_food: 'Where to eat on Google Maps',
-      car_n: 'Car rental', car_d: 'Cars and vans to explore the route at your own pace.',
-      bike_n: 'Bikes and kayaks', bike_d: 'Rental for exploring lakeshores and trails, with equipment.',
-      cab_t: 'Cabins and rentals', cab_d: 'Options for family or couple stays with lake and forest views.', rent_lk: 'Find rentals on Google Maps',
+      nav_lod: 'Stay', nav_food: 'Eat', nav_map: 'Map', nav_em: 'Emergencies',
+      loc_t: 'Local services', loc_h: 'Where to stay, eat and rent',
+      tab_dormir: 'Stay', tab_comer: 'Eat', tab_arriendo: 'Rentals',
+      lk_maps: 'See on Google Maps', lk_book: 'See on Booking', lk_air: 'See on Airbnb',
       lod_t: 'Accommodation', lod_h: 'Where to stay, by budget and style',
       f_all: 'All', f_camp: 'Camping', f_hostal: 'Hostel', f_hotel: 'Hotel or cabin',
       lod: [
@@ -994,7 +938,7 @@ const T = {
         'Guides with first aid certification and proven experience.',
         'Emergency numbers visible at all times.'
       ],
-      map_t: 'Map and areas', map_h: 'Explore each area on the map', map_btn: 'Open in maps',
+      map_t: 'Map and areas', map_h: 'Explore each area on the map',
       promo_t: 'Promotion', promo_h: 'Promotional piece',
       poster_title: 'Your route, in your pocket', poster_msg: 'Plan your trip to the lakes and volcanoes without getting lost.',
       promo_sub: 'Share it on your social media', promo_ch: 'Channel: Instagram and the guide page. Main message: plan without getting lost.',
@@ -1017,7 +961,7 @@ const T = {
         'Decree No. 19, Ministry of Economy, Development and Tourism.'
       ]
     },
-    nav_plan: 'Plan', nav_spots: 'Highlights', nav_care: 'Care', nav_dl: 'Download',
+    nav_plan: 'Plan', nav_spots: 'Highlights', nav_care: 'Care',
     hero_kicker: 'Digital guide · Southern Chile', hero_t1: 'Lakes and Volcanoes Route', hero_t2: 'in your pocket',
     hero_sub: 'Your route organized by your travel style and your time, with information you can check even without signal.',
     hero_cta: 'Plan my trip', stat_reg: 'regions', stat_circ: 'circuits', stat_km: 'km of route',
@@ -1040,7 +984,6 @@ const T = {
     eco2: 'Stay on marked trails to protect the soil and vegetation.',
     eco3: 'Do not feed or chase wildlife. Keep your distance from birds.',
     eco4: 'Respect Pewenche communities and ask permission before taking photos.',
-    em_gen: 'General emergencies', em_fire: 'Fire department', em_police: 'Police (Carabineros)',
     off_title: 'Take it with you, offline', off_text: 'Download the guide and use it anywhere along the route, even without a connection.',
     dl_btn: 'Download guide for offline use', dl_prep: 'Preparing guide…', dl_done: 'Guide ready offline ✓',
     t_ready: 'Guide ready. You can use it without signal.', t_already: 'The guide is already available offline.',
@@ -1080,27 +1023,10 @@ const T = {
         ['O que a diferencia?', 'Roteiros por perfil de viajante, uso offline, fichas breves com recomendações de conservação e links para os serviços locais.'],
         ['Por que é pertinente?', 'Responde ao problema central do diagnóstico e facilita o acesso a uma oferta que já existe, mas está pouco articulada.']
       ],
-      pub_t: 'Público-alvo', pub_h: 'Viajantes de 25 a 65 anos que planejam pelo celular',
-      seg: [
-        ['Casais e adultos jovens', '25 a 40 anos', 'Viajam com pouco tempo, buscam aventura leve, fotografia de paisagens e gastronomia local.'],
-        ['Famílias e adultos', '35 a 55 anos', 'Buscam atividades variadas, hospedagem confortável e roteiros com informação clara sobre distâncias e tempos.'],
-        ['Viajantes internacionais', 'Argentina, Brasil, EUA, Alemanha, França e Espanha', 'Precisam de informações em espanhol e inglês e dependem mais da navegação digital.']
-      ],
-      pub_info: [
-        ['Procedência', 'Nacionais da Região Metropolitana, Valparaíso e Concepción; internacionais dos países indicados.'],
-        ['Interesses', 'Natureza, fotografia de paisagens, vida ao ar livre e gastronomia do sul.'],
-        ['Motivações', 'Desconexão da cidade, conhecer lugares novos e estar em um ambiente natural e tranquilo.'],
-        ['Tipos de turismo', 'Aventura, bem-estar, cultural ou histórico e ecoturismo.'],
-        ['Necessidades', 'Boa conectividade viária e sinalização, navegação GPS ou internet, e hospedagem de todos os tipos, do camping às pousadas.'],
-        ['Hábitos', 'Planejam pelo celular, consultam mapas e avaliações, e valorizam poder consultar as informações offline.']
-      ],
-      nav_lod: 'Hospedagem', nav_food: 'Comer', nav_map: 'Mapa',
-      nav_em: 'Emergências',
-      loc_t: 'Serviços locais', loc_h: 'Onde ficar, comer e alugar', tab_dormir: 'Hospedagem', tab_comer: 'Comer', tab_arriendo: 'Aluguéis',
-      lk_maps: 'Ver no Google Maps', lk_book: 'Ver no Booking', lk_air: 'Ver no Airbnb', lk_food: 'Onde comer no Google Maps',
-      car_n: 'Aluguel de veículos', car_d: 'Carros e vans para percorrer a rota no seu ritmo.',
-      bike_n: 'Bicicletas e caiaques', bike_d: 'Aluguel para explorar margens de lagos e trilhas, com equipamento.',
-      cab_t: 'Cabanas e aluguéis', cab_d: 'Opções para estadias em família ou em casal, com vista para lagos e florestas.', rent_lk: 'Buscar aluguéis no Google Maps',
+      nav_lod: 'Hospedagem', nav_food: 'Comer', nav_map: 'Mapa', nav_em: 'Emergências',
+      loc_t: 'Serviços locais', loc_h: 'Onde ficar, comer e alugar',
+      tab_dormir: 'Hospedagem', tab_comer: 'Comer', tab_arriendo: 'Aluguéis',
+      lk_maps: 'Ver no Google Maps', lk_book: 'Ver no Booking', lk_air: 'Ver no Airbnb',
       lod_t: 'Hospedagem', lod_h: 'Onde ficar, conforme seu orçamento e estilo',
       f_all: 'Todos', f_camp: 'Camping', f_hostal: 'Hostel', f_hotel: 'Hotel ou cabana',
       lod: [
@@ -1146,7 +1072,7 @@ const T = {
         'Guias com certificado de primeiros socorros e experiência comprovada.',
         'Números de emergência sempre visíveis.'
       ],
-      map_t: 'Mapa e regiões', map_h: 'Explore cada região no mapa', map_btn: 'Abrir no mapa',
+      map_t: 'Mapa e regiões', map_h: 'Explore cada região no mapa',
       promo_t: 'Divulgação', promo_h: 'Peça promocional',
       poster_title: 'Sua rota, no seu bolso', poster_msg: 'Planeje a viagem aos lagos e vulcões sem se perder.',
       promo_sub: 'Compartilhe nas suas redes', promo_ch: 'Canal: Instagram e a página do guia. Mensagem principal: planejar sem se perder.',
@@ -1169,7 +1095,7 @@ const T = {
         'Decreto nº 19, Ministério da Economia, Fomento e Turismo.'
       ]
     },
-    nav_plan: 'Planeje', nav_spots: 'Destaques', nav_care: 'Cuidado', nav_dl: 'Baixar',
+    nav_plan: 'Planeje', nav_spots: 'Destaques', nav_care: 'Cuidado',
     hero_kicker: 'Guia digital · Sul do Chile', hero_t1: 'Rota dos Lagos e Vulcões', hero_t2: 'no seu bolso',
     hero_sub: 'Seu roteiro organizado pelo seu estilo de viagem e pelo seu tempo, com informações que você pode consultar mesmo sem sinal.',
     hero_cta: 'Planejar minha viagem', stat_reg: 'regiões', stat_circ: 'circuitos', stat_km: 'km de rota',
@@ -1192,7 +1118,6 @@ const T = {
     eco2: 'Fique nas trilhas sinalizadas para proteger o solo e a vegetação.',
     eco3: 'Não alimente nem persiga animais. Mantenha distância das aves.',
     eco4: 'Respeite as comunidades pewenche e peça permissão antes de fotografar.',
-    em_gen: 'Emergências gerais', em_fire: 'Bombeiros', em_police: 'Polícia (Carabineros)',
     off_title: 'Leve com você, sem sinal', off_text: 'Baixe o guia e consulte em qualquer trecho da rota, mesmo sem conexão.',
     dl_btn: 'Baixar guia para uso offline', dl_prep: 'Preparando o guia…', dl_done: 'Guia pronto offline ✓',
     t_ready: 'Guia pronto. Você pode usá-lo sem sinal.', t_already: 'O guia já está disponível offline.',
@@ -1223,21 +1148,22 @@ const T = {
 };
 
 /* =========================================================
-   LUGARES, PERFILES E ILUSTRACIONES
+   LUGARES (con soporte de foto real)
+   Para añadir una foto: cambia photo:'' por photo:'img/archivo.jpg'
    ========================================================= */
 const LUGARES = {
-  lago:      { scene: 'lake',    p: ['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id: 'L1' },
-  osorno:    { scene: 'volcano', p: ['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id: 'O1' },
-  villarrica:{ scene: 'volcano', p: ['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id: 'V1', smoke: true },
-  conguillio:{ scene: 'forest',  p: ['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id: 'C1' },
-  vpr:       { scene: 'falls',   p: ['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id: 'P1' },
-  frutillar: { scene: 'house',   p: ['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id: 'F1' },
-  iglesia:   { scene: 'church',  p: ['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id: 'I1' },
-  teatro:    { scene: 'theater', p: ['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id: 'T1' },
-  pewenche:  { scene: 'ruka',    p: ['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id: 'R1' },
-  termas:    { scene: 'steam',   p: ['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id: 'S1' },
-  templo:    { scene: 'church',  p: ['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id: 'TL1' },
-  ferias:    { scene: 'house',   p: ['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id: 'FE1' }
+  lago:       { scene:'lake',    p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',  photo:'' },
+  osorno:     { scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',  photo:'' },
+  villarrica: { scene:'volcano', p:['#f7c7a8','#fff4ec','#8c7f8f','#5d7a6a','#2f5a48'], id:'V1',  photo:'', smoke:true },
+  conguillio: { scene:'forest',  p:['#b7e3d0','#f1fbf7','#7bb59a','#3d8a68','#1f5a42'], id:'C1',  photo:'' },
+  vpr:        { scene:'falls',   p:['#a9dcef','#f0fbff','#6f8fa0','#3f6b7e','#7fd0e6'], id:'P1',  photo:'' },
+  frutillar:  { scene:'house',   p:['#ffe0c4','#fff7ef','#c96a3c','#f2dfc6','#4b7a4f'], id:'F1',  photo:'' },
+  iglesia:    { scene:'church',  p:['#ffe9c7','#fffaf1','#d9965a','#f4e0c0','#4e7f54'], id:'I1',  photo:'' },
+  teatro:     { scene:'theater', p:['#ffd6e4','#fff6fa','#b65a80','#e2b5c8','#2a7d9c'], id:'T1',  photo:'' },
+  pewenche:   { scene:'ruka',    p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',  photo:'' },
+  termas:     { scene:'steam',   p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',  photo:'' },
+  templo:     { scene:'church',  p:['#e8f0f5','#fbfdff','#7d93a6','#c9d8e3','#4d6b7a'], id:'TL1', photo:'' },
+  ferias:     { scene:'house',   p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1', photo:'' }
 };
 const PERFILES = {
   aventura:   ['villarrica','vpr','lago','conguillio','osorno'],
@@ -1311,13 +1237,33 @@ function scene(key, p, id, extra) {
   return `<svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${base}${body}</svg>`;
 }
 
+/* Devuelve una <img> si hay foto, o el SVG si no */
+function renderArt(L, info) {
+  if (L.photo) {
+    const img = document.createElement('img');
+    img.src = L.photo;
+    img.alt = info ? info.n : '';
+    img.loading = 'lazy';
+    img.onerror = () => {
+      const svgWrap = document.createElement('div');
+      svgWrap.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+      img.replaceWith(svgWrap.firstChild);
+    };
+    return img;
+  }
+  const svgWrap = document.createElement('div');
+  svgWrap.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+  return svgWrap.firstChild;
+}
+
 /* =========================================================
-   ESTADO Y UTILIDADES
+   ESTADO
    ========================================================= */
 let lang = 'es';
 try { lang = localStorage.getItem('guia-lang') || 'es'; } catch (e) {}
 if (!T[lang]) lang = 'es';
 let perfil = 'naturaleza', dias = 2, paso = 0;
+let lodFiltro = 'all';
 
 const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
@@ -1335,12 +1281,17 @@ function numParadas() { return dias === 1 ? 3 : dias === 2 ? 4 : 5; }
 function applyStatic() {
   document.documentElement.lang = lang;
   document.title = T[lang].title;
-  $$('[data-i18n]').forEach(n => { const v = T[lang][n.dataset.i18n]; if (typeof v === 'string') n.textContent = v; });
+  $$('[data-i18n]').forEach(n => {
+    const v = T[lang][n.dataset.i18n];
+    if (typeof v === 'string') n.textContent = v;
+  });
   $('#langLabel').textContent = { es: '🇨🇱 Español', en: '🇬🇧 English', pt: '🇧🇷 Português' }[lang];
   $$('.lang-menu button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.lang === lang)));
   $('#dlText').textContent = t('dl_btn');
   updateButtons();
   renderGrid();
+  renderExtras();
+  splitHero();
   if (paso === 2) generarItinerario(false);
 }
 function updateButtons() {
@@ -1381,7 +1332,8 @@ function generarItinerario(conEsqueleto) {
       const dia = Math.floor(i * dias / total) + 1;
       const hora = HORAS[i % HORAS.length];
       const stop = el('div', 'stop');
-      const thumb = el('div', 'thumb'); thumb.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+      const thumb = el('div', 'thumb');
+      thumb.appendChild(renderArt(L, info));
       const body = el('div');
       body.appendChild(el('div', 'time', (dias > 1 ? t('day') + ' ' + dia + ' · ' : '') + hora));
       body.appendChild(el('h4', '', T[lang].stops[perfil][i % lista.length]));
@@ -1399,7 +1351,8 @@ function generarItinerario(conEsqueleto) {
     for (let i = 0; i < 3; i++) {
       const s = el('div', 'skel');
       s.appendChild(el('div', 'box'));
-      const b = el('div'); b.appendChild(el('div', 'l s')); b.appendChild(el('div', 'l m')); b.appendChild(el('div', 'l w'));
+      const b = el('div');
+      b.appendChild(el('div', 'l s')); b.appendChild(el('div', 'l m')); b.appendChild(el('div', 'l w'));
       s.appendChild(b); tl.appendChild(s);
     }
     setTimeout(pintar, 900);
@@ -1423,7 +1376,6 @@ $$('.style-card').forEach(card => {
 $$('.dur').forEach(b => b.addEventListener('click', () => {
   dias = Number(b.dataset.dias);
   $$('.dur').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  renderGrid();
 }));
 $('#prev').addEventListener('click', () => irA(paso - 1));
 $('#next').addEventListener('click', () => irA(paso === 2 ? 0 : paso + 1));
@@ -1438,7 +1390,8 @@ function renderGrid() {
     const L = LUGARES[id], info = T[lang].places[id];
     const card = el('article', 'spot' + (i < 2 ? ' wide' : ''));
     card.tabIndex = 0;
-    const art = el('div', 'art'); art.innerHTML = scene(L.scene, L.p, L.id, { smoke: L.smoke });
+    const art = el('div', 'art');
+    art.appendChild(renderArt(L, info));
     const inf = el('div', 'info');
     inf.appendChild(el('span', 'tag', info.t));
     inf.appendChild(el('h3', '', info.n));
@@ -1463,7 +1416,8 @@ dl.addEventListener('click', async () => {
   dl.classList.add('busy'); $('#dlText').textContent = t('dl_prep');
   let p = 0; const timer = setInterval(() => { p = Math.min(p + 12, 90); $('#dlProg').style.width = p + '%'; }, 120);
   try {
-    if (!('serviceWorker' in navigator)) throw new Error('sin service worker');
+    if (!('serviceWorker' in navigator)) throw new Error('no-sw');
+    if (location.protocol === 'file:') throw new Error('file-proto');
     const reg = await navigator.serviceWorker.register('sw.js');
     await navigator.serviceWorker.ready;
     if (reg.active) reg.active.postMessage('precache');
@@ -1474,7 +1428,9 @@ dl.addEventListener('click', async () => {
   } catch (err) {
     clearInterval(timer); $('#dlProg').style.width = '0';
     dl.classList.remove('busy'); $('#dlText').textContent = t('dl_btn');
-    toast(t('t_https'));
+    if (err.message === 'no-sw') toast('Tu navegador no soporta modo offline.');
+    else if (err.message === 'file-proto') toast(t('t_https'));
+    else toast('No se encontró sw.js. Súbelo junto al index.html.');
   }
 });
 
@@ -1493,9 +1449,15 @@ $$('.lang-menu button').forEach(b => b.addEventListener('click', () => {
   langEl.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false');
 }));
 document.addEventListener('click', () => { langEl.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    langEl.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  }
+});
 
 /* =========================================================
-   CONTADORES, REVELADO, SECCIÓN ACTIVA, ENCABEZADO Y BOTÓN SUBIR
+   CONTADORES, REVELADO, NAV ACTIVA, ENCABEZADO, SUBIR
    ========================================================= */
 function countUp(node) {
   const target = Number(node.dataset.count), suffix = node.dataset.suffix || '';
@@ -1516,8 +1478,19 @@ const io = new IntersectionObserver(es => es.forEach(e => {
 }), { threshold: .14 });
 
 const navLinks = $$('nav.sections a');
+function updateNavActive(sectionId) {
+  const tab = document.querySelector('#locales .tab[aria-selected="true"]')?.dataset.tab;
+  navLinks.forEach(a => {
+    const tabAttr = a.dataset.tab;
+    if (tabAttr) {
+      a.classList.toggle('active', sectionId === 'locales' && tabAttr === tab);
+    } else {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + sectionId);
+    }
+  });
+}
 const navObs = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  if (e.isIntersecting) updateNavActive(e.target.id);
 }), { rootMargin: '-40% 0px -55% 0px' });
 $$('main section').forEach(s => navObs.observe(s));
 
@@ -1532,162 +1505,49 @@ window.addEventListener('scroll', () => {
 topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 /* =========================================================
-   INICIO
+   DATOS LOCALES (alojamiento/comida/arriendo)
    ========================================================= */
-$$('.rv').forEach(n => io.observe(n));
-applyStatic();
-/* =========================================================
-   SECCIONES NUEVAS: descripción, público, alojamiento, comida,
-   servicios, accesibilidad, calidad, mapa, promoción, resultados, fuentes
-   ========================================================= */
-let lodFiltro = 'all';
-function renderExtras() {
-  const X = T[lang].x;
-  const set = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
-  const fill = (id, arr, fn) => { const n = document.getElementById(id); if (!n) return; n.innerHTML = ''; arr.forEach((v, i) => n.appendChild(fn(v, i))); };
-
-  // Sección unificada de servicios locales
-  set('x-loc-t', X.loc_t); set('x-loc-h', X.loc_h);
-  document.querySelectorAll('#locales .tab').forEach(b => { b.textContent = X['tab_' + b.dataset.tab]; });
-  // Textos de navegación
-  $$('nav.sections a[href="#emergencias"]').forEach(a => a.textContent = X.nav_em);
-  $$('nav.sections a[data-tab="dormir"]').forEach(a => a.textContent = X.nav_lod);
-  $$('nav.sections a[data-tab="comer"]').forEach(a => a.textContent = X.nav_food);
-  $$('nav.sections a[href="#mapa"]').forEach(a => a.textContent = X.nav_map);
-
-  // Descripción
-  set('x-desc-t', X.desc_t); set('x-desc-h', X.desc_h);
-  fill('x-desc-list', X.desc_q, ([q, a], i) => {
-    const d = el('details', 'qa'); if (i === 0) d.open = true;
-    const s = el('summary', '', q); d.appendChild(s); d.appendChild(el('p', '', a));
-    return d;
-  });
-
-  // Alojamiento
-  set('x-lod-t', X.lod_t); set('x-lod-h', X.lod_h); set('x-lod-note', X.lod_note);
-  const filtros = [['all', X.f_all], ['camp', X.f_camp], ['hostal', X.f_hostal], ['hotel', X.f_hotel]];
-  fill('x-lod-filters', filtros, ([k, label]) => {
-    const b = el('button', '', label); b.setAttribute('aria-pressed', String(lodFiltro === k));
-    b.addEventListener('click', () => { lodFiltro = k; renderLod(); });
-    return b;
-  });
-  renderLod();
-
-  // Comida
-  set('x-food-t', X.food_t); set('x-food-h', X.food_h); set('x-food-tip', X.food_tip);
-  fill('x-food-grid', X.food, f => {
-    const c = el('div', 'card-x food-card'); c.appendChild(el('span', 'big', f.e));
-    c.appendChild(el('h4', '', f.n)); c.appendChild(el('p', '', f.d));
-    return c;
-  });
-
-  renderRest();
-  renderEmerg();
-
-  // Servicios
-  set('x-srv-t', X.srv_t); set('x-srv-h', X.srv_h);
-  fill('x-srv-grid', [], ([i, h, d]) => {
-    const c = el('div', 'card-x'); c.appendChild(el('span', 'ico', i));
-    c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d)); return c;
-  });
-
-  // Arriendos reales dentro de la página
-  PLACES.arriendo.forEach(x => {
-    $('#x-srv-grid').appendChild(placeCard(LBL[lang][x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota[lang], x.z));
-  });
-
-  // Accesibilidad
-  set('x-acc-t', X.acc_t); set('x-acc-h', X.acc_h);
-  fill('x-acc-grid', X.acc, ([h, d]) => {
-    const c = el('div', 'card-x'); c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d)); return c;
-  });
-
-  // Calidad
-  set('x-cal-t', X.cal_t); set('x-cal-h', X.cal_h);
-  fill('x-cal-list', X.cal, txt => el('li', '', txt));
-
-  // Mapa con Google Maps incrustado
-  set('x-map-t', X.map_t); set('x-map-h', X.map_h);
-  const zonas = ['Frutillar', 'Puerto Varas', 'Puerto Octay', 'Petrohué', 'Pucón', 'Villarrica', 'Panguipulli', 'Lago Ranco'];
-  const frame = document.getElementById('x-map-frame');
-  if (!frame.dataset.zona) frame.dataset.zona = 'Frutillar';
-  fill('x-map-grid', zonas, z => {
-    const b = el('button', '', z);
-    b.setAttribute('aria-pressed', String(frame.dataset.zona === z));
-    b.addEventListener('click', () => { frame.dataset.zona = z; renderMapa(); renderExtras(); });
-    return b;
-  });
-  renderMapa();
-
-  // Promoción
-  set('x-promo-t', X.promo_t); set('x-promo-h', X.promo_h);
-  set('x-poster-title', X.poster_title); set('x-poster-msg', X.poster_msg);
-  set('x-promo-sub', X.promo_sub); set('x-promo-ch', X.promo_ch);
-  const shareBtn = $('#share'); shareBtn.textContent = X.share;
-  const art = $('#x-poster-art'); art.innerHTML = scene('lake', LUGARES.lago.p, 'PO1');
-  art.querySelector('svg').style.height = '100%';
-
-  // Resultados
-  set('x-res-t', X.res_t); set('x-res-h', X.res_h); set('x-viab', X.viab);
-  fill('x-res-grid', X.res, ([h, d]) => {
-    const c = el('div', 'card-x'); c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d)); return c;
-  });
-
-  // Fuentes
-  set('x-src-t', X.src_t);
-  fill('x-src', X.src, s => el('li', '', s));
-}
-
 function gmaps(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
-function linksBox(items) {
-  const box = el('div', 'links');
-  items.forEach(([label, url]) => {
-    const a = el('a', '', label + ' ↗'); a.href = url; a.target = '_blank'; a.rel = 'noopener';
-    box.appendChild(a);
-  });
-  return box;
-}
 
-
-/* Lugares reales encontrados en Google Maps (valoraciones al momento de la búsqueda) */
 const PLACES = {
   alojamiento: [
-    { k: 'hotel', z: 'Puerto Varas', n: 'Hotel Solace Puerto Varas', r: 4.6, c: 1237, nota: { es: 'Hotel moderno con desayuno incluido y bar en la azotea con vista a la ciudad. Cerca del centro.', en: 'Modern hotel with free breakfast and a rooftop bar with city views. Close to downtown.', pt: 'Hotel moderno com café da manhã incluso e bar no terraço com vista para a cidade. Perto do centro.' } },
-    { k: 'hotel', z: 'Puerto Varas', n: 'Hotel Agua Nativa', r: 4.3, c: 404, nota: { es: 'Habitaciones sencillas con vista al lago, restaurante propio, tinas calientes y desayuno.', en: 'Simple rooms with lake views, an on-site restaurant, hot tubs and breakfast.', pt: 'Quartos simples com vista para o lago, restaurante próprio, banheiras de hidromassagem e café da manhã.' } },
-    { k: 'hotel', z: 'Puerto Varas', n: 'Park Inn by Radisson', r: 4.2, c: 1304, nota: { es: 'Hotel contemporáneo con piscina exterior y restaurante con vista al lago. El ruido exterior puede escucharse.', en: 'Contemporary hotel with an outdoor pool and a restaurant with lake views. Outside noise can carry into rooms.', pt: 'Hotel contemporâneo com piscina externa e restaurante com vista para o lago. O barulho externo pode ser ouvido nos quartos.' } },
-    { k: 'hotel', z: 'Puerto Varas', n: 'Hotel Terrazas del Lago', r: 4.3, c: 630, nota: { es: 'Hotel junto al lago, dentro de unas tres hectáreas de parque, con cabañas básicas. Bueno para familias.', en: 'Lakeside hotel within about three hectares of parkland, with basic cabins. Good for families.', pt: 'Hotel à beira do lago, em cerca de três hectares de parque, com cabanas simples. Bom para famílias.' } },
-    { k: 'hotel', z: 'Puerto Varas', n: 'Wyndham Puerto Varas Pettra', r: 4.6, c: 186, nota: { es: 'Hotel contemporáneo con atención cuidada y buen acceso a los atractivos.', en: 'Contemporary hotel with attentive service and good access to attractions.', pt: 'Hotel contemporâneo com atendimento atencioso e bom acesso aos atrativos.' } },
-    { k: 'hostal', z: 'Pucón', n: 'Hostal La Tetera', r: 4.6, c: 77, nota: { es: 'Casa de huéspedes acogedora, con seis habitaciones y desayuno. Cupos limitados: conviene reservar.', en: 'Cozy guesthouse with six rooms and breakfast. Limited space: book ahead.', pt: 'Pousada aconchegante, com seis quartos e café da manhã. Vagas limitadas: reserve com antecedência.' } },
-    { k: 'hostal', z: 'Pucón', n: 'Terra Volcano Hostel', r: 5.0, c: 9, nota: { es: 'Hostal cercano a las excursiones al volcán Villarrica.', en: 'Hostel close to the Villarrica volcano tours.', pt: 'Hostel perto dos passeios ao vulcão Villarrica.' } },
-    { k: 'hostal', z: 'Pucón', n: 'Gecko Hostel', r: 4.2, c: 235, nota: { es: 'Dormitorios y habitaciones privadas, cocina equipada, patio con parrilla y atención las 24 horas.', en: 'Dorms and private rooms, equipped kitchen, patio with BBQ and 24-hour access.', pt: 'Dormitórios e quartos privativos, cozinha equipada, pátio com churrasqueira e acesso 24 horas.' } },
-    { k: 'hostal', z: 'Pucón', n: 'Hostal Celta', r: 5.0, c: 5, nota: { es: 'Hostal acogedor, cómodo para explorar los atractivos naturales de los alrededores.', en: 'Cozy hostel, convenient for exploring the natural attractions nearby.', pt: 'Hostel aconchegante, prático para explorar os atrativos naturais da região.' } },
-    { k: 'hostal', z: 'Pucón', n: 'Hostel Palguin', r: 3.5, c: 2, nota: { es: 'Hostal económico con ambiente de mochileros y ubicación céntrica.', en: 'Budget hostel with a backpacker atmosphere and a central location.', pt: 'Hostel econômico com clima de mochileiros e localização central.' } },
-    { k: 'camp', z: 'Puerto Octay', n: 'Camping Centinela', r: 4.1, c: 317, nota: { es: 'Camping con zona para casas rodantes con electricidad y agua, fogones y baños.', en: 'Campground with RV spaces with electricity and water, fire pits and restrooms.', pt: 'Camping com área para motorhome com eletricidade e água, fogueiras e banheiros.' } },
-    { k: 'camp', z: 'Puerto Octay', n: 'Camping Los Avellanos', r: 3.8, c: 83, nota: { es: 'Camping a orillas del lago Llanquihue, en Las Cascadas. Tiene accesos para silla de ruedas.', en: 'Campground on the shores of Llanquihue Lake, in Las Cascadas. Wheelchair-accessible entrance.', pt: 'Camping à beira do lago Llanquihue, em Las Cascadas. Acesso para cadeira de rodas.' } },
-    { k: 'camp', z: 'Puerto Octay', n: 'Camping La Tranca del Lago', r: 4.1, c: 55, nota: { es: 'Camping en Las Cascadas, abierto las 24 horas y con estacionamiento gratuito.', en: 'Campground in Las Cascadas, open 24 hours with free parking.', pt: 'Camping em Las Cascadas, aberto 24 horas e com estacionamento gratuito.' } },
-    { k: 'camp', z: 'Puerto Octay', n: 'Camping Kimün', r: 4.8, c: 60, nota: { es: 'Camping familiar en Las Cascadas, con precios convenientes y baños públicos.', en: 'Family-run campground in Las Cascadas, with good prices and public restrooms.', pt: 'Camping familiar em Las Cascadas, com preços convenientes e banheiros públicos.' } }
+    { k:'hotel', z:'Puerto Varas', n:'Hotel Solace Puerto Varas', r:4.6, c:1237, nota:{ es:'Hotel moderno con desayuno incluido y bar en la azotea con vista a la ciudad.', en:'Modern hotel with free breakfast and a rooftop bar with city views.', pt:'Hotel moderno com café da manhã incluso e bar no terraço com vista para a cidade.' } },
+    { k:'hotel', z:'Puerto Varas', n:'Hotel Agua Nativa', r:4.3, c:404, nota:{ es:'Habitaciones sencillas con vista al lago, restaurante propio y tinas calientes.', en:'Simple rooms with lake views, an on-site restaurant and hot tubs.', pt:'Quartos simples com vista para o lago, restaurante próprio e banheiras de hidromassagem.' } },
+    { k:'hotel', z:'Puerto Varas', n:'Park Inn by Radisson', r:4.2, c:1304, nota:{ es:'Hotel contemporáneo con piscina exterior y restaurante con vista al lago.', en:'Contemporary hotel with an outdoor pool and a restaurant with lake views.', pt:'Hotel contemporâneo com piscina externa e restaurante com vista para o lago.' } },
+    { k:'hotel', z:'Puerto Varas', n:'Hotel Terrazas del Lago', r:4.3, c:630, nota:{ es:'Hotel junto al lago, dentro de un parque de unas tres hectáreas, con cabañas básicas.', en:'Lakeside hotel within about three hectares of parkland, with basic cabins.', pt:'Hotel à beira do lago, em cerca de três hectares de parque, com cabanas simples.' } },
+    { k:'hotel', z:'Puerto Varas', n:'Wyndham Puerto Varas Pettra', r:4.6, c:186, nota:{ es:'Hotel contemporáneo con atención cuidada y buen acceso a los atractivos.', en:'Contemporary hotel with attentive service and good access to attractions.', pt:'Hotel contemporâneo com atendimento atencioso e bom acesso aos atrativos.' } },
+    { k:'hostal', z:'Pucón', n:'Hostal La Tetera', r:4.6, c:77, nota:{ es:'Casa de huéspedes acogedora, con seis habitaciones y desayuno. Conviene reservar.', en:'Cozy guesthouse with six rooms and breakfast. Book ahead.', pt:'Pousada aconchegante, com seis quartos e café da manhã. Reserve com antecedência.' } },
+    { k:'hostal', z:'Pucón', n:'Terra Volcano Hostel', r:5.0, c:9, nota:{ es:'Hostal cercano a las excursiones al volcán Villarrica.', en:'Hostel close to the Villarrica volcano tours.', pt:'Hostel perto dos passeios ao vulcão Villarrica.' } },
+    { k:'hostal', z:'Pucón', n:'Gecko Hostel', r:4.2, c:235, nota:{ es:'Dormitorios y habitaciones privadas, cocina equipada y patio con parrilla.', en:'Dorms and private rooms, equipped kitchen and BBQ patio.', pt:'Dormitórios e quartos privativos, cozinha equipada e pátio com churrasqueira.' } },
+    { k:'hostal', z:'Pucón', n:'Hostal Celta', r:5.0, c:5, nota:{ es:'Hostal acogedor, cómodo para explorar los atractivos naturales de los alrededores.', en:'Cozy hostel, convenient for exploring the natural attractions nearby.', pt:'Hostel aconchegante, prático para explorar os atrativos naturais da região.' } },
+    { k:'hostal', z:'Pucón', n:'Hostel Palguin', r:3.5, c:2, nota:{ es:'Hostal económico con ambiente de mochileros y ubicación céntrica.', en:'Budget hostel with a backpacker atmosphere and central location.', pt:'Hostel econômico com clima de mochileiros e localização central.' } },
+    { k:'camp', z:'Puerto Octay', n:'Camping Centinela', r:4.1, c:317, nota:{ es:'Camping con zona para casas rodantes con electricidad y agua, fogones y baños.', en:'Campground with RV spaces with electricity and water, fire pits and restrooms.', pt:'Camping com área para motorhome com eletricidade e água, fogueiras e banheiros.' } },
+    { k:'camp', z:'Puerto Octay', n:'Camping Los Avellanos', r:3.8, c:83, nota:{ es:'Camping a orillas del lago Llanquihue, en Las Cascadas. Tiene accesos para silla de ruedas.', en:'Campground on the shores of Llanquihue Lake, in Las Cascadas. Wheelchair-accessible entrance.', pt:'Camping à beira do lago Llanquihue, em Las Cascadas. Acesso para cadeira de rodas.' } },
+    { k:'camp', z:'Puerto Octay', n:'Camping La Tranca del Lago', r:4.1, c:55, nota:{ es:'Camping en Las Cascadas, abierto las 24 horas y con estacionamiento gratuito.', en:'Campground in Las Cascadas, open 24 hours with free parking.', pt:'Camping em Las Cascadas, aberto 24 horas e com estacionamento gratuito.' } },
+    { k:'camp', z:'Puerto Octay', n:'Camping Kimün', r:4.8, c:60, nota:{ es:'Camping familiar en Las Cascadas, con precios convenientes y baños públicos.', en:'Family-run campground in Las Cascadas, with good prices and public restrooms.', pt:'Camping familiar em Las Cascadas, com preços convenientes e banheiros públicos.' } }
   ],
   comida: [
-    { z: 'Puerto Varas', n: 'La Olla', r: 4.4, c: 4500, p: '$$', nota: { es: 'Cocina chilena tradicional y mariscos, en un ambiente informal. Conviene reservar los fines de semana.', en: 'Traditional Chilean cooking and seafood in a relaxed setting. Book ahead on weekends.', pt: 'Culinária chilena tradicional e frutos do mar em ambiente informal. Reserve nos fins de semana.' } },
-    { z: 'Frutillar', n: 'El Barr-co Frutillar Alto', r: 4.9, c: 56, p: '$', nota: { es: 'Comida chilena casera, porciones generosas y precios accesibles. Abre al mediodía.', en: 'Homestyle Chilean food, generous portions and affordable prices. Lunch hours.', pt: 'Comida chilena caseira, porções generosas e preços acessíveis. Abre ao meio-dia.' } },
-    { z: 'Frutillar', n: 'Se Cocina', r: 4.7, c: 215, p: '$$', nota: { es: 'Cocina con productos locales y regionales, con opciones vegetarianas. Se recomienda reservar para cenar.', en: 'Cooking with local and regional products, with vegetarian options. Book ahead for dinner.', pt: 'Cozinha com produtos locais e regionais, com opções vegetarianas. Reserve para o jantar.' } },
-    { z: 'Frutillar', n: 'F&F Familie Fritz', r: 4.6, c: 242, p: '$$$', nota: { es: 'Parrilla y cocina internacional, con opciones veganas y sala de juegos para niños.', en: 'Grill and international cuisine, with vegan options and a playroom for children.', pt: 'Churrasco e cozinha internacional, com opções veganas e sala de jogos para crianças.' } },
-    { z: 'Frutillar', n: 'Sabores Criollos Frutillar', r: 4.6, c: 186, p: '$$', nota: { es: 'Cocina peruana, con platos como lomo saltado y ceviche. Acepta reservas.', en: 'Peruvian cuisine, with dishes such as lomo saltado and ceviche. Accepts reservations.', pt: 'Culinária peruana, com pratos como lomo saltado e ceviche. Aceita reservas.' } }
+    { z:'Puerto Varas', n:'La Olla', r:4.4, c:4500, p:'$$', nota:{ es:'Cocina chilena tradicional y mariscos, en un ambiente informal. Conviene reservar los fines de semana.', en:'Traditional Chilean cooking and seafood in a relaxed setting. Book ahead on weekends.', pt:'Culinária chilena tradicional e frutos do mar em ambiente informal. Reserve nos fins de semana.' } },
+    { z:'Frutillar', n:'El Barr-co Frutillar Alto', r:4.9, c:56, p:'$', nota:{ es:'Comida chilena casera, porciones generosas y precios accesibles. Abre al mediodía.', en:'Homestyle Chilean food, generous portions and affordable prices. Lunch hours.', pt:'Comida chilena caseira, porções generosas e preços acessíveis. Abre ao meio-dia.' } },
+    { z:'Frutillar', n:'Se Cocina', r:4.7, c:215, p:'$$', nota:{ es:'Cocina con productos locales y regionales, con opciones vegetarianas. Conviene reservar para cenar.', en:'Cooking with local and regional products, with vegetarian options. Book ahead for dinner.', pt:'Cozinha com produtos locais e regionais, com opções vegetarianas. Reserve para o jantar.' } },
+    { z:'Frutillar', n:'F&F Familie Fritz', r:4.6, c:242, p:'$$$', nota:{ es:'Parrilla y cocina internacional, con opciones veganas y sala de juegos para niños.', en:'Grill and international cuisine, with vegan options and a playroom for children.', pt:'Churrasco e cozinha internacional, com opções veganas e sala de jogos para crianças.' } },
+    { z:'Frutillar', n:'Sabores Criollos Frutillar', r:4.6, c:186, p:'$$', nota:{ es:'Cocina peruana, con platos como lomo saltado y ceviche. Acepta reservas.', en:'Peruvian cuisine, with dishes such as lomo saltado and ceviche. Accepts reservations.', pt:'Culinária peruana, com pratos como lomo saltado e ceviche. Aceita reservas.' } }
   ],
   arriendo: [
-    { tipo: 'car', z: 'Puerto Varas', n: 'Sur Rent a Car', r: 4.7, c: 146, nota: { es: 'Flota de sedanes, SUV y camionetas. Ofrece recogida en el aeropuerto.', en: 'Fleet of sedans, SUVs and pickups. Airport pick-up available.', pt: 'Frota de sedãs, SUVs e picapes. Retirada no aeroporto disponível.' } },
-    { tipo: 'car', z: 'Puerto Varas', n: 'BCS Rent a Car', r: 3.9, c: 16, nota: { es: 'Arriendo de vehículos en Puerto Varas, para explorar la región de Los Lagos.', en: 'Vehicle rental in Puerto Varas, for exploring the Los Lagos region.', pt: 'Aluguel de veículos em Puerto Varas, para explorar a região de Los Lagos.' } },
-    { tipo: 'car', z: 'Puerto Varas', n: 'Patagonia Car Rental', r: 3.7, c: 19, nota: { es: 'Variedad de vehículos y entrega y retiro en distintos puntos.', en: 'Variety of vehicles, with delivery and pick-up at different points.', pt: 'Variedade de veículos, com entrega e retirada em diferentes pontos.' } },
-    { tipo: 'car', z: 'Puerto Montt', n: 'Loki Rent a Car (Puerto Montt)', r: 5.0, c: 497, nota: { es: 'Entrega en hoteles, cabañas o en el aeropuerto El Tepual. Atiende las 24 horas.', en: 'Delivery to hotels, cabins or El Tepual airport. Open 24 hours.', pt: 'Entrega em hotéis, cabanas ou no aeroporto El Tepual. Atende 24 horas.' } },
-    { tipo: 'bike', z: 'Frutillar', n: 'Trail Spirit / Aro 25', r: 5.0, c: 66, nota: { es: 'Arriendo de bicicletas y taller de reparación en Frutillar.', en: 'Bike rental and repair workshop in Frutillar.', pt: 'Aluguel de bicicletas e oficina de reparo em Frutillar.' } }
+    { tipo:'car', z:'Puerto Varas', n:'Sur Rent a Car', r:4.7, c:146, nota:{ es:'Flota de sedanes, SUV y camionetas. Ofrece recogida en el aeropuerto.', en:'Fleet of sedans, SUVs and pickups. Airport pick-up available.', pt:'Frota de sedãs, SUVs e picapes. Retirada no aeroporto disponível.' } },
+    { tipo:'car', z:'Puerto Varas', n:'BCS Rent a Car', r:3.9, c:16, nota:{ es:'Arriendo de vehículos en Puerto Varas, para explorar la región de Los Lagos.', en:'Vehicle rental in Puerto Varas, for exploring the Los Lagos region.', pt:'Aluguel de veículos em Puerto Varas, para explorar a região de Los Lagos.' } },
+    { tipo:'car', z:'Puerto Varas', n:'Patagonia Car Rental', r:3.7, c:19, nota:{ es:'Variedad de vehículos y entrega y retiro en distintos puntos.', en:'Variety of vehicles, with delivery and pick-up at different points.', pt:'Variedade de veículos, com entrega e retirada em diferentes pontos.' } },
+    { tipo:'car', z:'Puerto Montt', n:'Loki Rent a Car (Puerto Montt)', r:5.0, c:497, nota:{ es:'Entrega en hoteles, cabañas o en el aeropuerto El Tepual. Atiende las 24 horas.', en:'Delivery to hotels, cabins or El Tepual airport. Open 24 hours.', pt:'Entrega em hotéis, cabanas ou no aeroporto El Tepual. Atende 24 horas.' } },
+    { tipo:'bike', z:'Frutillar', n:'Trail Spirit / Aro 25', r:5.0, c:66, nota:{ es:'Arriendo de bicicletas y taller de reparación en Frutillar.', en:'Bike rental and repair workshop in Frutillar.', pt:'Aluguel de bicicletas e oficina de reparo em Frutillar.' } }
   ]
 };
 const LOCALE = { es: 'es-CL', en: 'en-US', pt: 'pt-BR' };
 const LBL = {
-  es: { hotel: 'Hotel', hostal: 'Hostal', camp: 'Camping', reviews: 'reseñas', seeMap: 'Ver zona en el mapa', noCab: 'No encontramos cabañas con datos verificados en Frutillar; revisa la zona en el mapa.', car: 'Auto', bike: 'Bicicleta' },
-  en: { hotel: 'Hotel', hostal: 'Hostel', camp: 'Campground', reviews: 'reviews', seeMap: 'View area on map', noCab: 'We found no verified cabins in Frutillar; check the area on the map.', car: 'Car', bike: 'Bike' },
-  pt: { hotel: 'Hotel', hostal: 'Hostel', camp: 'Camping', reviews: 'avaliações', seeMap: 'Ver região no mapa', noCab: 'Não encontramos cabanas com dados verificados em Frutillar; veja a região no mapa.', car: 'Carro', bike: 'Bicicleta' }
+  es: { hotel:'Hotel', hostal:'Hostal', camp:'Camping', reviews:'reseñas', seeMap:'Ver zona en el mapa', car:'Auto', bike:'Bicicleta' },
+  en: { hotel:'Hotel', hostal:'Hostel', camp:'Campground', reviews:'reviews', seeMap:'View area on map', car:'Car', bike:'Bike' },
+  pt: { hotel:'Hotel', hostal:'Hostel', camp:'Camping', reviews:'avaliações', seeMap:'Ver região no mapa', car:'Carro', bike:'Bicicleta' }
 };
+
 function placeCard(tag, n, r, c, nota, zona) {
   const card = el('div', 'card-x place');
   card.appendChild(el('span', 'age', tag));
@@ -1707,63 +1567,63 @@ function showZone(zona) {
 
 function renderRest() {
   const g = document.getElementById('x-rest-grid'); if (!g) return; g.innerHTML = '';
-  PLACES.comida.forEach(r => {
-    const c = placeCard(r.z + ' · ' + r.p, r.n, r.r, r.c, r.nota[lang], r.z);
-    g.appendChild(c);
-  });
+  PLACES.comida.forEach(r => g.appendChild(placeCard(r.z + ' · ' + r.p, r.n, r.r, r.c, r.nota[lang], r.z)));
 }
 
-/* Números de emergencia de Chile (verificados en fuentes oficiales) */
 const EMERG = {
-  es: { t: 'Emergencias', h: 'Números de emergencia en Chile',
+  es: { t:'Emergencias', h:'Números de emergencia en Chile',
     items: [
-      ['131', 'Ambulancia (SAMU)', 'Atención médica urgente'],
-      ['132', 'Bomberos', 'Incendios y rescates'],
-      ['133', 'Carabineros', 'Seguridad pública y accidentes de tránsito'],
-      ['134', 'Policía de Investigaciones (PDI)', 'Delitos complejos y control migratorio'],
-      ['130', 'Incendios forestales (CONAF)', 'Incendios en áreas silvestres'],
-      ['136', 'Cuerpo de Socorro Andino', 'Rescate en montaña'],
-      ['137', 'Búsqueda y salvamento marítimo', 'Emergencias marítimas'],
-      ['138', 'Rescate aéreo', 'Búsqueda y rescate desde el aire']
+      ['131','Ambulancia (SAMU)','Atención médica urgente'],
+      ['132','Bomberos','Incendios y rescates'],
+      ['133','Carabineros','Seguridad pública y accidentes de tránsito'],
+      ['134','Policía de Investigaciones (PDI)','Delitos complejos y control migratorio'],
+      ['130','Incendios forestales (CONAF)','Incendios en áreas silvestres'],
+      ['136','Cuerpo de Socorro Andino','Rescate en montaña'],
+      ['137','Búsqueda y salvamento marítimo','Emergencias marítimas'],
+      ['138','Rescate aéreo','Búsqueda y rescate desde el aire']
     ],
     tips: [
       'Si hay un accidente con heridos, llama al 131 y al 133, y no muevas los vehículos.',
       'En la montaña, avisa siempre a tu alojamiento o guía antes de salir.',
       'Ten a mano tu ubicación: nombre del sector o coordenadas de GPS.'
-    ] },
-  en: { t: 'Emergencies', h: 'Emergency numbers in Chile',
+    ]
+  },
+  en: { t:'Emergencies', h:'Emergency numbers in Chile',
     items: [
-      ['131', 'Ambulance (SAMU)', 'Urgent medical care'],
-      ['132', 'Fire department', 'Fires and rescues'],
-      ['133', 'Police (Carabineros)', 'Public safety and traffic accidents'],
-      ['134', 'Investigations (PDI)', 'Complex crimes and immigration control'],
-      ['130', 'Forest fires (CONAF)', 'Fires in wild areas'],
-      ['136', 'Andean rescue corps', 'Mountain rescue'],
-      ['137', 'Sea search and rescue', 'Maritime emergencies'],
-      ['138', 'Air rescue', 'Search and rescue from the air']
+      ['131','Ambulance (SAMU)','Urgent medical care'],
+      ['132','Fire department','Fires and rescues'],
+      ['133','Police (Carabineros)','Public safety and traffic accidents'],
+      ['134','Investigations (PDI)','Complex crimes and immigration control'],
+      ['130','Forest fires (CONAF)','Fires in wild areas'],
+      ['136','Andean rescue corps','Mountain rescue'],
+      ['137','Sea search and rescue','Maritime emergencies'],
+      ['138','Air rescue','Search and rescue from the air']
     ],
     tips: [
       'If there is an accident with injuries, call 131 and 133, and do not move the vehicles.',
       'In the mountains, always tell your accommodation or guide before you leave.',
       'Keep your location handy: the name of the area or GPS coordinates.'
-    ] },
-  pt: { t: 'Emergências', h: 'Números de emergência no Chile',
+    ]
+  },
+  pt: { t:'Emergências', h:'Números de emergência no Chile',
     items: [
-      ['131', 'Ambulância (SAMU)', 'Atendimento médico de urgência'],
-      ['132', 'Bombeiros', 'Incêndios e resgates'],
-      ['133', 'Carabineros', 'Segurança pública e acidentes de trânsito'],
-      ['134', 'Polícia de Investigações (PDI)', 'Crimes complexos e controle migratório'],
-      ['130', 'Incêndios florestais (CONAF)', 'Incêndios em áreas silvestres'],
-      ['136', 'Corpo de Socorro Andino', 'Resgate em montanha'],
-      ['137', 'Busca e salvamento marítimo', 'Emergências marítimas'],
-      ['138', 'Resgate aéreo', 'Busca e resgate pelo ar']
+      ['131','Ambulância (SAMU)','Atendimento médico de urgência'],
+      ['132','Bombeiros','Incêndios e resgates'],
+      ['133','Carabineros','Segurança pública e acidentes de trânsito'],
+      ['134','Polícia de Investigações (PDI)','Crimes complexos e controle migratório'],
+      ['130','Incêndios florestais (CONAF)','Incêndios em áreas silvestres'],
+      ['136','Corpo de Socorro Andino','Resgate em montanha'],
+      ['137','Busca e salvamento marítimo','Emergências marítimas'],
+      ['138','Resgate aéreo','Busca e resgate pelo ar']
     ],
     tips: [
       'Se houver um acidente com feridos, ligue para 131 e 133, e não mova os veículos.',
       'Na montanha, avise sempre sua hospedagem ou guia antes de sair.',
       'Tenha sua localização à mão: nome do setor ou coordenadas de GPS.'
-    ] }
+    ]
+  }
 };
+
 function renderEmerg() {
   const E = EMERG[lang];
   const set = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
@@ -1775,23 +1635,138 @@ function renderEmerg() {
     c.appendChild(a); c.appendChild(el('h4', '', name)); c.appendChild(el('p', '', desc));
     g.appendChild(c);
   });
-  const tips = document.getElementById('x-em-tips'); tips.innerHTML = '';
+  const tips = document.getElementById('x-em-tips'); if (!tips) return; tips.innerHTML = '';
   E.tips.forEach(t => tips.appendChild(el('li', '', t)));
 }
 
-function setTab(name) {
-  $$('#locales .tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
-  $$('#locales .panel').forEach(p => p.classList.toggle('active', p.dataset.panel === name));
-}
-$$('#locales .tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
-$$('nav.sections a[data-tab]').forEach(a => a.addEventListener('click', () => setTab(a.dataset.tab)));
+/* =========================================================
+   RENDER DE SECCIONES EXTRA
+   ========================================================= */
+function renderExtras() {
+  const X = T[lang].x;
+  const set = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
+  const fill = (id, arr, fn) => { const n = document.getElementById(id); if (!n) return; n.innerHTML = ''; arr.forEach((v, i) => n.appendChild(fn(v, i))); };
 
-function renderMapa() {
-  const f = document.getElementById('x-map-frame');
-  if (!f) return;
-  const zona = f.dataset.zona || 'Frutillar';
-  f.onload = () => { const fb = document.getElementById('x-map-fallback'); if (fb) fb.style.display = 'none'; };
-  f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&output=embed';
+  // Servicios locales (tabs + títulos)
+  set('x-loc-t', X.loc_t); set('x-loc-h', X.loc_h);
+  document.querySelectorAll('#locales .tab').forEach(b => { b.textContent = X['tab_' + b.dataset.tab]; });
+  const navMapa = document.getElementById('nav-mapa'); if (navMapa) navMapa.textContent = X.nav_map;
+  const navEm = document.getElementById('nav-em'); if (navEm) navEm.textContent = X.nav_em;
+  $$('nav.sections a[data-tab="dormir"]').forEach(a => a.textContent = X.nav_lod);
+  $$('nav.sections a[data-tab="comer"]').forEach(a => a.textContent = X.nav_food);
+
+  // Descripción
+  set('x-desc-t', X.desc_t); set('x-desc-h', X.desc_h);
+  fill('x-desc-list', X.desc_q, ([q, a], i) => {
+    const d = el('details', 'qa'); if (i === 0) d.open = true;
+    d.appendChild(el('summary', '', q));
+    d.appendChild(el('p', '', a));
+    return d;
+  });
+
+  // Alojamiento — filtros
+  const filtros = [['all', X.f_all], ['camp', X.f_camp], ['hostal', X.f_hostal], ['hotel', X.f_hotel]];
+  fill('x-lod-filters', filtros, ([k, label]) => {
+    const b = el('button', '', label); b.setAttribute('aria-pressed', String(lodFiltro === k));
+    b.addEventListener('click', () => { lodFiltro = k; renderLod(); });
+    return b;
+  });
+  renderLod();
+
+  // Zonas de alojamiento (X.lod)
+  fill('x-lod-zones', X.lod, item => {
+    const c = el('div', 'info-item');
+    c.appendChild(el('b', '', item.z + ' · ' + item.tp));
+    c.appendChild(el('span', '', item.p + ' · ' + item.d));
+    return c;
+  });
+
+  // Comida típica
+  fill('x-food-grid', X.food, f => {
+    const c = el('div', 'card-x food-card');
+    c.appendChild(el('span', 'big', f.e));
+    c.appendChild(el('h4', '', f.n));
+    c.appendChild(el('p', '', f.d));
+    return c;
+  });
+  set('x-food-tip', X.food_tip);
+  renderRest();
+
+  // Servicios y transporte + arriendos
+  fill('x-srv-grid', X.srv, ([icon, name, desc]) => {
+    const c = el('div', 'card-x');
+    c.appendChild(el('span', 'ico', icon));
+    c.appendChild(el('h4', '', name));
+    c.appendChild(el('p', '', desc));
+    return c;
+  });
+  const srvGrid = document.getElementById('x-srv-grid');
+  if (srvGrid) PLACES.arriendo.forEach(x => {
+    srvGrid.appendChild(placeCard(LBL[lang][x.tipo] + ' · ' + x.z, x.n, x.r, x.c, x.nota[lang], x.z));
+  });
+
+  // Accesibilidad
+  set('x-acc-t', X.acc_t); set('x-acc-h', X.acc_h);
+  fill('x-acc-grid', X.acc, ([h, d]) => {
+    const c = el('div', 'card-x');
+    c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d));
+    return c;
+  });
+
+  // Calidad
+  set('x-cal-t', X.cal_t); set('x-cal-h', X.cal_h);
+  fill('x-cal-list', X.cal, txt => el('li', '', txt));
+
+  // Mapa
+  set('x-map-t', X.map_t); set('x-map-h', X.map_h);
+  const zonas = ['Frutillar','Puerto Varas','Puerto Octay','Petrohué','Pucón','Villarrica','Panguipulli','Lago Ranco'];
+  const frame = document.getElementById('x-map-frame');
+  if (!frame.dataset.zona) frame.dataset.zona = 'Frutillar';
+  fill('x-map-grid', zonas, z => {
+    const b = el('button', '', z);
+    b.setAttribute('aria-pressed', String(frame.dataset.zona === z));
+    b.addEventListener('click', () => {
+      frame.dataset.zona = z;
+      $$('#x-map-grid button').forEach(x => x.setAttribute('aria-pressed', String(x.textContent === z)));
+      renderMapa();
+    });
+    return b;
+  });
+  renderMapa();
+
+  // Promoción
+  set('x-promo-t', X.promo_t); set('x-promo-h', X.promo_h);
+  set('x-poster-title', X.poster_title); set('x-poster-msg', X.poster_msg);
+  set('x-promo-sub', X.promo_sub); set('x-promo-ch', X.promo_ch);
+  const shareBtn = document.getElementById('share');
+  if (shareBtn) shareBtn.textContent = X.share;
+  const art = document.getElementById('x-poster-art');
+  if (art) {
+    art.innerHTML = '';
+    if (LUGARES.lago.photo) {
+      const img = document.createElement('img');
+      img.src = LUGARES.lago.photo; img.alt = '';
+      art.appendChild(img);
+    } else {
+      art.innerHTML = scene('lake', LUGARES.lago.p, 'PO1');
+      const svg = art.querySelector('svg'); if (svg) svg.style.height = '100%';
+    }
+  }
+
+  // Resultados
+  set('x-res-t', X.res_t); set('x-res-h', X.res_h); set('x-viab', X.viab);
+  fill('x-res-grid', X.res, ([h, d]) => {
+    const c = el('div', 'card-x');
+    c.appendChild(el('h4', '', h)); c.appendChild(el('p', '', d));
+    return c;
+  });
+
+  // Fuentes
+  set('x-src-t', X.src_t);
+  fill('x-src', X.src, s => el('li', '', s));
+
+  // Emergencias
+  renderEmerg();
 }
 
 function renderLod() {
@@ -1801,14 +1776,45 @@ function renderLod() {
     const k = ['all', 'camp', 'hostal', 'hotel'][i];
     b.setAttribute('aria-pressed', String(lodFiltro === k));
   });
-  const g = $('#x-lod-grid'); g.innerHTML = '';
+  const g = document.getElementById('x-lod-grid'); if (!g) return; g.innerHTML = '';
   lista.forEach(x => g.appendChild(placeCard(L[x.k] + ' · ' + x.z, x.n, x.r, x.c, x.nota[lang], x.z)));
   const note = document.getElementById('x-lod-note');
-  if (note) note.textContent = T[lang].x.lod_note + ' ' + (lodFiltro === 'all' || lodFiltro === 'hotel' ? L.noCab : '');
+  if (note) note.textContent = T[lang].x.lod_note;
 }
 
-// Compartir el enlace de la guía
-$('#share').addEventListener('click', async () => {
+function renderMapa() {
+  const f = document.getElementById('x-map-frame');
+  const fb = document.getElementById('x-map-fallback');
+  if (!f) return;
+  const zona = f.dataset.zona || 'Frutillar';
+  if (fb) { fb.style.display = 'grid'; fb.textContent = 'Cargando mapa…'; }
+  f.onload = () => { if (fb) fb.style.display = 'none'; };
+  f.onerror = () => {
+    if (fb) {
+      fb.style.display = 'grid';
+      fb.innerHTML = 'No se pudo cargar el mapa. <a class="map-open" target="_blank" rel="noopener" href="' +
+        'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '">Abrir en Google Maps →</a>';
+    }
+  };
+  f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(zona + ', Chile') + '&output=embed';
+}
+
+/* Tabs locales */
+function setTab(name) {
+  $$('#locales .tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
+  $$('#locales .panel').forEach(p => p.classList.toggle('active', p.dataset.panel === name));
+  const locs = document.getElementById('locales');
+  if (locs) {
+    const r = locs.getBoundingClientRect();
+    if (r.top < window.innerHeight * .6 && r.bottom > 0) updateNavActive('locales');
+  }
+}
+$$('#locales .tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+$$('nav.sections a[data-tab]').forEach(a => a.addEventListener('click', () => setTab(a.dataset.tab)));
+
+/* Compartir */
+const shareBtn = document.getElementById('share');
+if (shareBtn) shareBtn.addEventListener('click', async () => {
   const data = { title: document.title, text: T[lang].x.promo_ch, url: location.href };
   try {
     if (navigator.share) { await navigator.share(data); }
@@ -1816,16 +1822,13 @@ $('#share').addEventListener('click', async () => {
   } catch (e) {}
 });
 
-// Reemplaza applyStatic para que también actualice las secciones nuevas
-const _applyStaticBase = applyStatic;
-applyStatic = function () { _applyStaticBase(); renderExtras(); splitHero(); };
-renderExtras();
-splitHero();
-
+/* Split del título */
 function splitHero() {
   let i = 0;
   document.querySelectorAll('.hero-title .ln').forEach(ln => {
-    const txt = ln.textContent;
+    const txt = ln.getAttribute('data-i18n') ? T[lang][ln.dataset.i18n] : ln.textContent;
+    if (ln.dataset.last === txt && ln.querySelector('.char')) return;
+    ln.dataset.last = txt;
     ln.setAttribute('aria-label', txt);
     ln.innerHTML = '';
     txt.split(' ').forEach((word, wi, arr) => {
@@ -1846,10 +1849,11 @@ function splitHero() {
   });
 }
 
-
-// Revelado de las secciones nuevas
-$$('section .rv, .qa').forEach(n => io.observe(n));
-
+/* =========================================================
+   INICIO
+   ========================================================= */
+$$('.rv').forEach(n => io.observe(n));
+applyStatic();
 irA(0);
 </script>
 </body>
