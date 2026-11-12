@@ -1234,34 +1234,91 @@ function renderGrid() {
    ========================================================= */
 const PLACES = {
   alojamiento: [
-    { k:'hotel', z:'Puerto Varas', n:'Hotel Solace Puerto Varas', r:4.6, c:1237, nota:'Hotel moderno con desayuno incluido y bar en la azotea con vista a la ciudad.' },
-    { k:'hotel', z:'Puerto Varas', n:'Hotel Agua Nativa', r:4.3, c:404, nota:'Habitaciones sencillas con vista al lago, restaurante propio y tinas calientes.' },
-    { k:'hotel', z:'Puerto Varas', n:'Park Inn by Radisson', r:4.2, c:1304, nota:'Hotel contemporáneo con piscina exterior y restaurante con vista al lago.' },
-    { k:'hotel', z:'Puerto Varas', n:'Hotel Terrazas del Lago', r:4.3, c:630, nota:'Hotel junto al lago, dentro de un parque de unas tres hectáreas, con cabañas básicas.' },
-    { k:'hotel', z:'Puerto Varas', n:'Wyndham Puerto Varas Pettra', r:4.6, c:186, nota:'Hotel contemporáneo con atención cuidada y buen acceso a los atractivos.' },
-    { k:'hostal', z:'Pucón', n:'Hostal La Tetera', r:4.6, c:77, nota:'Casa de huéspedes acogedora, con seis habitaciones y desayuno. Conviene reservar.' },
-    { k:'hostal', z:'Pucón', n:'Terra Volcano Hostel', r:5.0, c:9, nota:'Hostal cercano a las excursiones al volcán Villarrica.' },
-    { k:'hostal', z:'Pucón', n:'Gecko Hostel', r:4.2, c:235, nota:'Dormitorios y habitaciones privadas, cocina equipada y patio con parrilla.' },
-    { k:'hostal', z:'Pucón', n:'Hostal Celta', r:5.0, c:5, nota:'Hostal acogedor, cómodo para explorar los atractivos naturales de los alrededores.' },
-    { k:'hostal', z:'Pucón', n:'Hostel Palguin', r:3.5, c:2, nota:'Hostal económico con ambiente de mochileros y ubicación céntrica.' },
-    { k:'camp', z:'Puerto Octay', n:'Camping Centinela', r:4.1, c:317, nota:'Camping con zona para casas rodantes con electricidad y agua, fogones y baños.' },
-    { k:'camp', z:'Puerto Octay', n:'Camping Los Avellanos', r:3.8, c:83, nota:'Camping a orillas del lago Llanquihue, en Las Cascadas. Tiene accesos para silla de ruedas.' },
-    { k:'camp', z:'Puerto Octay', n:'Camping La Tranca del Lago', r:4.1, c:55, nota:'Camping en Las Cascadas, abierto las 24 horas y con estacionamiento gratuito.' },
-    { k:'camp', z:'Puerto Octay', n:'Camping Kimün', r:4.8, c:60, nota:'Camping familiar en Las Cascadas, con precios convenientes y baños públicos.' }
+    {
+      k: 'hotel',
+      z: 'Puerto Varas',
+      n: 'Casa Molino Hotel Boutique',
+      r: 9.1,
+      c: 366,
+      nota: 'Hotel boutique a orillas del lago Llanquihue, con jardines y restaurante. Una experiencia acogedora y bien valorada.',
+      link: 'https://www.booking.com/hotel/cl/casa-molino.es.html'
+    },
+    {
+      k: 'hotel',
+      z: 'Puerto Varas',
+      n: 'Solace Hotel Puerto Varas',
+      r: 9.0,
+      c: 1432,
+      nota: 'Moderno hotel en una zona verde, a 600 metros del lago. Muy popular por su desayuno y ubicación.',
+      link: 'https://www.booking.com/hotel/cl/solace-puerto-varas.es.html'
+    },
+    {
+      k: 'hotel',
+      z: 'Puerto Varas',
+      n: 'Hotel Cabaña Del Lago',
+      r: 8.9,
+      c: 3902,
+      nota: 'Ofrece amplias cabañas y habitaciones con vistas panorámicas al lago y los volcanes. Ideal para familias.',
+      link: 'https://www.booking.com/hotel/cl/cabana-del-lago.es.html'
+    }
   ],
   comida: [
-    { z:'Puerto Varas', n:'La Olla', r:4.4, c:4500, p:'$$', nota:'Cocina chilena tradicional y mariscos, en un ambiente informal. Conviene reservar los fines de semana.' },
-    { z:'Frutillar', n:'El Barr-co Frutillar Alto', r:4.9, c:56, p:'$', nota:'Comida chilena casera, porciones generosas y precios accesibles. Abre al mediodía.' },
-    { z:'Frutillar', n:'Se Cocina', r:4.7, c:215, p:'$$', nota:'Cocina con productos locales y regionales, con opciones vegetarianas. Conviene reservar para cenar.' },
-    { z:'Frutillar', n:'F&F Familie Fritz', r:4.6, c:242, p:'$$$', nota:'Parrilla y cocina internacional, con opciones veganas y sala de juegos para niños.' },
-    { z:'Frutillar', n:'Sabores Criollos Frutillar', r:4.6, c:186, p:'$$', nota:'Cocina peruana, con platos como lomo saltado y ceviche. Acepta reservas.' }
+    {
+      z: 'Frutillar',
+      n: 'Se Cocina',
+      r: 4.9,
+      c: 56,
+      p: '$$$',
+      nota: 'Cocina de autor con productos locales, aclamada por su excelente relación calidad-precio. Una parada obligada.',
+      link: 'https://www.yelp.com/biz/se-cocina-fundo-santa-clara'
+    },
+    {
+      z: 'Puerto Varas',
+      n: 'Casa Valdés',
+      r: 4.6,
+      c: 15,
+      p: '$$$$',
+      nota: 'Especializado en mariscos frescos. Considerado por muchos como el mejor restaurante de la zona para una cena especial.',
+      link: 'https://www.yelp.com/biz/casa-valdes-puerto-varas'
+    },
+    {
+      z: 'Puerto Varas',
+      n: 'La Marca',
+      r: 4.5,
+      c: 13,
+      p: '$$$',
+      nota: 'Famoso por sus cortes de carne a la parrilla. Un lugar ideal para los amantes de la buena carne y el vino.',
+      link: 'https://www.yelp.com/biz/la-marca-los-lagos'
+    }
   ],
   arriendo: [
-    { tipo:'car', z:'Puerto Varas', n:'Sur Rent a Car', r:4.7, c:146, nota:'Flota de sedanes, SUV y camionetas. Ofrece recogida en el aeropuerto.' },
-    { tipo:'car', z:'Puerto Varas', n:'BCS Rent a Car', r:3.9, c:16, nota:'Arriendo de vehículos en Puerto Varas, para explorar la región de Los Lagos.' },
-    { tipo:'car', z:'Puerto Varas', n:'Patagonia Car Rental', r:3.7, c:19, nota:'Variedad de vehículos y entrega y retiro en distintos puntos.' },
-    { tipo:'car', z:'Puerto Montt', n:'Loki Rent a Car (Puerto Montt)', r:5.0, c:497, nota:'Entrega en hoteles, cabañas o en el aeropuerto El Tepual. Atiende las 24 horas.' },
-    { tipo:'bike', z:'Frutillar', n:'Trail Spirit / Aro 25', r:5.0, c:66, nota:'Arriendo de bicicletas y taller de reparación en Frutillar.' }
+    {
+      tipo: 'car',
+      z: 'Puerto Varas',
+      n: 'Mitta Rent a Car',
+      r: 4.2,
+      c: 150,
+      nota: 'Amplia red de sucursales en aeropuertos y ciudades. Ofrecen servicios como silla para niños y kilometraje libre.',
+      link: 'https://www.mitta.cl/'
+    },
+    {
+      tipo: 'car',
+      z: 'Puerto Varas',
+      n: 'Surentacar',
+      r: 4.0,
+      c: 80,
+      nota: 'Ofrecen traslado gratuito desde el Aeropuerto El Tepual y descuentos en cabañas asociadas. Una opción práctica.',
+      link: 'https://www.surentacar.cl/'
+    },
+    {
+      tipo: 'car',
+      z: 'Frutillar',
+      n: 'Mérida Rent a Car',
+      r: 4.5,
+      c: 45,
+      nota: 'Atención cercana y rápida por WhatsApp. Ideales para moverte por Llanquihue, Frutillar y el aeropuerto.',
+      link: 'https://meridarentacar.cl/'
+    }
   ]
 };
 const LBL = { hotel:'Hotel', hostal:'Hostal', camp:'Camping', reviews:'reseñas', seeMap:'Ver zona en el mapa', car:'Auto', bike:'Bicicleta' };
