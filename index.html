@@ -1157,10 +1157,16 @@ const T = {
    Para poner tu propia foto: cambia photo:'' por photo:'img/archivo.jpg'
    ========================================================= */
 const WM = 'https://commons.wikimedia.org/wiki/Special:FilePath/';
+c/* =========================================================
+   LUGARES (con fotos reales de Wikimedia Commons)
+   Las URLs han sido verificadas.
+   ========================================================= */
+const WM = 'https://commons.wikimedia.org/wiki/Special:FilePath/';
 const LUGARES = {
   lago: {
     scene:'lake', p:['#8ccbe6','#eef8fb','#7aa9bd','#4f8ea6','#2c6e88'], id:'L1',
-    photo: WM + 'Lago_Llanquihue_y_volc%C3%A1n_Osorno.jpg'
+    // Amanecer sobre el Lago Llanquihue y Volcán Osorno (verificado)
+    photo: WM + 'Amanecer_sobre_el_Lago_LLanquihue_y_Volc%C3%A1n_Osorno%2C_vista_desde_la_costanera_de_Puerto_Varas.JPG'
   },
   osorno: {
     scene:'volcano', p:['#9fd3ea','#f3fbff','#6f9fb3','#e9f4f8','#2c6e88'], id:'O1',
@@ -1192,7 +1198,9 @@ const LUGARES = {
   },
   pewenche: {
     scene:'ruka', p:['#f6e7bf','#fffaf0','#a7834a','#c9a86a','#4f7a4c'], id:'R1',
-    photo: '' // No hay foto específica en Commons; se muestra el SVG ilustrado.
+    // No hay una foto específica de "Rutas Ancestrales Pewenche" en Commons.
+    // Se mantiene el SVG ilustrado para no romper la estética de la guía.
+    photo: ''
   },
   termas: {
     scene:'steam', p:['#c8f0ea','#f2fdfb','#5bb7ab','#2a9d92','#1a6f68'], id:'S1',
@@ -1204,7 +1212,8 @@ const LUGARES = {
   },
   ferias: {
     scene:'house', p:['#fff1d6','#fffaf2','#e0a050','#f5dcae','#6b8a4a'], id:'FE1',
-    photo: '' // Se mantiene el SVG ilustrado.
+    // Feria Artesanal en Pucón (verificado)
+    photo: WM + 'Feria_Artesanal_en_Puc%C3%B3n.JPG'
   }
 };
 const PERFILES = {
