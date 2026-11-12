@@ -1,4 +1,4 @@
-const CACHE = 'guia-lagos-v15'; // Subimos versión
+const CACHE = 'guia-lagos-v16'; // Subimos versión
 
 const CORE = [
   './',
